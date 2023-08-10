@@ -1,25 +1,32 @@
 <template>
-  <div class="test"></div>
+  <div class="app">
+    <nuxt-link :to="'/about'">about</nuxt-link>
+    {{ getMode }}
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'IndexPage',
+  async asyncData({$axios}) {
+    const data = await $axios.$get(
+      'https://jsonplaceholder.typicode.com/comments'
+    )
+    return {
+      apiData: data,
+    }
+  },
   data() {
     return {
       res: null,
     }
   },
-  // async asyncData() {
-  //   const data = await fetchData('https://jsonplaceholder.typicode.com/comments')
-  //   return {
-  //     apiData: data,
-  //   }
-  // },
-  // async created() {
-  //   const res = await fetchData()
-  //   this.res = res
-  // },
+  computed: {
+    ...mapGetters({
+      getMode: 'checkMode/getMode',
+    }),
+  },
 }
 </script>
 <style lang="scss" scoped>
