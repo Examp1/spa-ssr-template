@@ -1,68 +1,176 @@
-# spa-ssr-template
+# HOW TO
+## Run Locally  
 
-## Build Setup
+Go to the project directory  
+~~~bash  
+  cd my-project
+~~~
 
-```bash
-# install dependencies
-$ npm install
+Change configs
+~~~bash  
+cp .env.example .env
+~~~
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+Create the symbolic link for Storage
+~~~bash  
+php artisan storage:link
+~~~ 
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+Install  dependencies
+~~~bash  
+composer install
+or composer install --ignore-platform-reqs
+~~~ 
 
-# generate static project
-$ npm run generate
-```
+Generate key
+~~~bash  
+php artisan key:generate
+~~~ 
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+Migrate & Seed
+~~~bash  
+php artisan migrate --seed
+~~~ 
+Admin email: admin@owlweb.com.ua
+password: randomized, is shown in the console after ```Seeding: Database\Seeders\AdminSeeder```
 
-## Special Directories
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+## Demo content(only on fresh db)
+1. Copy folder ```public/demo``` to ```public/storage/media/demo```
+~~~bash
+cp -r ./public/demo ./storage/app/public/media/demo
+~~~
+2. Seed DB
+~~~bash
+php artisan db:seed --class=DemoSeeder
+~~~
 
-### `assets`
+## Docker(Sail)
+1. Install Docker and WSL2(Ubuntu 20.04).
+Useful links:
+- https://docs.docker.com/desktop/windows/wsl/
+- https://support.atlassian.com/bitbucket-cloud/docs/set-up-an-ssh-key/
+Copy keys from Windows
+~~~bash
+cp -r /mnt/c/Users/<username>/.ssh ~/
+~~~
+Run ssh agent
+~~~bash
+eval $(ssh-agent)
+~~~
+Change permissions
+~~~bash
+chmod 600 ~/.ssh/<private_key_file>
+~~~
+Add key
+~~~bash
+ssh-add ~/.ssh/<private_key_file>
+~~~
+Check
+~~~bash
+ssh -T git@bitbucket.org
+~~~
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+2. Clone project in WSL.
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+3. Make temporary alias: ```alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'``` or create permanent
+~~~bash
+cd ~
+touch .bash_aliases
+nano .bash_aliases
+~~~
+Add ```alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'```
 
-### `components`
+4. Make config from example(.env.example) ```cp .env.example .env```
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+5. Install dependencies ```docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/var/www/html -w /var/www/html laravelsail/php80-composer:latest composer install --ignore-platform-reqs```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+6. Run Sail ```sail up``` or ```sail up -d```. Stop - ```sail stop```. Bug fix when stuck on ```gpg: keybox '/root/.gnupg/pubring.kbx' created```:
+In your project folder go to /vendor/laravel/sail/runtimes/8.0/Dockerfile. On line:21 remove :80 so the line should be this: ```&& echo "keyserver hkp://keyserver.ubuntu.com" >> ~/.gnupg/dirmngr.conf \```
 
-### `layouts`
+7. Rest of commands from Run Localy(replacing ```php``` with ```sail``` alias or use ```./vendor/bin/sail``` )
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+8. Run VSCode ```code .```
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+## Files permissions
+assuming www-data is your web server user, you can run:
+~~~bash
+sudo chown -R www-data:www-data /path/to/your/laravel-directory
+~~~
+And this is good, because your webserver will own files and can execute. The bad part is that your logged in user (either via FTP or SSH) will probably be a different user so what you want to do is to add this user to the webserver group:
+~~~bash
+sudo usermod -a -G www-data ubuntu
+~~~
+Of course, this assumes your webserver is running as www-data (the Homestead default), and your user is ubuntu (it’s vagrant if you are using Homestead).
 
-### `pages`
+Then, a good practice is to set all your directories to 755 and all of your files to 644… SET file permissions using the following command:
+~~~bash
+sudo find /path/to/your/laravel-directory -type f -exec chmod 644 {} \;
+~~~
+SET directory permissions:
+~~~bash
+sudo find /path/to/your/laravel-directory -type d -exec chmod 755 {} \;
+~~~
+Your user as owner
+What I prefer is to own all the directories and files I am working with (it makes working with everything much easier), so I do:
+~~~bash
+sudo chown -R my-user:www-data /path/to/your/laravel-directory
+~~~
+Then I can just give these permissions to myself and the webserver user:
+~~~bash
+sudo find /path/to/your/laravel-directory -type f -exec chmod 664 {} \;
+sudo find /path/to/your/laravel-directory -type d -exec chmod 775 {} \;
+~~~
+One thing you don’t want to forget is to give the webserver access to read and write files in the cache folder
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+Your webserver will need to upload and store data as well so make sure you give the permissions for the storage folder as well:
+~~~bash
+sudo chgrp -R www-data storage bootstrap/cache
+sudo chmod -R ug+rwx storage bootstrap/cache
+~~~
+## Git Patches
+~~~console
+git format-patch <commit sha>^..<commit sha> --stdout > <patch-name>.patch
+git am --3way <patch-name>.patch   
+~~~
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
+## Telescope After Installation
+Copy telescope migration from vendor to database/migrations/telescope subfolder
+php artisan migrate --path=database/migrations/telescope
 
-### `plugins`
+Remove App\Providers\TelescopeServiceProvider::class from config/app.php because all providers inside config/app.php is automatically loaded. But in your production environment, laravel/telescope isn't installed that means Laravel\Telescope\TelescopeApplicationServiceProvider is undefined and App\Providers\TelescopeServiceProvider can not extend an undefined class.
 
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
+Register App\Providers\TelescopeServiceProvider::class manually inside app/Providers/AppServiceProviders.php
+~~~
+<?php
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
+namespace App\Providers;
 
-### `static`
+use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\TelescopeApplicationServiceProvider;
 
-This directory contains your static files. Each file inside this directory is mapped to `/`.
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if (class_exists(TelescopeApplicationServiceProvider::class)) {
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+    }
 
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
+}
+~~~
