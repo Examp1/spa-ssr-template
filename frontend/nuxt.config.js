@@ -1,5 +1,6 @@
+const isProduction = process.env.NODE_ENV === 'production';
 export default {
-  ssr: true,
+  ssr: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'spa-ssr-template',
@@ -36,11 +37,6 @@ export default {
     '@nuxtjs/axios',
   ],
 
-  router: {
-    middleware: 'isSSR',
-    linkActiveClass: 'activeLink',
-    // trailingSlash: false
-  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -49,5 +45,18 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    publicPath: isProduction ? '/assets/app/' : '_nuxt/'
+    // publicPath: process.env.NODE_ENV === 'production' ? '/assets/app/' : '/'
+  },
+  generate: {
+    dir: isProduction ? '../public/assets/app' : 'dist'
+    // dir: '../public/assets/app'
+  },
+  router: {
+    middleware: 'isSSR',
+    linkActiveClass: 'activeLink',
+    // base: process.env.NODE_ENV === 'production' ? '/assets/app/' : '/'
+    // trailingSlash: false
+  },
 }
