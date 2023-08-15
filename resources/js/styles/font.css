@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'AcerBold';
+    src: url('../assets/fonts/AcerFoco_SmBd.ttf');
+}
+@font-face {
+    font-family: 'AcerLt';
+    src: url('../assets/fonts/AcerFoco_Lt.ttf');
+}
+    
+@font-face {
+    font-family: 'AcerRg';
+    src: url('../assets/fonts/AcerFoco_Rg.ttf');
+}
+   

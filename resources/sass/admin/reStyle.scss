@@ -1,0 +1,34 @@
+@import 'custom/left_and_right_column';
+@import 'custom/dashboard';
+
+.smallBtnWrp {
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 15px;
+    grid-gap: 5px;
+
+    .btn {
+
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+select{
+    width: 100%;
+}
+
+.attr-containerNew:last-of-type {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .media-wrapper,
+    .form-control {
+        width: 100% ! important;
+    }
+
+}

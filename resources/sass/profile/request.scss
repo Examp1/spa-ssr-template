@@ -1,0 +1,30 @@
+body {
+    background-color: #FAFBFC;
+}
+
+.step-pagination {
+    display: flex;
+    justify-content: center;
+
+    .step-item {
+        margin: 0 30px;
+
+        &.active {
+            color: green;
+        }
+    }
+}
+
+.form-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-step {
+        background-color: #fff;
+        padding: 15px;
+        width: 700px;
+        min-height: 300px;
+    }
+}
+

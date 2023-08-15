@@ -1,0 +1,46 @@
+.owl-modal-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(10, 14, 20, 0.15);
+}
+
+.owl-modal-container .owl-modal {
+    background-color: #fff;
+    z-index: 10000;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.owl-modal-container .owl-modal .owl-modal-header {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px #ccc solid;
+    padding: 0 15px;
+    position: relative;
+}
+
+.owl-modal-container .owl-modal .owl-modal-header .owl-modal-close-btn {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    top: 2px;
+    right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.owl-modal-container .owl-modal .owl-modal-body {
+    padding: 15px;
+}

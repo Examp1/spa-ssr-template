@@ -1,0 +1,209 @@
+#main-wrapper[data-sidebartype=full] .page-wrapper
+    margin-left: 160px
+.page-wrapper > .container-fluid
+    min-height: calc(100vh - 90px)
+.sidebar-nav ul .sidebar-item .sidebar-link
+    &:hover
+        background-color: #141619
+        color: #27A9E3
+        i
+            color: inherit
+        &.has-arrow:after
+            border-color: #27A9E3 transparent transparent transparent
+.sidebar-nav ul .sidebar-item .sidebar-link.active
+    background-color: #27A9E3
+    color: #fff
+    i
+        color: inherit
+    &.has-arrow:after
+        border-color: #fff transparent transparent transparent
+        transform: rotate(180deg) translate(0, -50%)
+.hide-menu
+    white-space: pre-wrap
+    line-height: 18px
+.sidebar-nav ul .sidebar-item .sidebar-link i
+    font-style: normal
+    width: unset
+    line-height: 16px
+    font-size: 18px
+    margin-right: 12px
+.sidebar-nav ul .sidebar-item .sidebar-link
+    color: #fff
+    padding: 8px 10px
+    line-height: 25px
+    opacity: 0.6
+.left-sidebar
+    width: 160px
+    padding-top: 25px
+.topbar .top-navbar
+    min-height: 35px
+.topbar .top-navbar .navbar-header .navbar-brand, #main-wrapper[data-layout=vertical][data-sidebartype=full] .topbar .top-navbar .navbar-header
+    width: 160px
+.topbar
+    height: 35px
+    .top-navbar, .navbar-collapse
+        height: inherit
+    .top-navbar .navbar-nav > .nav-item > .nav-link
+        height: 35px
+        line-height: 35px
+        &:hover
+            background-color: #242C34
+    .pro-pic span.logo
+        width: 18px
+        height: 18px
+.sidebar-nav .has-arrow:after
+    width: 0
+    height: 0
+    border-style: solid
+    border-width: 3px 3px 0 3px
+    border-color: #A5A8AB transparent transparent transparent
+    transform: rotate(0deg) translate(0, -50%)
+    top: 20px
+    right: 9px
+.sidebar-nav ul .sidebar-item .first-level
+    background-color: #27313C !important
+    padding: 0px
+#navbarDropdown
+    div
+        margin-right: 30px
+        position: relative
+        &::after
+            position: absolute
+            content: ""
+            width: 7px
+            height: 7px
+            border-width: 1px 0 0 1px
+            border-style: solid
+            border-color: #fff
+            margin-left: 10px
+            transform: rotate(225deg) translate(0, -50%)
+            transform-origin: top
+            top: 8px
+            right: -15px
+            transition: all 0.3s ease-out
+.container-custom
+    display: flex
+    flex-wrap: wrap
+    flex-direction: column
+    .breadcrumb-nav
+        // width: 100%
+    .form-horizontal
+        width: 100%
+// r aside
+.r-aside
+    section
+        background-color: #fff
+        padding: 12px 10px
+        margin-bottom: 5px
+        h2
+            margin-bottom: 0px
+            cursor: pointer
+            font-size: 18px
+            display: flex
+            justify-content: space-between
+    .accordion-content
+        display: flex
+        flex-direction: column
+        .topBtnWrp
+            display: grid
+            grid-gap: 5px
+            grid-template-columns: repeat(2, 1fr)
+            padding-bottom: 25px
+            .cancel-btn
+                margin-top: 15px
+        .btnWrp
+            padding-bottom: 25px
+    input, textarea, select
+        padding: 6px 4px 6px 12px
+        border: 1px solid #E9ECEF
+        border-radius: 2px
+.status
+    .accordion-content
+        align-content: flex-end
+.section_item
+    display: flex
+    justify-content: space-between
+    margin-bottom: 15px
+    .inputWrapper
+        display: flex
+        input
+            width: 46px
+    .wrp
+        display: flex
+        flex-direction: column
+        grid-gap: 1px
+        margin-left: 3px
+        span
+            display: flex
+            justify-content: center
+            align-items: center
+            cursor: pointer
+            width: 28px
+            border-radius: 1px
+            height: 16px
+            border: none
+            background-color: #F8F9FA
+    .input-group
+        display: flex
+        flex-direction: column
+
+.tolltip
+    cursor: pointer
+    position: relative
+    &::after
+        content: attr(data-text)
+        position: absolute
+        background-color: rgba(#000, .7)
+        color: #fff
+        padding: 5px 10px
+        border-radius: 5px
+        top: -30px
+        left: 0px
+        opacity: 0
+        visibility: hidden
+        transition: .3s
+    i
+        color: #CED4DA
+    &:hover
+        &::after
+            opacity: 1
+            visibility: visible
+.md-switch
+    display: flex
+    align-items: center
+    margin-left: auto
+    &:not(:last-of-type)
+        margin-bottom: 15px
+    span
+        font-weight: 600
+        font-size: 14px
+        line-height: 120%
+        text-align: right
+        color: #3E5569
+        margin-bottom: 7px
+        margin-right: 10px
+.copy
+    position: fixed
+    left: -1000%
+.top_textWrp
+    width: 100%
+    display: flex
+    justify-content: space-between
+.up
+    position: fixed
+    width: 40px
+    height: 40px
+    background-color: #27a9e3
+    bottom: 20px
+    right: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #fff
+    cursor: pointer
+    opacity: 0
+    transition: .3s
+    transform: translateX(100px)
+    &.active
+        opacity: 1
+        transform: translateX(0)

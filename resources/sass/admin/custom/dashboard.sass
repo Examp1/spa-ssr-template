@@ -1,0 +1,85 @@
+.topInfo
+    display: flex
+    justify-content: space-between
+    width: 100%
+    align-items: center
+    margin-bottom: 20px
+.adminLinksWrp
+    display: grid
+    grid-gap: 20px
+    grid-template-columns: repeat(4, 1fr)
+    margin-bottom: 20px
+.admLinkGroup
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+.admLink
+    width: calc( 50% - 10px )
+    height: 89px
+    color: #fff
+    font-family: "Nunito Sans", sans-serif
+    i
+        font-size: 27px
+        // font-weight: 500
+    a
+        display: flex
+        // font-weight: 600
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        font-size: 16px
+        text-decoration: none
+        height: inherit
+        color: #fff
+    &:first-of-type
+        width: 100%
+        margin-bottom: 10px
+.blue
+    background-color: #2255A4
+    &-br
+        background-color: #27A9E3
+.yellow
+    background-color: #FFB848
+.red
+    background-color: #DA542E
+.green
+    background-color: #28B779
+.gray
+    background-color: #E2E3E5
+.chart
+    margin-bottom: 60px
+.owlwebBlock
+    .adminLinksWrp
+        grid-template-columns: repeat(2, 1fr)
+    h2
+        margin-bottom: 20px
+    .recommend
+        display: flex
+        flex-direction: column
+        align-items: center
+        padding: 12px 20px
+        height: auto
+        font-family: var(--bs-font-sans-serif)
+        .title
+            font-style: normal
+            font-weight: 700
+            font-size: 18px
+            line-height: 120%
+            text-align: center
+            color: #3E5569
+        .desc
+            font-weight: 400
+            font-size: 14px
+            line-height: 120%
+        hr
+            width: 100%
+            height: 2px
+        .btnCopy
+            margin: 21px 0px
+            border: 1px solid #D0D0D1
+            border-radius: 2px
+            padding: 7px 8px
+            color: #6C757D
+#copyInpt
+    position: fixed
+    left: -1000%
