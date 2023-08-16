@@ -22,9 +22,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $remember_token
  * @property string $phone
  * @property integer $status
- * @property integer $crm_access
- * @property integer $crm_sync
- * @property string $crm_access_token
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
@@ -46,16 +43,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
-        'status',
-        'email_verified_at',
-        'phone_verified_at',
-        'crm_access',
-        'crm_sync',
-        'crm_access_token',
+        'name', 'email', 'password', 'phone', 'status', 'email_verified_at', 'phone_verified_at',
     ];
 
     /**

@@ -69,17 +69,6 @@
     </div>
 </div>
 
-<hr>
-<div class="form-group row">
-    <label class="col-md-3 text-right" for="crm_access">{{ __('CRM Access') }}</label>
-    <div class="col-md-9">
-        <select name="crm_access" class="form-control" id="crm_access">
-            <option value="0" @if( $model->crm_access == 0) selected @endif >Ні</option>
-            <option value="1" @if( $model->crm_access == 1) selected @endif>Так</option>
-        </select>
-    </div>
-</div>
-
 <input type="submit" class="btn btn-success text-white" value="{{ __('Save') }}">
 </form>
 

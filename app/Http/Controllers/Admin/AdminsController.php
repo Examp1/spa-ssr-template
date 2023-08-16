@@ -71,11 +71,10 @@ class AdminsController extends Controller
         /* @var $user Admin */
 
         $user = Admin::create([
-            'name'       => $request->get('name'),
-            'email'      => $request->get('email'),
-            'password'   => Hash::make($request->get('password')),
-            'status'     => Admin::STATUS_REGISTER,
-            'crm_access' => $request->get('crm_access'),
+            'name'           => $request->get('name'),
+            'email'          => $request->get('email'),
+            'password'       => Hash::make($request->get('password')),
+            'status'         => Admin::STATUS_REGISTER,
         ]);
 
         $user->assignRole($request->get('roles'));
@@ -124,7 +123,6 @@ class AdminsController extends Controller
         try {
             $model->name = $request->get('name');
             $model->email = $request->get('email');
-            $model->crm_access = $request->get('crm_access');
 
             if ($request->has('password') && $request->get('password')) {
                 $model->password = Hash::make($request->get('password'));

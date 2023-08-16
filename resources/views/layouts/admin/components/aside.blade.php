@@ -310,22 +310,6 @@ use Illuminate\Support\Facades\Request;
                         <span class="hide-menu">Mailgun test</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item @if(in_array(Request::segment(2),['mailgun-test'])) active @endif">
-                    <a target="_blank" class="sidebar-link waves-effect waves-dark sidebar-link" href="{{env('CRM_URL')}}"
-                       aria-expanded="false">
-                        <i class="mdi mdi-mailbox"></i>
-                        <span class="hide-menu">CRM home</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item @if(in_array(Request::segment(2),['mailgun-test'])) active @endif">
-                    <a target="_blank" class="sidebar-link waves-effect waves-dark sidebar-link" href="{{env('CRM_URL') . '/accounts'}}"
-                       aria-expanded="false">
-                        <i class="mdi mdi-mailbox"></i>
-                        <span class="hide-menu">CRM accounts</span>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
