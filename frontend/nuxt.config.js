@@ -1,7 +1,6 @@
 const isProduction = process.env.NODE_ENV === 'production';
 export default {
   ssr: false,
-  target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'spa-ssr-template',
@@ -21,7 +20,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/mixins/utils.js', '~/mixins/order.js', '~/mixins/seoMixin.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,14 +35,30 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/i18n',
   ],
 
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://test3.owlweb.com.ua/',
   },
+
+  i18n: {
+    defaultLocale: 'uk',
+    locales: [
+        {
+            code: 'uk',
+            file: 'uk.json',
+        },
+        {
+            code: 'en',
+            file: 'en.json',
+        },
+    ],
+    langDir: '~/locales/',
+},
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
