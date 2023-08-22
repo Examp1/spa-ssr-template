@@ -3,7 +3,7 @@
     <img class="bgImage" :src="path(propsData.image)" alt="" />
     <div class="container" :class="contentAlign">
       <img class="sticker" :src="path(propsData.sticker)" alt="sticker" />
-      <h2>{{ propsData.title }}</h2>
+      <h1>{{ propsData.title }}</h1>
       <div v-html="propsData.text"></div>
       <app-btn
         v-for="(btn, idx) in propsData.btns"

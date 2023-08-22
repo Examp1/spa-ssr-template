@@ -1,34 +1,27 @@
-@mixin heading-styles {
-  font-weight: bold;
-  margin-top: 0;
-}
-
 h1 {
-  @include heading-styles;
-  font-size: 2rem;
+  color: $black;
+  font-size: 55px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%;
 }
 
 h2 {
-  @include heading-styles;
   font-size: 1.75rem;
 }
 
 h3 {
-  @include heading-styles;
   font-size: 1.5rem;
 }
 
 h4 {
-  @include heading-styles;
   font-size: 1.25rem;
 }
 
 h5 {
-  @include heading-styles;
   font-size: 1rem;
 }
 
 h6 {
-  @include heading-styles;
   font-size: 0.875rem;
 }
