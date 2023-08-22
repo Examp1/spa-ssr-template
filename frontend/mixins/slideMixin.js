@@ -1,3 +1,7 @@
+// чтобы использовать нужно:
+// 1) импортировать в компоненте import slideMixin from '~/mixins/slideMixin'
+// 2) подключить миксин mixins: [slideMixin],
+// 3) ипользовать div class="s" @click="slideToggle($event.target)">triger</div> <p>content</p>
 export default {
   methods: {
     slideUp(target, duration = 1500) {

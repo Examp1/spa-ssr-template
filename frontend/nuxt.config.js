@@ -16,8 +16,15 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  styleResources: {
+    scss: [
+      '~/assets/scss/mixinsAndVariables/colors.scss',
+      '~/assets/scss/mixinsAndVariables/separators.scss',
+      '~/assets/scss/mixinsAndVariables/breakpoints.scss'
+    ]
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/scss/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/mixins/utils.js', '~/mixins/order.js', '~/mixins/seoMixin.js'],
@@ -33,6 +40,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/style-resources',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/i18n',
@@ -48,17 +56,17 @@ export default {
   i18n: {
     defaultLocale: 'uk',
     locales: [
-        {
-            code: 'uk',
-            file: 'uk.json',
-        },
-        {
-            code: 'en',
-            file: 'en.json',
-        },
+      {
+        code: 'uk',
+        file: 'uk.json',
+      },
+      {
+        code: 'en',
+        file: 'en.json',
+      },
     ],
     langDir: '~/locales/',
-},
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

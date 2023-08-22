@@ -1,0 +1,34 @@
+// смотрим по макету какие отступы нужны
+// Определите отступы в карте
+$spaces: (
+  L: (base: 75px, tablet: 50px, mobile: 25px),
+  M: (base: 50px, tablet: 25px, mobile: 0px),
+  S: (base: 25px, tablet: 0px, mobile: 0px),
+  NON: (base: 0, tablet: 0, mobile: 0)
+);
+// Цикл для создания классов .top_separator и .bottom_separator
+@each $size, $values in $spaces {
+  .mt-#{$size} {
+    margin-top: map-get($values, base);
+
+    @media (max-width: 1024px) {
+      margin-top: map-get($values, tablet);
+    }
+
+    @media (max-width: 576px) {
+      margin-top: map-get($values, mobile);
+    }
+  }
+
+  .mb-#{$size} {
+    margin-bottom: map-get($values, base);
+
+    @media (max-width: 1024px) {
+      margin-bottom: map-get($values, tablet);
+    }
+
+    @media (max-width: 576px) {
+      margin-bottom: map-get($values, mobile);
+    }
+  }
+}

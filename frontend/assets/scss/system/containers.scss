@@ -1,0 +1,54 @@
+@import '../mixinsAndVariables/breakpoints';
+
+$gap-desktop: 0px 20px;
+$gap-tablet-l: 0px 50px;
+$gap-tablet-s: 0px 34px;
+$gap-mobile-l: 0px 20px;
+$gap-mobile-s: 0px 15px;
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include desktop {
+    padding: $gap-desktop;
+  }
+
+  @include large-tablets {
+    padding: $gap-tablet-l;
+  }
+
+  @include small-tablets {
+    padding: $gap-tablet-s;
+  }
+
+  @include large-phones {
+    padding: $gap-mobile-l;
+  }
+
+  @include super-small-phones {
+    padding: $gap-mobile-s;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 20px;
+
+  @include large-tablets {
+    padding: $gap-tablet-l;
+  }
+
+  @include small-tablets {
+    padding: $gap-tablet-s;
+  }
+
+  @include large-phones {
+    padding: $gap-mobile-l;
+  }
+
+  @include super-small-phones {
+    padding: $gap-mobile-s;
+  }
+}

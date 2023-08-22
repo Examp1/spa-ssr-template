@@ -1,0 +1,7 @@
+@import '~normalize.css/normalize';
+// миксины
+@import './mixinsAndVariables/breakpoints';
+@import './mixinsAndVariables/colors';
+// глоаблаьные стили
+@import './system/containers';
+@import './system/typography';
