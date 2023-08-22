@@ -27,7 +27,12 @@ export default {
   css: ['~/assets/scss/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/mixins/utils.js', '~/mixins/order.js', '~/mixins/seoMixin.js'],
+  plugins: [
+    '~/mixins/utils.js',
+    '~/mixins/order.js',
+    '~/mixins/seoMixin.js',
+    '~/plugins/global-components.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -50,7 +55,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'https://test3.owlweb.com.ua/',
+    baseURL: 'https://spa-ssr-template.owlweb.com.ua/',
   },
 
   i18n: {

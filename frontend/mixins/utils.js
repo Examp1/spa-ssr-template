@@ -2,7 +2,7 @@ import Vue from "vue";
 const MEDIA_PATH_PREFIX = 'media/images/original';
 const MEDIA_PATH_PREFIX2 = 'storage/media';
 const PDF_PREFIX = '/storage/files/';
-const MediaDomain = 'https://owi.com.ua/';
+const MediaDomain = 'https://spa-ssr-template.owlweb.com.ua/';
 
 const utils = {
     props: ["propsData"],

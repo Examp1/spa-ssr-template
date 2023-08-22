@@ -9,26 +9,26 @@ $spaces: (
 // Цикл для создания классов .top_separator и .bottom_separator
 @each $size, $values in $spaces {
   .mt-#{$size} {
-    margin-top: map-get($values, base);
+    padding-top: map-get($values, base);
 
     @media (max-width: 1024px) {
-      margin-top: map-get($values, tablet);
+      padding-top: map-get($values, tablet);
     }
 
     @media (max-width: 576px) {
-      margin-top: map-get($values, mobile);
+      padding-top: map-get($values, mobile);
     }
   }
 
   .mb-#{$size} {
-    margin-bottom: map-get($values, base);
+    padding-bottom: map-get($values, base);
 
     @media (max-width: 1024px) {
-      margin-bottom: map-get($values, tablet);
+      padding-bottom: map-get($values, tablet);
     }
 
     @media (max-width: 576px) {
-      margin-bottom: map-get($values, mobile);
+      padding-bottom: map-get($values, mobile);
     }
   }
 }
