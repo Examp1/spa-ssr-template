@@ -1,5 +1,4 @@
-import { VuelidatePlugin } from '@vuelidate/core'
+import Vue from 'vue'
+import Vuelidate from '@vuelidate/core'
 
-export default ({ app }, inject) => {
-  app.use(VuelidatePlugin)
-}
+Vue.use(Vuelidate)
