@@ -1,17 +1,20 @@
 <template>
-  <div class="firstScreen">
-    <img class="bgImage" :src="path(propsData.image)" alt="" />
+  <section class="firstScreen">
+    <img v-if="hasBg" class="bgImage" :src="path(propsData.image)" alt="" />
     <div class="container" :class="contentAlign">
       <img class="sticker" :src="path(propsData.sticker)" alt="sticker" />
-      <h1>{{ propsData.title }}</h1>
-      <div v-html="propsData.text"></div>
-      <app-btn
-        v-for="(btn, idx) in propsData.btns"
-        :key="'btn' + idx"
-        :props-data="btn"
-      ></app-btn>
+      <div class="textWrapper">
+        <h1>{{ propsData.title }}</h1>
+        <div v-html="propsData.text"></div>
+        <app-btn
+          v-for="(btn, idx) in propsData.btns"
+          :key="'btn' + idx"
+          :props-data="btn"
+        ></app-btn>
+      </div>
+      <img v-if="!hasBg" :src="path(propsData.image)" alt="">
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -21,6 +24,9 @@ export default {
   components: { appBtn },
   // XXX
   computed: {
+    hasBg() {
+      return this.propsData.with_fon === '0'
+    },
     contentAlign() {
       switch (this.propsData.widget_type) {
         case 'type_1':
@@ -55,8 +61,8 @@ export default {
   min-height: 87.5vh;
   position: relative;
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: space-between;
+  // flex-direction: ;
   &.left {
     align-items: flex-start;
   }
@@ -69,7 +75,7 @@ export default {
 }
 .sticker {
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
 }
 </style>

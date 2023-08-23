@@ -31,7 +31,7 @@ export default {
     '~/mixins/utils.js',
     '~/mixins/order.js',
     '~/mixins/seoMixin.js',
-    '~/plugins/global-components.js',
+    '~/plugins/global.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
