@@ -5,3 +5,6 @@
 // глоаблаьные стили
 @import './system/containers';
 @import './system/typography';
+*, *::before, *::after{
+  box-sizing: border-box;
+}

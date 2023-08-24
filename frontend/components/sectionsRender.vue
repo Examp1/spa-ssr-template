@@ -1,6 +1,7 @@
 <template>
   <div>
-    <app-block-form></app-block-form>
+    <app-gallery></app-gallery>
+    <app-dinamic-form></app-dinamic-form>
     <component
       :is="item.component"
       v-for="(item, idx) in propsData"
@@ -19,9 +20,10 @@
 
 <script>
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
+import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
 import AppTextNColumns from './adminComponents/main/app-text-n-columns.vue'
-import AppBlockForm from './dynamicForm/app-block-form.vue'
+import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppOverlay from './ui/app-overlay.vue'
 // import AppFirstScreen from './adminComponents/app-firstScreen.vue'
 // const componentMappings = {
@@ -36,7 +38,8 @@ export default {
     'image-and-text': AppImageAndText,
     'text-n-columns': AppTextNColumns,
     AppOverlay,
-    AppBlockForm,
+    AppDinamicForm,
+    AppGallery,
   },
   // methods: {
   //   dynamicComponent(componentName) {

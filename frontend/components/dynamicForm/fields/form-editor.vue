@@ -1,5 +1,5 @@
 <template>
-  <div class="formInput">
+  <div class="formField">
     <label class="label">{{ propsData.title }}</label>
     <ValidationProvider
       :name="propsData.name"
@@ -21,20 +21,16 @@
 
 <script>
 export default {
+  props: {
+    validationRules: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       inputValue: '',
     }
-  },
-  computed: {
-    validationRules() {
-      const rules = {}
-      if (this.propsData.rules.required) rules.required = true
-      if (this.propsData.rules.email) rules.email = true
-      if (this.propsData.rules.min) rules.min = this.propsData.rules.min
-      if (this.propsData.rules.max) rules.max = this.propsData.rules.max
-      return rules
-    },
   },
 }
 </script>

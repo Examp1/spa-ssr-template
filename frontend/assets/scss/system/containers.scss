@@ -34,7 +34,9 @@ $gap-mobile-s: 0px 15px;
 
 .container-fluid {
   width: 100%;
-  padding: 0 20px;
+  @include desktop {
+    padding: $gap-desktop;
+  }
 
   @include large-tablets {
     padding: $gap-tablet-l;
