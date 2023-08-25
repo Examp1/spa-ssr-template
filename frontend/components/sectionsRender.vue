@@ -1,36 +1,35 @@
 <template>
-  <div>
-    <app-gallery></app-gallery>
-    <app-dinamic-form></app-dinamic-form>
-    <component
-      :is="item.component"
+  <div class="sections">
+    <section
       v-for="(item, idx) in propsData"
-      :key="'component' + idx"
-      :props-data="item.content"
-      class="container"
-      :class="`mb-${item.content.bottom_separator} mt-${item.content.top_separator}`"
+      :key="item.content + idx"
+      :style="{ ...backgroundStyle(item.content), order: item.position }"
+      class="component"
     >
-    </component>
-    <!-- <template v-for="(item, idx) in propsData">
-      {{ item.component }}
-      <component :is="dynamicComponent(item.component)" :key="'item'+idx"></component>
-    </template> -->
+      <component
+        :is="item.component"
+        :props-data="item.content"
+        :class="[
+          containerClass(item.component),
+          `mb-${item.content.bottom_separator}`,
+          `mt-${item.content.top_separator}`,
+        ]"
+      >
+      </component>
+    </section>
   </div>
 </template>
+
 
 <script>
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
 import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
+import AppSimpleText from './adminComponents/main/app-simple-text.vue'
+import AppStages from './adminComponents/main/app-stages.vue'
 import AppTextNColumns from './adminComponents/main/app-text-n-columns.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppOverlay from './ui/app-overlay.vue'
-// import AppFirstScreen from './adminComponents/app-firstScreen.vue'
-// const componentMappings = {
-//   test: 'article/test-test.vue',
-//   'simple-text': 'main/app-simpleText',
-//   // ... другие компоненты
-// }
 
 export default {
   components: {
@@ -39,19 +38,37 @@ export default {
     'text-n-columns': AppTextNColumns,
     AppOverlay,
     AppDinamicForm,
-    AppGallery,
+    gallery: AppGallery,
+    'simple-text': AppSimpleText,
+    'stages': AppStages,
   },
-  // methods: {
-  //   dynamicComponent(componentName) {
-  //     const componentPath = componentMappings[componentName]
-  //     if (!componentPath) {
-  //       throw new Error(`Component ${componentName} not found in mappings.`)
-  //     }
-  //     return () => import(`~/components/adminComponents/${componentPath}.vue`)
-  //   },
-  // },
+  methods: {
+    containerClass(component) {
+      if (component === 'gallery') {
+        return 'container-fluid'
+      } else {
+        return 'container'
+      }
+    },
+    backgroundStyle(content) {
+      switch (content.background_type) {
+        case 'white':
+          return { backgroundColor: 'white' }
+        case 'transparent':
+          return {} // Не применяем стиль, если transparent
+        case 'simple':
+          return { backgroundColor: content.background }
+        default:
+          return {} // Для любых других случаев, не применяем стиль
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+.sections{
+  display: flex;
+  flex-direction: column;
+}
 </style>

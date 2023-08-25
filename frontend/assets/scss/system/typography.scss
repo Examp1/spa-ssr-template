@@ -1,27 +1,56 @@
-h1 {
-  color: $black;
-  font-size: 55px;
+@mixin heading-styles($color: $black, $font-size, $font-weight, $line-height) {
+  color: $color;
+  font-size: $font-size;
   font-style: normal;
-  font-weight: 700;
-  line-height: 120%;
+  font-weight: $font-weight;
+  line-height: $line-height;
+}
+
+@mixin text-large {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  letter-spacing: -0.4px;
+}
+
+@mixin text-small {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+h1 {
+  @include heading-styles($color: $black, $font-size: 55px, $font-weight: 700, $line-height: 120%);
 }
 
 h2 {
-  font-size: 1.75rem;
+  @include heading-styles($color: $black, $font-size: 40px, $font-weight: 600, $line-height: 120%);
 }
 
 h3 {
-  font-size: 1.5rem;
+  @include heading-styles($color: $black, $font-size: 35px, $font-weight: 600, $line-height: 120%);
 }
 
 h4 {
-  font-size: 1.25rem;
+  @include heading-styles($color: $black, $font-size: 27px, $font-weight: 600, $line-height: 120%);
 }
 
 h5 {
-  font-size: 1rem;
+  @include heading-styles($color: $black, $font-size: 22px, $font-weight: 600, $line-height: 130%);
 }
 
 h6 {
-  font-size: 0.875rem;
+  @include heading-styles($color: $black, $font-size: 22px, $font-weight: 600, $line-height: 120%);
+}
+
+p,
+li,
+span {
+  @include text-large
 }

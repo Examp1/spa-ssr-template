@@ -1,15 +1,18 @@
 <template>
-  <section class="image-and-text">
+  <div class="image-and-text">
     <h2>{{ propsData.title }}</h2>
-    <div class="wrp" :class="propsData.image_position">
-      <div class="text">
+    <div
+      class="wrp"
+      :class="propsData.image_position"
+      :style="{
+        '--imgWidth': calculateTextAndImageWidth.image,
+        '--textWidth': calculateTextAndImageWidth.text,
+      }"
+    >
+      <div class="textWrapper">
         <div v-html="propsData.description"></div>
         <div>
-          <app-btn
-            v-for="(btn, idx) in propsData.btns"
-            :key="'btn' + idx"
-            :props-data="btn"
-          ></app-btn>
+          <app-btns :props-data="propsData.btns"></app-btns>
         </div>
       </div>
       <div class="imageWrapper">
@@ -20,49 +23,49 @@
         <img :src="path(propsData.image)" alt="" />
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-import AppBtn from '../../ui/app-btn.vue'
+import AppBtns from '../../ui/app-btns.vue'
 
 export default {
-  name: 'image-and-text',
-  components: { AppBtn },
+  name: 'ImageAndText',
+  components: { AppBtns },
+  computed: {
+    calculateTextAndImageWidth() {
+      return {
+        text: (10 - this.propsData.column_width) * 10 + '%',
+        image: this.propsData.column_width * 10 + '%',
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.image-and-text .wrp {
-  display: flex;
-  justify-content: space-between;
-  h2 {
-    font-weight: 500;
-    font-size: 22px;
-    line-height: 110%;
-  }
-  &.left {
-    flex-direction: row-reverse;
-  }
-  @media (max-width: 576px) {
-    flex-direction: column-reverse !important;
-  }
-}
-.text,
-.imageWrapper {
-  width: calc(50% - 15px);
-  @media (max-width: 576px) {
-    width: 100%;
-  }
-  img {
-    width: 100%;
-    position: sticky;
-    top: 0px;
-  }
-}
-.imageWrapper {
-  @media (max-width: 576px) {
-    margin-bottom: 30px;
+.image-and-text {
+  .wrp {
+    display: flex;
+    grid-gap: 60px;
+    @include default-phones{
+      flex-direction: column;
+    }
+    .textWrapper{
+      width: var(--textWidth);
+      @include default-phones {
+        width: 100%;
+      }
+    }
+    .imageWrapper {
+      width: var(--imgWidth);
+      img{
+        width: 100%;
+      }
+      @include default-phones {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

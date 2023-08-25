@@ -1,27 +1,23 @@
 <template>
-  <section class="firstScreen">
+  <div class="firstScreen" v-if="false">
     <img v-if="hasBg" class="bgImage" :src="path(propsData.image)" alt="" />
     <div class="container" :class="contentAlign">
       <img class="sticker" :src="path(propsData.sticker)" alt="sticker" />
       <div class="textWrapper">
         <h1>{{ propsData.title }}</h1>
         <div v-html="propsData.text"></div>
-        <app-btn
-          v-for="(btn, idx) in propsData.btns"
-          :key="'btn' + idx"
-          :props-data="btn"
-        ></app-btn>
+        <app-btns :props-data="propsData.btns"></app-btns>
       </div>
       <img v-if="!hasBg" :src="path(propsData.image)" alt="">
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-import appBtn from '../../ui/app-btn.vue'
+import AppBtns from '../../ui/app-btns.vue'
 export default {
   name: 'FirstScreen',
-  components: { appBtn },
+  components: { AppBtns },
   // XXX
   computed: {
     hasBg() {

@@ -1,29 +1,34 @@
 @mixin super-small-phones {
-  @media (min-width: 320px) and (max-width: 375px) {
+  @media (max-width: 375px) {
     @content;
   }
 }
 
 @mixin regular-phones {
-  @media (min-width: 390px) and (max-width: 425px) {
+  @media (max-width: 425px) {
     @content;
   }
 }
 
+@mixin default-phones {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
 @mixin large-phones {
-  @media (min-width: 425px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     @content;
   }
 }
 
 @mixin small-tablets {
-  @media (min-width: 768px) and (max-width: 1024px) {
+  @media (max-width: 1024px) {
     @content;
   }
 }
 
 @mixin large-tablets {
-  @media (min-width: 1024px) and (max-width: 1366px) {
+  @media (max-width: 1366px) {
     @content;
   }
 }

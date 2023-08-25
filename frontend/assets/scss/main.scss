@@ -1,10 +1,12 @@
 @import '~normalize.css/normalize';
+*, *::before, *::after{
+  box-sizing: border-box;
+}
 // миксины
 @import './mixinsAndVariables/breakpoints';
 @import './mixinsAndVariables/colors';
 // глоаблаьные стили
 @import './system/containers';
 @import './system/typography';
-*, *::before, *::after{
-  box-sizing: border-box;
-}
+@import './system/btns';
+

@@ -1,5 +1,5 @@
 <template>
-  <section :style="{'--column': +propsData.title_column_select}">
+  <div :style="{'--column': +propsData.title_column_select}">
     <h2>{{ propsData.title }}</h2>
     <div
       v-for="(row, idx) in propsData.rows"
@@ -13,20 +13,16 @@
         v-html="column.column_text"
       ></div>
     </div>
-    <app-btn
-      v-for="(btn, idx) in propsData.btns"
-      :key="'btn' + idx"
-      :props-data="btn"
-    ></app-btn>
-  </section>
+    <app-btns :props-data="propsData.btns"></app-btns>
+  </div>
 </template>
 
 <script>
-import AppBtn from '../../ui/app-btn.vue'
+import AppBtns from '../../ui/app-btns.vue'
 
 export default {
   name: 'TextNColumns',
-  components: { AppBtn },
+  components: { AppBtns },
 }
 </script>
 

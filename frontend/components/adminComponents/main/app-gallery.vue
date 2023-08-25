@@ -13,6 +13,7 @@
 import appSlider from '../../ui/app-slider.vue'
 
 export default {
+  name: 'AppGallery',
   components: { appSlider },
   data() {
     return {

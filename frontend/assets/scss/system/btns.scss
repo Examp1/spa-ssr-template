@@ -1,0 +1,39 @@
+.btn {
+  padding: 22px 30px;
+  text-decoration: none;
+  position: relative;
+  transition: .3s;
+  cursor: pointer;
+  &:has(i) {
+    padding-right: 64px;
+
+    i {
+      transition: inherit;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 32px;
+    }
+  }
+
+  &.fill {
+    background-color: $black;
+    color: #fff;
+    border: 2px solid black;
+    &:hover{
+      background-color: transparent;
+      color: $black;
+    }
+  }
+  &.stroke {
+    border: 2px solid $black;
+    color: $black;
+    &:hover{
+      background-color: $black;
+      color: #fff
+    }
+  }
+  &.simple{
+    color: $black
+  }
+}
