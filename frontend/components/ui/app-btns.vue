@@ -16,7 +16,7 @@ import appBtn from './app-btn.vue'
 .btns{
   display: flex;
   grid-gap: 20px;
-  @include large-phones{
+  @include md{
     flex-wrap: wrap;
   }
 }

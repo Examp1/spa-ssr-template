@@ -25,6 +25,12 @@ body {
   font-family: sans-serif;
 }
 
+@for $i from 1 through 6 {
+  h#{$i} {
+    margin-top: 0;
+  }
+}
+
 h1 {
   @include heading-styles($color: $black, $font-size: 55px, $font-weight: 700, $line-height: 120%);
 }

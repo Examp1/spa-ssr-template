@@ -48,12 +48,12 @@ export default {
   .wrp {
     display: flex;
     grid-gap: 60px;
-    @include default-phones{
+    @include sm{
       flex-direction: column;
     }
     .textWrapper{
       width: var(--textWidth);
-      @include default-phones {
+      @include sm {
         width: 100%;
       }
     }
@@ -62,7 +62,7 @@ export default {
       img{
         width: 100%;
       }
-      @include default-phones {
+      @include sm {
         width: 100%;
       }
     }
