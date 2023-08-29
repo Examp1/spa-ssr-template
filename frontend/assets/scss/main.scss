@@ -2,6 +2,9 @@
 *, *::before, *::after{
   box-sizing: border-box;
 }
+img{
+  width: 100%;
+}
 // миксины
 @import './mixinsAndVariables/breakpoints';
 @import './mixinsAndVariables/colors';

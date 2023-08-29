@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <nuxt-link :to="'/about'">about</nuxt-link>
     <sections-render :props-data="apiData.constructor"></sections-render>
   </div>
 </template>

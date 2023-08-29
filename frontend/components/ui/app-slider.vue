@@ -1,5 +1,6 @@
 <template>
   <VueSlickCarousel
+    ref="slider"
     v-bind="propsData"
     class="globalSlider container-fluid"
     :class="{ '--swiping': swiping === true }"
@@ -24,6 +25,12 @@ export default {
   methods: {
     setCarouselSwiping(state) {
       this.swiping = state
+    },
+    prev() {
+      this.$refs.slider.prev()
+    },
+    next() {
+      this.$refs.slider.next()
     },
   },
 }

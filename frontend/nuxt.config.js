@@ -50,6 +50,7 @@ export default {
     '@nuxtjs/style-resources',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
     '@nuxtjs/i18n',
   ],
 
@@ -83,7 +84,7 @@ export default {
     dir: isProduction ? '../public/assets' : 'dist'
   },
   router: {
-    middleware: 'isSSR',
+    middleware: 'getMenusAndSettings',
     linkActiveClass: 'activeLink',
     // trailingSlash: false
   },

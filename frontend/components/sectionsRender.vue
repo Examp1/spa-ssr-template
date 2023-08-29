@@ -23,6 +23,7 @@
 
 <script>
 import AppAccordion from './adminComponents/main/app-accordion.vue'
+import AppBlocks from './adminComponents/main/app-blocks.vue'
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
 import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
@@ -44,7 +45,8 @@ export default {
     'simple-text': AppSimpleText,
     'stages': AppStages,
     'numbers': AppNumbers,
-    AppAccordion,
+    'accordion': AppAccordion,
+    'blocks': AppBlocks,
   },
   methods: {
     containerClass(component) {
