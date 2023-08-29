@@ -31,6 +31,7 @@ import AppNumbers from './adminComponents/main/app-numbers.vue'
 import AppSimpleText from './adminComponents/main/app-simple-text.vue'
 import AppStages from './adminComponents/main/app-stages.vue'
 import AppTextNColumns from './adminComponents/main/app-text-n-columns.vue'
+import AppVideoAndText from './adminComponents/main/app-video-and-text.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppOverlay from './ui/app-overlay.vue'
 
@@ -47,6 +48,7 @@ export default {
     'numbers': AppNumbers,
     'accordion': AppAccordion,
     'blocks': AppBlocks,
+    'video-and-text': AppVideoAndText,
   },
   methods: {
     containerClass(component) {
