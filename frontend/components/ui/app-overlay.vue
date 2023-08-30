@@ -8,10 +8,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: "ModalOverlay",
+  name: 'ModalOverlay',
   methods: {
+    ...mapActions({
+      setFormData: 'dinamic_form/setFormData',
+      openForm: 'modal/openForm',
+    }),
     closeModal() {
+      this.openForm(false)
       this.$emit('close')
     },
   },

@@ -1,7 +1,11 @@
 <template>
   <div class="sections">
+    <first-screen
+      v-if="organizedData.firstScreen"
+      :props-data="organizedData.firstScreen.content"
+    ></first-screen>
     <section
-      v-for="(item, idx) in propsData"
+      v-for="(item, idx) in organizedData.components"
       :key="item.content + idx"
       :style="{ ...backgroundStyle(item.content), order: item.position }"
       class="component"
@@ -17,11 +21,17 @@
       >
       </component>
     </section>
+    <transition name="fade" mode="out-in">
+      <app-overlay v-if="isFormOpen">
+        <app-dinamic-form :props-data="getFormData"></app-dinamic-form>
+      </app-overlay>
+    </transition>
   </div>
 </template>
 
 
 <script>
+import { mapGetters } from 'vuex'
 import AppAccordion from './adminComponents/main/app-accordion.vue'
 import AppBlocks from './adminComponents/main/app-blocks.vue'
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
@@ -44,11 +54,33 @@ export default {
     AppDinamicForm,
     gallery: AppGallery,
     'simple-text': AppSimpleText,
-    'stages': AppStages,
-    'numbers': AppNumbers,
-    'accordion': AppAccordion,
-    'blocks': AppBlocks,
+    stages: AppStages,
+    numbers: AppNumbers,
+    accordion: AppAccordion,
+    blocks: AppBlocks,
     'video-and-text': AppVideoAndText,
+  },
+  computed: {
+    ...mapGetters({
+      getFormData: 'dinamic_form/getFormData',
+      isFormOpen: 'modal/isFormOpen',
+    }),
+    organizedData() {
+      // Находим объект с component: 'first-screen'
+      const firstScreenComponent = this.propsData.find(
+        (item) => item.component === 'first-screen'
+      )
+
+      // Фильтруем все объекты, которые не имеют component: 'first-screen'
+      const otherComponents = this.propsData.filter(
+        (item) => item.component !== 'first-screen'
+      )
+
+      return {
+        firstScreen: firstScreenComponent,
+        components: otherComponents,
+      }
+    },
   },
   methods: {
     containerClass(component) {
@@ -63,11 +95,11 @@ export default {
         case 'white':
           return { backgroundColor: 'white' }
         case 'transparent':
-          return {} // Не применяем стиль, если transparent
+          return {}
         case 'simple':
           return { backgroundColor: content.background }
         default:
-          return {} // Для любых других случаев, не применяем стиль
+          return {}
       }
     },
   },
@@ -75,7 +107,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sections{
+.sections {
   display: flex;
   flex-direction: column;
 }

@@ -23,12 +23,12 @@ export default {
   name: 'AppBtn',
   methods: {
     ...mapActions({
-      setFormData: 'modals/setFormData',
-      setOpenModal: 'modals/setOpenModal',
+      setFormData: 'dinamic_form/setFormData',
+      openForm: 'modal/openForm',
     }),
-    formOpen(form, method) {
+    formOpen(form) {
       this.setFormData(form)
-      this.setOpenModal(method)
+      this.openForm(true)
     },
   },
 }

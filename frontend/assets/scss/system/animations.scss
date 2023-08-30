@@ -8,7 +8,7 @@
   transition: transform 0.5s;
 }
 .slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
-  transform: translateY(100%);
+  transform: translateX(120%);
 }
 .fadeInDown-enter-active, .fadeInDown-leave-active {
   transition: opacity 0.5s, transform 0.5s;

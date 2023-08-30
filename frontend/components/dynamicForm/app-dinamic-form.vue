@@ -1,10 +1,9 @@
 <template>
   <ValidationObserver v-slot="{ invalid }">
-    {{ invalid }}
     <form class="form container">
       <component
         :is="componentMappings[field.type]"
-        v-for="(field, idx) in inputs"
+        v-for="(field, idx) in propsData.form_data"
         :key="'field' + idx"
         :props-data="field"
         :validation-rules="generateValidationRules(field)"

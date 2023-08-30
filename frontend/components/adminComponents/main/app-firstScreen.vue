@@ -1,14 +1,16 @@
 <template>
-  <div class="firstScreen" v-if="false">
-    <img v-if="hasBg" class="bgImage" :src="path(propsData.image)" alt="" />
-    <div class="container" :class="contentAlign">
-      <img class="sticker" :src="path(propsData.sticker)" alt="sticker" />
-      <div class="textWrapper">
-        <h1>{{ propsData.title }}</h1>
-        <div v-html="propsData.text"></div>
-        <app-btns :props-data="propsData.btns"></app-btns>
+  <div class="firstScreen">
+    <img v-if="hasBg" class="bgImage" :src="path(propsData.image)" alt="bg" />
+    <div class="container">
+      <img v-if="propsData.sticker" class="sticker" :src="path(propsData.sticker)" alt="sticker" />
+      <div class="inner-wrapper" :class="contentAlign">
+        <div class="text-wrapper">
+          <h1>{{ propsData.title }}</h1>
+          <div v-html="propsData.text"></div>
+          <app-btns :props-data="propsData.btns"></app-btns>
+        </div>
+        <img v-if="!hasBg" :src="path(propsData.image)" alt="img" />
       </div>
-      <img v-if="!hasBg" :src="path(propsData.image)" alt="">
     </div>
   </div>
 </template>
@@ -18,7 +20,6 @@ import AppBtns from '../../ui/app-btns.vue'
 export default {
   name: 'FirstScreen',
   components: { AppBtns },
-  // XXX
   computed: {
     hasBg() {
       return this.propsData.with_fon === '0'
@@ -54,20 +55,25 @@ export default {
   object-fit: cover;
 }
 .container {
-  min-height: 87.5vh;
+  min-height: calc(100vh - 75px);
   position: relative;
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  .inner-wrapper {
+    display: flex;
+    grid-gap: 20px;
+    &.left {
+      flex-direction: row;
+    }
+    &.center {
+      justify-content: center;
+    }
+    &.right {
+      flex-direction: row-reverse;
+    }
+  }
   // flex-direction: ;
-  &.left {
-    align-items: flex-start;
-  }
-  &.center {
-    align-items: center;
-  }
-  &.right {
-    align-items: flex-end;
-  }
 }
 .sticker {
   position: absolute;

@@ -37,6 +37,9 @@ export default {
 <style lang="scss" scoped>
 header {
   background-color: #cbcbcb;
+  position: sticky;
+  top: 0;
+  z-index: 999;
   .container {
     height: 75px;
     display: flex;
@@ -46,6 +49,9 @@ header {
     display: flex;
     list-style: none;
     grid-gap: 25px;
+    @include md {
+      display: none;
+    }
     a {
       color: #000;
       text-decoration: none;
