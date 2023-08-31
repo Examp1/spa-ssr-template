@@ -34,6 +34,7 @@
 import { mapGetters } from 'vuex'
 import AppAccordion from './adminComponents/main/app-accordion.vue'
 import AppBlocks from './adminComponents/main/app-blocks.vue'
+import AppCta from './adminComponents/main/app-cta.vue'
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
 import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
@@ -59,6 +60,7 @@ export default {
     accordion: AppAccordion,
     blocks: AppBlocks,
     'video-and-text': AppVideoAndText,
+    'cta': AppCta,
   },
   computed: {
     ...mapGetters({

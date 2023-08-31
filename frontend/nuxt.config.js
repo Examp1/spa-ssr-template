@@ -84,7 +84,7 @@ export default {
     dir: isProduction ? '../public/assets' : 'dist'
   },
   router: {
-    middleware: 'getMenusAndSettings',
+    middleware: ['getMenusAndSettings','toLowerCase'],
     linkActiveClass: 'activeLink',
     // trailingSlash: false
   },
