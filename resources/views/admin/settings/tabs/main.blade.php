@@ -119,8 +119,8 @@ foreach ($settings_fields as $field => $text) {
             <option value="">---</option>
             <option value="{{ \App\Models\Menu::TYPE_PAGE }}" @if ($main_page_type_sel == \App\Models\Menu::TYPE_PAGE) selected @endif>
                 Сторінка</option>
-            <option value="{{ \App\Models\Menu::TYPE_LANDING }}" @if ($main_page_type_sel == \App\Models\Menu::TYPE_LANDING) selected @endif>
-                Лендінг</option>
+{{--            <option value="{{ \App\Models\Menu::TYPE_LANDING }}" @if ($main_page_type_sel == \App\Models\Menu::TYPE_LANDING) selected @endif>--}}
+{{--                Лендінг</option>--}}
         </select>
     </div>
 </div>
@@ -140,20 +140,20 @@ foreach ($settings_fields as $field => $text) {
     </div>
 </div>
 
-<div class="form-group row main-box-landing"
-    @if ($main_page_type_sel == \App\Models\Menu::TYPE_LANDING) style="display: flex" @else style="display: none" @endif>
-    <label class="col-md-3 text-right">{{ __('Choose') }}</label>
-    <div class="col-md-9">
-        <select name="setting_data[{{ $defaultLang }}][main_page_landing_id]" class="form-control">
-            @foreach (\App\Models\Landing::query()->active()->get() as $item)
-                <option value="{{ $item->id }}" @if (old(
-                        'setting_data.' . $defaultLang . '.main_page_landing_id',
-                        $data[$defaultLang]['main_page_landing_id'][0]['value'] ?? '') == $item->id) selected @endif>
-                    {{ $item->title }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
+{{--<div class="form-group row main-box-landing"--}}
+{{--    @if ($main_page_type_sel == \App\Models\Menu::TYPE_LANDING) style="display: flex" @else style="display: none" @endif>--}}
+{{--    <label class="col-md-3 text-right">{{ __('Choose') }}</label>--}}
+{{--    <div class="col-md-9">--}}
+{{--        <select name="setting_data[{{ $defaultLang }}][main_page_landing_id]" class="form-control">--}}
+{{--            @foreach (\App\Models\Landing::query()->active()->get() as $item)--}}
+{{--                <option value="{{ $item->id }}" @if (old(--}}
+{{--                        'setting_data.' . $defaultLang . '.main_page_landing_id',--}}
+{{--                        $data[$defaultLang]['main_page_landing_id'][0]['value'] ?? '') == $item->id) selected @endif>--}}
+{{--                    {{ $item->title }}</option>--}}
+{{--            @endforeach--}}
+{{--        </select>--}}
+{{--    </div>--}}
+{{--</div>--}}
 
 <hr>
 

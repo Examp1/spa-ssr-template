@@ -13,7 +13,7 @@ class FullWithImageWidget implements WidgetInterface
 
     public static string $preview = 'full-width-image.jpg';
 
-    public static array $groups = [WIDGET_GROUP_LANDING];
+    public static array $groups = [WIDGET_GROUP_PAGE];
 
     /**
      * @var array

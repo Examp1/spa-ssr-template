@@ -49,7 +49,7 @@ return [
     */
     'groups'            => [
         WIDGET_GROUP_PAGE    => 'Сторінка',
-        WIDGET_GROUP_LANDING => 'Лендінг',
+//        WIDGET_GROUP_LANDING => 'Лендінг',
 //        WIDGET_GROUP_ARTICLE => 'Публікація блога',
     ],
 
