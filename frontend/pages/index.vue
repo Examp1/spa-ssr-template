@@ -1,25 +1,20 @@
 <template>
-  <div class="app">
-    <nuxt-link :to="'/about'">about</nuxt-link>
-    {{ getMode }}
+  <div class="page">
+    <sections-render :props-data="apiData.constructor"></sections-render>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { getPageBySlug } from '~/services/pageService'
+import sectionsRender from '~/components/sectionsRender.vue'
 export default {
-  name: 'IndexPage',
-  async asyncData({$axios}) {
-    const data = await $axios.$get(
-      'https://jsonplaceholder.typicode.com/comments'
-    )
+  name: 'HomePage',
+  components: { sectionsRender },
+  async asyncData(ctx) {
+    const data = await getPageBySlug(ctx, 'test')
     return {
       apiData: data,
-    }
-  },
-  data() {
-    return {
-      res: null,
     }
   },
   computed: {
@@ -30,9 +25,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.test {
+.app {
   width: 100%;
   height: 100vh;
-  background-color: #f4f4f4;
 }
 </style>

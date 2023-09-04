@@ -16,11 +16,25 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
+  styleResources: {
+    scss: [
+      '~/assets/scss/mixinsAndVariables/colors.scss',
+      '~/assets/scss/mixinsAndVariables/separators.scss',
+      '~/assets/scss/mixinsAndVariables/breakpoints.scss'
+    ]
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/scss/main.scss', 'vue-slick-carousel/dist/vue-slick-carousel.css',
+    'vue-slick-carousel/dist/vue-slick-carousel-theme.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    '~/mixins/utils.js',
+    '~/mixins/order.js',
+    '~/mixins/seoMixin.js',
+    '~/plugins/global.js',
+    '~/filters/index.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -33,30 +47,45 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/style-resources',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
+    '@nuxtjs/i18n',
   ],
 
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://spa-ssr-template.owlweb.com.ua/',
+  },
+
+  i18n: {
+    defaultLocale: 'uk',
+    locales: [
+      {
+        code: 'uk',
+        file: 'uk.json',
+      },
+      {
+        code: 'en',
+        file: 'en.json',
+      },
+    ],
+    langDir: '~/locales/',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: isProduction ? '/assets/app/' : '_nuxt/'
-    // publicPath: process.env.NODE_ENV === 'production' ? '/assets/app/' : '/'
+    publicPath: isProduction ? 'app/' : '_nuxt/'
   },
   generate: {
-    dir: isProduction ? '../public/assets/app' : 'dist'
-    // dir: '../public/assets/app'
+    dir: isProduction ? '../public/assets' : 'dist'
   },
   router: {
-    middleware: 'isSSR',
+    middleware: ['getMenusAndSettings','toLowerCase'],
     linkActiveClass: 'activeLink',
-    // base: process.env.NODE_ENV === 'production' ? '/assets/app/' : '/'
     // trailingSlash: false
   },
 }
