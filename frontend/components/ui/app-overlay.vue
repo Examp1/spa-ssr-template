@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay" @mousedown.self="closeModal">
     <div class="modal-content" @click.stop>
-      <div class="close"></div>
+      <div class="close" @mousedown.self="closeModal">&times;</div>
       <slot />
     </div>
   </div>
@@ -38,8 +38,17 @@ export default {
   z-index: 1000;
 }
 .modal-content {
+  position: relative;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
+}
+.close{
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 35px;
+  line-height: 20px;
 }
 </style>

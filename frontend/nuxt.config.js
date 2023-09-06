@@ -19,7 +19,6 @@ export default {
   styleResources: {
     scss: [
       '~/assets/scss/mixinsAndVariables/colors.scss',
-      '~/assets/scss/mixinsAndVariables/separators.scss',
       '~/assets/scss/mixinsAndVariables/breakpoints.scss'
     ]
   },
@@ -47,6 +46,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/device',
     '@nuxtjs/style-resources',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
@@ -84,7 +84,7 @@ export default {
     dir: isProduction ? '../public/assets' : 'dist'
   },
   router: {
-    middleware: ['getMenusAndSettings','toLowerCase'],
+    middleware: ['getMenusAndSettings', 'toLowerCase'],
     linkActiveClass: 'activeLink',
     // trailingSlash: false
   },

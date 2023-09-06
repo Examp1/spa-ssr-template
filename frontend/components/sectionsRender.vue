@@ -23,7 +23,7 @@
     </section>
     <transition name="fade" mode="out-in">
       <app-overlay v-if="isFormOpen">
-        <app-dinamic-form :props-data="getFormData"></app-dinamic-form>
+        <form_component :props-data="getFormData"></form_component>
       </app-overlay>
     </transition>
   </div>
@@ -33,6 +33,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import AppAccordion from './adminComponents/main/app-accordion.vue'
+import AppAdvantages from './adminComponents/main/app-advantages.vue'
+import AppBlocksLinks from './adminComponents/main/app-blocks-links.vue'
 import AppBlocks from './adminComponents/main/app-blocks.vue'
 import AppCta from './adminComponents/main/app-cta.vue'
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
@@ -41,7 +43,11 @@ import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
 import AppNumbers from './adminComponents/main/app-numbers.vue'
 import AppSimpleText from './adminComponents/main/app-simple-text.vue'
 import AppStages from './adminComponents/main/app-stages.vue'
+import AppTable from './adminComponents/main/app-table.vue'
+import AppTeam from './adminComponents/main/app-team.vue'
+import AppTextDivider from './adminComponents/main/app-text-divider.vue'
 import AppTextNColumns from './adminComponents/main/app-text-n-columns.vue'
+import AppTheses from './adminComponents/main/app-theses.vue'
 import AppVideoAndText from './adminComponents/main/app-video-and-text.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppOverlay from './ui/app-overlay.vue'
@@ -52,7 +58,7 @@ export default {
     'image-and-text': AppImageAndText,
     'text-n-columns': AppTextNColumns,
     AppOverlay,
-    AppDinamicForm,
+    'form_component': AppDinamicForm,
     gallery: AppGallery,
     'simple-text': AppSimpleText,
     stages: AppStages,
@@ -60,9 +66,22 @@ export default {
     accordion: AppAccordion,
     blocks: AppBlocks,
     'video-and-text': AppVideoAndText,
-    'cta': AppCta,
+    cta: AppCta,
+    'blocks-links': AppBlocksLinks,
+    'theses': AppTheses,
+    'text-divider': AppTextDivider,
+    'advantages': AppAdvantages,
+    'team': AppTeam,
+    'table_component': AppTable
   },
   computed: {
+    isMobile() {
+      if (typeof window === 'undefined') {
+        return false
+      }
+      const userAgent = window.navigator.userAgent
+      return /mobile/i.test(userAgent)
+    },
     ...mapGetters({
       getFormData: 'dinamic_form/getFormData',
       isFormOpen: 'modal/isFormOpen',

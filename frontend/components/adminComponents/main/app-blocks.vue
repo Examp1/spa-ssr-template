@@ -1,10 +1,7 @@
 <template>
   <div class="blocks">
     <h2>{{ propsData.title }}</h2>
-    <div
-      class="blocks-wrapper"
-      :style="cssVariables"
-    >
+    <div class="blocks-wrapper" :style="cssVariables">
       <div
         v-for="(block, idx) in propsData.list"
         :key="'block' + idx"
@@ -24,29 +21,36 @@ export default {
   name: 'AppBlocks',
   computed: {
     cssVariables() {
-      let columnGap = "30px";
-      const rowGap = "90px";
+      let columnGap = '30px'
+      const rowGap = '90px'
       if (+this.propsData.title_column_select === 2) {
-        columnGap = "60px";
+        columnGap = '60px'
       } else if ([3, 4].includes(+this.propsData.title_column_select)) {
-        columnGap = "30px";
+        columnGap = '30px'
       }
       return {
         '--column': this.propsData.title_column_select,
         'column-gap': columnGap,
-        'row-gap': rowGap
-      };
-    }
-  }
+        'row-gap': rowGap,
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+@function calculateColumnsMd($column) {
+  @if $column == 1 {
+    @return 1;
+  } @else {
+    @return min($column, 3);
+  }
+}
 .blocks-wrapper {
   display: grid;
   grid-template-columns: repeat(var(--column), 1fr);
   @include lg {
-    grid-template-columns: repeat(calc(min(var(--column), 4) - 1), 1fr);
+    grid-template-columns: repeat(calculateColumnsLg(var(--column)), 1fr);
   }
 
   @include md {

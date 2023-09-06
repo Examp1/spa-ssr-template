@@ -1,9 +1,8 @@
 <template>
-  <ValidationObserver v-slot="{ invalid }">
-    <form class="form container">
+  <ValidationObserver v-slot="{ invalid }" tag="form" class="form container">
       <component
         :is="componentMappings[field.type]"
-        v-for="(field, idx) in propsData.form_data"
+        v-for="(field, idx) in propsData.form_data || propsData.list"
         :key="'field' + idx"
         :props-data="field"
         :validation-rules="generateValidationRules(field)"
@@ -12,12 +11,12 @@
       <button :disabled="invalid" class="submitBtn" @click="submitForm">
         Отправить
       </button>
-    </form>
   </ValidationObserver>
 </template>
 
 <script>
 export default {
+  name: 'DinamicForm',
   data() {
     return {
       inputData: {},

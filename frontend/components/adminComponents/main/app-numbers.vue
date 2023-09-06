@@ -48,22 +48,4 @@ h2 {
 .numbers{
   display: grid;
 }
-.gtc3 {
-  grid-template-columns: repeat(3, 1fr);
-  @include s-lg {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @include sm {
-    grid-template-columns: 1fr;
-  }
-}
-.gtc2 {
-  grid-template-columns: repeat(2, 1fr);
-  @include s-lg {
-    grid-template-columns: 1fr;
-  }
-}
-.gtc1 {
-  grid-template-columns: 1fr;
-}
 </style>

@@ -28,12 +28,12 @@ export const seoMixin = {
         site_name: ogSiteName
       } = {},
       script,
-      shema
+      schema,
     } = this.meta;
 
     // Определение базового URL
     const baseUrl = this.meta.og.url.match(/^(https?:\/\/[^/]+)/)[1];
-
+    const cleanedPath = this.$route.fullPath.replace(/^\/(en|ru)(\/|$)/, '/');
     // Создание массива links
     const links = [
       {
@@ -42,8 +42,8 @@ export const seoMixin = {
         href: favicon
       },
       { rel: 'canonical', href: `${baseUrl}${this.$route.path}` },
-      { rel: 'alternate', hreflang: 'uk', href: `${baseUrl}${this.$route.fullPath}` },
-      { rel: 'alternate', hreflang: 'en', href: `${baseUrl}/en${this.$route.fullPath}` },
+      { rel: 'alternate', hreflang: 'uk', href: `${baseUrl}${cleanedPath}` },
+      { rel: 'alternate', hreflang: 'en', href: `${baseUrl}/en${cleanedPath}` },
     ];
 
     // Проверка на наличие пагинации и добавление соответствующих тегов
@@ -59,9 +59,9 @@ export const seoMixin = {
     // Попытка парсинга shema и обработка ошибки
     let parsedShema = '';
     try {
-      parsedShema = shema ? JSON.parse(shema) : '';
+      parsedShema = schema ? JSON.parse(schema) : '';
     } catch (error) {
-      console.warn('Error parsing shema:', error);
+      console.warn('Error parsing schema:', error);
     }
 
     return {

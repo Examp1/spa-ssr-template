@@ -1,6 +1,6 @@
 <template>
   <div class="firstScreen">
-    <img v-if="hasBg" class="bgImage" :src="path(propsData.image)" alt="bg" />
+    <img v-if="!hasBg" class="bgImage" :src="path(propsData.image)" alt="bg" />
     <div class="container">
       <img v-if="propsData.sticker" class="sticker" :src="path(propsData.sticker)" alt="sticker" />
       <div class="inner-wrapper" :class="contentAlign">
@@ -9,7 +9,7 @@
           <div v-html="propsData.text"></div>
           <app-btns :props-data="propsData.btns"></app-btns>
         </div>
-        <img v-if="!hasBg" :src="path(propsData.image)" alt="img" />
+        <!-- <img v-if="!hasBg" :src="path(propsData.image)" alt="img" /> -->
       </div>
     </div>
   </div>
