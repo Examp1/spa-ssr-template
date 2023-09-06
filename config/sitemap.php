@@ -25,12 +25,7 @@ return [
             'model' => \App\Models\BlogCategories::class,
             'changefreq' => 'monthly',
             'priority'   => '0.8'
-        ],
-        'Landing'        => [
-            'model' => \App\Models\Landing::class,
-            'changefreq' => 'weekly',
-            'priority'   => '0.7'
-        ],
+        ]
     ],
 
     /*

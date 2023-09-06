@@ -14,7 +14,7 @@ class ContactsTabsWidget implements WidgetInterface
 
     public static string $preview = 'contacts-tabs.jpg';
 
-    public static array $groups = [WIDGET_GROUP_LANDING,WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_PAGE];
 
     /**
      * @var array

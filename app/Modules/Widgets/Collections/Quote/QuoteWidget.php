@@ -13,7 +13,7 @@ class QuoteWidget implements WidgetInterface
 
     public static string $preview = 'quote.jpg';
 
-    public static array $groups = [WIDGET_GROUP_LANDING];
+    public static array $groups = [WIDGET_GROUP_PAGE];
 
     /**
      * @var array

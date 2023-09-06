@@ -7,7 +7,6 @@ return [
     'entities' => [
         'Pages'          => \App\Models\Pages::class,
         'BlogArticles'   => \App\Models\BlogArticles::class,
-        'BlogCategories' => \App\Models\BlogCategories::class,
-        'Landing'        => \App\Models\Landing::class,
+        'BlogCategories' => \App\Models\BlogCategories::class
     ],
 ];

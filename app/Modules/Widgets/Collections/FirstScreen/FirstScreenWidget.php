@@ -14,7 +14,7 @@ class FirstScreenWidget implements WidgetInterface
 
     public static string $preview = 'first-screen.jpg';
 
-    public static array $groups = [WIDGET_GROUP_LANDING, WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_PAGE];
 
     /**
      * @var array
@@ -63,6 +63,20 @@ class FirstScreenWidget implements WidgetInterface
                     return [
                         'normal' => 'Звичайний',
                         'small'  => 'Маленький',
+                    ];
+                }
+            ],
+            [
+                'type'  => 'select',
+                'name'  => 'image_position',
+                'label' => 'Позиція зображення',
+                'class' => '',
+                'rules' => 'nullable|string|max:255',
+                'value' => 'M',
+                'list'  => function () {
+                    return [
+                        'left' => 'Ліворуч',
+                        'right'  => 'Праворуч',
                     ];
                 }
             ],

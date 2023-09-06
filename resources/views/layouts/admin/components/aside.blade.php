@@ -76,16 +76,6 @@ use Illuminate\Support\Facades\Request;
                     </li>
                 @endcan
 
-                @can('landing_view')
-                    <li class="sidebar-item @if(in_array(Request::segment(2),['landing'])) active @endif">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('landing.index')}}"
-                           aria-expanded="false">
-                            <i class="mdi mdi-book-open"></i>
-                            <span class="hide-menu">{{ __('Landings') }}</span>
-                        </a>
-                    </li>
-                @endcan
-
                 @if(
                 auth()->user()->can('blog_articles_view')
                 || auth()->user()->can('blog_tags_view')
@@ -276,16 +266,6 @@ use Illuminate\Support\Facades\Request;
                                        aria-expanded="false">
                                         <i class="mdi mdi-checkbox-blank-circle-outline"></i>
                                         <span class="hide-menu">{{ __('Pages') }}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('setting_landing_view')
-                                <li class="sidebar-item @if(in_array(Request::segment(4),['landing'])) active @endif">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                       href="/admin/settings/landing"
-                                       aria-expanded="false">
-                                        <i class="mdi mdi-checkbox-blank-circle-outline"></i>
-                                        <span class="hide-menu">{{ __('Landings') }}</span>
                                     </a>
                                 </li>
                             @endcan
