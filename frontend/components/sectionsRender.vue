@@ -38,10 +38,12 @@ import AppBlocksLinks from './adminComponents/main/app-blocks-links.vue'
 import AppBlocks from './adminComponents/main/app-blocks.vue'
 import AppCta from './adminComponents/main/app-cta.vue'
 import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
+import AppFullImage from './adminComponents/main/app-full-image.vue'
 import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
 import AppNumbers from './adminComponents/main/app-numbers.vue'
 import AppSimpleText from './adminComponents/main/app-simple-text.vue'
+import AppSimpleTitle from './adminComponents/main/app-simple-title.vue'
 import AppStages from './adminComponents/main/app-stages.vue'
 import AppTable from './adminComponents/main/app-table.vue'
 import AppTeam from './adminComponents/main/app-team.vue'
@@ -72,7 +74,9 @@ export default {
     'text-divider': AppTextDivider,
     'advantages': AppAdvantages,
     'team': AppTeam,
-    'table_component': AppTable
+    'table_component': AppTable,
+    'simple-title': AppSimpleTitle,
+    'full-image': AppFullImage
   },
   computed: {
     isMobile() {
