@@ -32,6 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AppAccordionTable from './adminComponents/main/app-accordion-table.vue'
 import AppAccordion from './adminComponents/main/app-accordion.vue'
 import AppAdvantages from './adminComponents/main/app-advantages.vue'
 import AppBlocksLinks from './adminComponents/main/app-blocks-links.vue'
@@ -41,7 +42,9 @@ import appFirstScreen from './adminComponents/main/app-firstScreen.vue'
 import AppFullImage from './adminComponents/main/app-full-image.vue'
 import AppGallery from './adminComponents/main/app-gallery.vue'
 import AppImageAndText from './adminComponents/main/app-image-and-text.vue'
+import AppLinkList from './adminComponents/main/app-link-list.vue'
 import AppNumbers from './adminComponents/main/app-numbers.vue'
+import AppPartners from './adminComponents/main/app-partners.vue'
 import AppSimpleText from './adminComponents/main/app-simple-text.vue'
 import AppSimpleTitle from './adminComponents/main/app-simple-title.vue'
 import AppStages from './adminComponents/main/app-stages.vue'
@@ -76,7 +79,10 @@ export default {
     'team': AppTeam,
     'table_component': AppTable,
     'simple-title': AppSimpleTitle,
-    'full-image': AppFullImage
+    'full-image': AppFullImage,
+    'partners': AppPartners,
+    'accordion-table': AppAccordionTable,
+    'link-list': AppLinkList
   },
   computed: {
     isMobile() {

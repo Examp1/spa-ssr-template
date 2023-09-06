@@ -1,6 +1,6 @@
 <template>
   <div class="app-stages">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div class="stages-list">
       <div
         v-for="(li, idx) in propsData.list"

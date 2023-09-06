@@ -2,7 +2,7 @@
   <div class="simple-title">
     <span class="subtitle">{{ propsData.subtitle }}</span>
     <div class="wrp">
-      <h2>{{ propsData.title }}</h2>
+      <h2 v-if="propsData.title">{{ propsData.title }}</h2>
       <app-btns :props-data="propsData.btns"></app-btns>
     </div>
   </div>

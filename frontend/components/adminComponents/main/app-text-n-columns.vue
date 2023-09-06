@@ -1,6 +1,6 @@
 <template>
   <div :style="{'--column': +propsData.title_column_select}">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div
       v-for="(row, idx) in propsData.rows"
       :key="'row' + idx"

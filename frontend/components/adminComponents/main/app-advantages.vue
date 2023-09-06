@@ -1,6 +1,6 @@
 <template>
   <div class="advantage-sections">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div class="advantages" :class="`gtc${propsData.items_in_row}`">
       <div
         v-for="(advantage, idx) in propsData.list"

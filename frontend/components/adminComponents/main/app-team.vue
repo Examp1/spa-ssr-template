@@ -1,6 +1,6 @@
 <template>
   <div class="team">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div class="person-list">
       <div
         v-for="(person, idx) in propsData.list"

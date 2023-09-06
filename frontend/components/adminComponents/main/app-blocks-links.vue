@@ -1,6 +1,6 @@
 <template>
   <div class="blocks-links">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div class="links">
       <div
         v-for="(link, idx) in propsData.list"

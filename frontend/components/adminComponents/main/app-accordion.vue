@@ -1,6 +1,6 @@
 <template>
   <div class="accordion" :class="propsData.content_position">
-    <h2>{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
     <div class="accordion-wrapper">
       <div
         v-for="(accItem, idx) in propsData.list"

@@ -6,7 +6,7 @@
         '--width': propsData.text_width + '%'
       }"
     >
-      <h2>{{ propsData.title }}</h2>
+      <h2 v-if="propsData.title">{{ propsData.title }}</h2>
       <div class="text" v-html="propsData.description"></div>
       <app-btns :props-data="propsData.btns"></app-btns>
     </div>
