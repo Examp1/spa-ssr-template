@@ -6,7 +6,8 @@
       :rules="validationRules"
       v-slot="{ errors }"
     >
-      <div class="selected" @click="open = !open" :class="{ open: open }">
+    <input v-model="selected" hidden type="text" >
+      <div class="selected"  @click="open = !open" :class="{ open: open }">
         {{ selected || propsData.name }}
       </div>
       <div class="options" :class="{ open: open }">
@@ -43,7 +44,7 @@ export default {
     setOpt(opt) {
       this.selected = opt
       this.open = false
-      this.$emit('input', opt) // Emit the selected value to the parent
+      this.$emit('input', opt, this.propsData.name) // Emit the selected value to the parent
     },
   },
 }

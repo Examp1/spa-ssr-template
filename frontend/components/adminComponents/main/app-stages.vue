@@ -1,16 +1,18 @@
 <template>
-  <div class="app-stages">
-    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
-    <div class="stages-list">
-      <div
-        v-for="(li, idx) in propsData.list"
-        :key="'li' + idx"
-        class="stages-item"
-      >
-        <div class="stage-counter">{{ idx + 1 | zeroPad }}</div>
-        <div class="stage-text">
-          <h3>{{ li.title }}</h3>
-          <div v-html="li.text"></div>
+  <div class="app-stages" :class="propsData.content_position">
+    <div class="stage-wrp">
+      <h2 v-if="propsData.title">{{ propsData.title }}</h2>
+      <div class="stages-list">
+        <div
+          v-for="(li, idx) in propsData.list"
+          :key="'li' + idx"
+          class="stages-item"
+        >
+          <div class="stage-counter">{{ (idx + 1) | zeroPad }}</div>
+          <div class="stage-text">
+            <h3>{{ li.title }}</h3>
+            <div v-html="li.text"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,6 +26,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.app-stages {
+  display: flex;
+  flex-direction: column;
+  &.left {
+    align-items: flex-start;
+  }
+  &.center {
+    align-items: center;
+  }
+  &.right {
+    align-items: flex-end;
+  }
+}
 .stages-list {
   .stages-item {
     display: flex;
@@ -36,7 +51,7 @@ export default {
         line-height: 120%;
         margin-bottom: 15px;
       }
-      div::v-deep > *{
+      div::v-deep > * {
         margin-top: 0;
         color: var(--gray-gray-700, #363636);
         font-size: 20px;
@@ -59,7 +74,7 @@ export default {
       font-weight: 400;
       line-height: 120%;
       position: relative;
-      &::before{
+      &::before {
         content: '';
         position: absolute;
         left: 50%;

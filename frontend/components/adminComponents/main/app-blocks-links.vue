@@ -1,7 +1,7 @@
 <template>
   <div class="blocks-links">
     <h2 v-if="propsData.title">{{ propsData.title }}</h2>
-    <div class="links">
+    <div class="links" :class="`gtc${propsData.title_column_select}`">
       <div
         v-for="(link, idx) in propsData.list"
         :key="'link' + idx"
@@ -30,16 +30,6 @@ export default {
 .links {
   display: grid;
   grid-gap: 40px;
-  grid-template-columns: repeat(4, 1fr);
-  @include s-lg{
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @include sm{
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @include m-sm{
-    grid-template-columns: 1fr;
-  }
   .link {
     padding: 36px;
     border: 1px solid #000;

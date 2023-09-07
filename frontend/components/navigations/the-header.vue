@@ -35,6 +35,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logo{
+  height: 40px;
+  img{
+    height: 100%;
+  }
+}
 header {
   background-color: #cbcbcb;
   position: sticky;

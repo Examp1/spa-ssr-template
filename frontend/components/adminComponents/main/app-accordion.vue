@@ -8,6 +8,9 @@
         class="accordion-item"
       >
         <div class="accordion-trigger" @click="slideToggle($event.target)">
+          <span v-if="propsData.type === 'numerical'"
+            >{{ (idx + 1) | zeroPad }}.</span
+          >
           {{ accItem.title }}
         </div>
         <div class="accordion-content" hidden v-html="accItem.text"></div>
@@ -21,6 +24,16 @@ import slideMixin from '~/mixins/slideMixin'
 export default {
   name: 'AppAccordion',
   mixins: [slideMixin],
+  computed: {
+    btn() {
+      return {
+        text: 'Зареєструватися',
+        icon: this.propsData.card_btn_style_icon,
+        type: this.propsData.card_btn_style_icon,
+        type_link: 'link',
+      }
+    },
+  },
 }
 </script>
 
@@ -28,19 +41,19 @@ export default {
 .accordion {
   display: flex;
   flex-direction: column;
-  &.left{
+  &.left {
     align-items: flex-start;
   }
-  &.right{
+  &.right {
     align-items: flex-end;
   }
   &-wrapper {
     width: 60%;
-    @include md{
+    @include md {
       width: 100%;
     }
   }
-  h2{
+  h2 {
     width: 100%;
   }
   &-item {
@@ -54,6 +67,12 @@ export default {
     line-height: 130%;
     border-top: 2px solid #e3e3e3;
     transition: 0.5s;
+    span {
+      font-size: 27px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%;
+    }
     &.active {
       border-color: #000;
     }

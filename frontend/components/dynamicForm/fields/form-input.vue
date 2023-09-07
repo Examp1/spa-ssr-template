@@ -32,18 +32,5 @@ export default {
       inputValue: '',
     }
   },
-  methods: {
-    errorMessage(defaultError) {
-      switch (defaultError) {
-        case 'The {field} field is required':
-          return this.propsData.messages.required
-        case 'The {field} field must be a valid email':
-          return this.propsData.messages.email
-        // Добавьте другие условия для min, max и так далее
-        default:
-          return defaultError
-      }
-    },
-  },
 }
 </script>

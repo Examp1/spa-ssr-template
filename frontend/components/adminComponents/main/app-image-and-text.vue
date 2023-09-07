@@ -66,6 +66,9 @@ export default {
         width: 100%;
       }
     }
+    &.left{
+      flex-direction: row-reverse;
+    }
   }
 }
 </style>

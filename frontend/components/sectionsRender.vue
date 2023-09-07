@@ -1,17 +1,18 @@
 <template>
   <div class="sections">
-    <first-screen
+    <!-- <first-screen
       v-if="organizedData.firstScreen"
       :props-data="organizedData.firstScreen.content"
-    ></first-screen>
+    ></first-screen> -->
     <section
-      v-for="(item, idx) in organizedData.components"
+      v-for="(item, idx) in propsData"
       :key="item.content + idx"
       :style="{ ...backgroundStyle(item.content), order: item.position }"
       class="component"
     >
       <component
         :is="item.component"
+        v-if="+item.visibility"
         :props-data="item.content"
         :class="[
           containerClass(item.component),
@@ -63,7 +64,7 @@ export default {
     'image-and-text': AppImageAndText,
     'text-n-columns': AppTextNColumns,
     AppOverlay,
-    'form_component': AppDinamicForm,
+    form_component: AppDinamicForm,
     gallery: AppGallery,
     'simple-text': AppSimpleText,
     stages: AppStages,
@@ -73,16 +74,16 @@ export default {
     'video-and-text': AppVideoAndText,
     cta: AppCta,
     'blocks-links': AppBlocksLinks,
-    'theses': AppTheses,
+    theses: AppTheses,
     'text-divider': AppTextDivider,
-    'advantages': AppAdvantages,
-    'team': AppTeam,
-    'table_component': AppTable,
+    advantages: AppAdvantages,
+    team: AppTeam,
+    table_component: AppTable,
     'simple-title': AppSimpleTitle,
     'full-image': AppFullImage,
-    'partners': AppPartners,
+    partners: AppPartners,
     'accordion-table': AppAccordionTable,
-    'link-list': AppLinkList
+    'link-list': AppLinkList,
   },
   computed: {
     isMobile() {
@@ -96,21 +97,8 @@ export default {
       getFormData: 'dinamic_form/getFormData',
       isFormOpen: 'modal/isFormOpen',
     }),
-    organizedData() {
-      // Находим объект с component: 'first-screen'
-      const firstScreenComponent = this.propsData.find(
-        (item) => item.component === 'first-screen'
-      )
-
-      // Фильтруем все объекты, которые не имеют component: 'first-screen'
-      const otherComponents = this.propsData.filter(
-        (item) => item.component !== 'first-screen'
-      )
-
-      return {
-        firstScreen: firstScreenComponent,
-        components: otherComponents,
-      }
+    hasFirstScreen() {
+      return this.propsData.some((item) => item.component === 'first-screen')
     },
   },
   methods: {
