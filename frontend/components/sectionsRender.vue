@@ -1,11 +1,11 @@
 <template>
   <div class="sections">
-    <!-- <first-screen
-      v-if="organizedData.firstScreen"
-      :props-data="organizedData.firstScreen.content"
-    ></first-screen> -->
+    <first-screen
+      v-if="!hasFirstScreen"
+      :props-data="simpleFisrtScreen"
+    ></first-screen>
     <section
-      v-for="(item, idx) in propsData"
+      v-for="(item, idx) in propsData.constructor"
       :key="item.content + idx"
       :style="{ ...backgroundStyle(item.content), order: item.position }"
       class="component"
@@ -98,7 +98,16 @@ export default {
       isFormOpen: 'modal/isFormOpen',
     }),
     hasFirstScreen() {
-      return this.propsData.some((item) => item.component === 'first-screen')
+      return this.propsData.constructor.some((item) => item.component === 'first-screen')
+    },
+    simpleFisrtScreen() {
+      return {
+        title: this.propsData.translate.title,
+        description: this.propsData.translate.description,
+        btns: this.propsData.translate.main_screen,
+        image: this.propsData.translate.image,
+        image_mob: this.propsData.translate.image_mob,
+      }
     },
   },
   methods: {

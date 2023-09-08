@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <sections-render :props-data="apiData.constructor"></sections-render>
+    <sections-render :props-data="apiData"></sections-render>
   </div>
 </template>
 
