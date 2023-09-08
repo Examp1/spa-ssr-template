@@ -59,6 +59,12 @@ export default {
     handleInput(value, name) {
       this.$set(this.inputData, name, value)
     },
+    reset() {
+      this.$refs.formObserver.reset()
+      this.$refs.formObserver.$children.forEach(el => {
+        el.value = ''
+      })
+    },
     async submitForm() {
       const isValid = await this.$refs.formObserver.validate()
       if (!isValid) return
@@ -74,7 +80,7 @@ export default {
       if (response.success) {
         this.success = true
         this.successText = response.data
-        this.$refs.formObserver.reset()
+        this.reset()
 
         setTimeout(() => {
           this.success = false

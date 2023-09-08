@@ -7,7 +7,7 @@
       v-slot="{ errors }"
     >
       <textarea
-        v-model="inputValue"
+        v-model="value"
         type="text"
         :name="propsData.name"
         :class="{ error: errors[0] }"
@@ -29,7 +29,7 @@ export default {
   },
   data() {
     return {
-      inputValue: '',
+      value: '',
     }
   },
 }
