@@ -98,7 +98,8 @@ export default {
       isFormOpen: 'modal/isFormOpen',
     }),
     hasFirstScreen() {
-      return this.propsData.constructor.some((item) => item.component === 'first-screen')
+      return this.propsData.constructor.some(item => item.component === 'first-screen' && +item.visibility)
+      // return temp
     },
     simpleFisrtScreen() {
       return {
