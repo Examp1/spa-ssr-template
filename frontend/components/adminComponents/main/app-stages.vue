@@ -41,8 +41,9 @@ export default {
 }
 .stages-list {
   .stages-item {
-    display: flex;
-    grid-gap: 60px;
+    --gutter: 60px;
+    position: relative;
+    padding-left: calc(78px + var(--gutter));
     .stage-text {
       h3 {
         font-size: 27px;
@@ -73,7 +74,8 @@ export default {
       font-style: normal;
       font-weight: 400;
       line-height: 120%;
-      position: relative;
+      position: absolute;
+      left: 0;
       &::before {
         content: '';
         position: absolute;

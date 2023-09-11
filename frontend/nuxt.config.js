@@ -78,7 +78,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    publicPath: isProduction ? 'app/' : '_nuxt/'
+    publicPath: isProduction ? 'app/' : '_nuxt/',
   },
   generate: {
     dir: isProduction ? '../public/assets' : 'dist'

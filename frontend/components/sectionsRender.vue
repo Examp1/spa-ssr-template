@@ -55,6 +55,7 @@ import AppTextDivider from './adminComponents/main/app-text-divider.vue'
 import AppTextNColumns from './adminComponents/main/app-text-n-columns.vue'
 import AppTheses from './adminComponents/main/app-theses.vue'
 import AppVideoAndText from './adminComponents/main/app-video-and-text.vue'
+import AppTicker from './adminComponents/widgets/app-ticker.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppOverlay from './ui/app-overlay.vue'
 
@@ -84,6 +85,7 @@ export default {
     partners: AppPartners,
     'accordion-table': AppAccordionTable,
     'link-list': AppLinkList,
+    ticker: AppTicker,
   },
   computed: {
     isMobile() {
@@ -98,7 +100,9 @@ export default {
       isFormOpen: 'modal/isFormOpen',
     }),
     hasFirstScreen() {
-      return this.propsData.constructor.some(item => item.component === 'first-screen' && +item.visibility)
+      return this.propsData.constructor.some(
+        (item) => item.component === 'first-screen' && +item.visibility
+      )
       // return temp
     },
     simpleFisrtScreen() {
@@ -113,7 +117,7 @@ export default {
   },
   methods: {
     containerClass(component) {
-      if (component === 'gallery') {
+      if (component === 'gallery' || component === 'ticker') {
         return 'container-fluid'
       } else {
         return 'container'
