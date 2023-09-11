@@ -105,7 +105,7 @@ export default {
     margin-top: 27px;
   }
   .list1,
-  .list2 {w
+  .list2 {
     display: flex;
     align-items: center;
     justify-content: center;
