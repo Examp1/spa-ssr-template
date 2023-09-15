@@ -87,5 +87,18 @@ export default {
     middleware: ['getMenusAndSettings', 'toLowerCase'],
     linkActiveClass: 'activeLink',
     // trailingSlash: false
+    extendRoutes(routes, resolve) {
+      const augmentedRoutes = [];
+      routes.forEach(route => {
+        if (route.path !== '*') {
+          augmentedRoutes.push({
+            ...route,
+            path: `${route.path}/:city?`, // необязательный параметр city
+            name: `city-${route.name}`
+          });
+        }
+      });
+      routes.splice(0, routes.length, ...augmentedRoutes);
+    }
   },
 }

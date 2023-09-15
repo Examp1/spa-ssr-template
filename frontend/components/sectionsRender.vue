@@ -116,6 +116,9 @@ export default {
     },
   },
   methods: {
+    changeCity(city) {
+      this.$setCity(city);
+    },
     containerClass(component) {
       if (component === 'gallery' || component === 'ticker') {
         return 'container-fluid'

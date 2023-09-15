@@ -18,6 +18,7 @@
     "@nuxtjs/device": "^2.2.0",
     "@nuxtjs/i18n": "^7.3.1",
     "@nuxtjs/style-resources": "^1.2.1",
+    "@studio-freight/lenis": "^1.0.23",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.3",
     "cookie-universal-nuxt": "^2.2.2",
