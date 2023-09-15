@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     changeCity(city) {
-      this.$setCity(city);
+      this.$setCity(city)
     },
     containerClass(component) {
       if (component === 'gallery' || component === 'ticker') {

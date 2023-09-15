@@ -79,6 +79,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     publicPath: isProduction ? 'app/' : '_nuxt/',
+    transpile: ['gsap'],
   },
   generate: {
     dir: isProduction ? '../public/assets' : 'dist'
