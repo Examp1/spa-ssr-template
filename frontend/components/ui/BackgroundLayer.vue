@@ -1,10 +1,22 @@
 <template>
-  <div class="background-layer">
+  <div class="background-layer" :style="getBackground">
     <div v-if="false" class="noise-container">
       <div class="noise-layer"></div>
     </div>
   </div>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters({
+      getBackground: 'app_settings/getBackground',
+      getLogo: 'app_settings/getLogo',
+    }),
+  },
+}
+</script>
 
 <style>
 .background-layer {

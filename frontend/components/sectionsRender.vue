@@ -1,5 +1,6 @@
 <template>
   <div class="sections">
+
     <first-screen
       v-if="!hasFirstScreen"
       :props-data="simpleFisrtScreen"

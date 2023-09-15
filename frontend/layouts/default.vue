@@ -44,7 +44,7 @@ export default {
   }
   100% {
     opacity: 1;
-    transform: translateX(-0%);
+    transform: translateX(0%);
   }
 }
 @keyframes bounce-out {

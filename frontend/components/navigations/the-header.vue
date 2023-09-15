@@ -17,14 +17,17 @@
           {{ li.name }}
         </app-link>
       </nav>
+      <the-lang-switcher></the-lang-switcher>
     </div>
   </header>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import theLangSwitcher from './the-lang-switcher.vue'
 export default {
   name: 'TheHeader',
+  components: { theLangSwitcher },
   computed: {
     ...mapGetters({
       getLogo: 'app_settings/getLogo',
@@ -42,7 +45,7 @@ export default {
   }
 }
 header {
-  background-color: #cbcbcb;
+  // background-color: #cbcbcb;
   position: sticky;
   top: 0;
   z-index: 999;
@@ -50,6 +53,7 @@ header {
     height: 75px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .menu {
     display: flex;
