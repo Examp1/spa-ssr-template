@@ -1,18 +1,20 @@
 @import '~normalize.css/normalize';
-*, *::before, *::after{
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-}
-img{
-  width: 100%;
 }
 // миксины
 @import './mixinsAndVariables/breakpoints';
 @import './mixinsAndVariables/colors';
+// иконочный шрифт
+@import './system/icons';
 // глоаблаьные стили
 @import './system/containers';
+@import './system/ui';
 @import './system/typography';
 @import './mixinsAndVariables/separators';
 @import './system/global-classes';
 @import './system/btns';
 @import './system/animations';
-
