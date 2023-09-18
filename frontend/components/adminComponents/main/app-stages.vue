@@ -11,7 +11,7 @@
           <div class="stage-counter">{{ (idx + 1) | zeroPad }}</div>
           <div class="stage-text">
             <h3>{{ li.title }}</h3>
-            <div v-html="li.text"></div>
+            <div class="redactor"  v-html="li.text"></div>
           </div>
         </div>
       </div>

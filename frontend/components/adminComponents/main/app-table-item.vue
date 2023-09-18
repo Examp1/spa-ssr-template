@@ -4,6 +4,7 @@
       v-for="(item, idx) in propsData"
       :key="'item' + idx"
       :style="{ 'min-width': item.column_width }"
+      class="redactor"
       v-html="item.column_text"
     ></div>
   </div>

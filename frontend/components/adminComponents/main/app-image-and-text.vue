@@ -10,18 +10,18 @@
       }"
     >
       <div class="textWrapper">
-        <div v-html="propsData.description"></div>
+        <div class="redactor" v-html="propsData.description"></div>
         <div>
           <app-btns :props-data="propsData.btns"></app-btns>
         </div>
       </div>
-      <div class="imageWrapper">
+      <picture class="imageWrapper">
         <source
           media="(max-width: 768px)"
           :srcset="path(propsData.image_mob)"
         />
         <img :src="path(propsData.image)" alt="" />
-      </div>
+      </picture>
     </div>
   </div>
 </template>

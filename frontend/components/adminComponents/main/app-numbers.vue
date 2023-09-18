@@ -9,7 +9,7 @@
       >
         <label>{{ number.number }}</label>
         <h3>{{ number.title }}</h3>
-        <div v-html="number.text"></div>
+        <div class="redactor" v-html="number.text"></div>
       </div>
     </div>
   </div>

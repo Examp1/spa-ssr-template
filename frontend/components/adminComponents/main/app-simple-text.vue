@@ -7,7 +7,7 @@
       }"
     >
       <h2 v-if="propsData.title">{{ propsData.title }}</h2>
-      <div class="text" v-html="propsData.description"></div>
+      <div class="redactor" v-html="propsData.description"></div>
       <app-btns :props-data="propsData.btns"></app-btns>
     </div>
   </div>

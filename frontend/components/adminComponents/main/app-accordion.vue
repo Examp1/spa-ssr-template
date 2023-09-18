@@ -13,7 +13,7 @@
           >
           {{ accItem.title }}
         </div>
-        <div class="accordion-content" hidden v-html="accItem.text"></div>
+        <div class="accordion-content redactor" hidden v-html="accItem.text"></div>
       </div>
     </div>
   </div>

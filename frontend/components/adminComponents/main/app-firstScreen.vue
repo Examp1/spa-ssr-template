@@ -6,7 +6,7 @@
       <div class="inner-wrapper" :class="contentAlign">
         <div class="text-wrapper">
           <h1>{{ propsData.title }}</h1>
-          <div v-html="propsData.text"></div>
+          <div class="redactor" v-html="propsData.text"></div>
           <app-btns :props-data="propsData.btns"></app-btns>
         </div>
         <!-- <img v-if="!hasBg" :src="path(propsData.image)" alt="img" /> -->

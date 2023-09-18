@@ -9,7 +9,7 @@
       <div
         v-for="(column, idx) in row"
         :key="'column' + idx"
-        class="column"
+        class="column redactor"
         v-html="column.column_text"
       ></div>
     </div>

@@ -9,7 +9,7 @@
       >
         <img :src="path(advantage.image)" alt="">
         <h3>{{ advantage.title }}</h3>
-        <div v-html="advantage.text"></div>
+        <div class="redactor" v-html="advantage.text"></div>
       </div>
     </div>
   </div>

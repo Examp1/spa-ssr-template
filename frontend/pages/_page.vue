@@ -11,7 +11,7 @@ export default {
   name: 'HomePage',
   components: { sectionsRender },
   async asyncData(ctx) {
-    const slug = !ctx.params.page ? 'test' : ctx.params.page
+    const slug = !ctx.params.page ? 'pro-kompaniyu' : ctx.params.page
     const data = await getPageBySlug(ctx, slug)
     return {
       apiData: data,

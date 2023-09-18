@@ -1,5 +1,5 @@
 <template>
-  <div class="text-divider" v-html="propsData.text"></div>
+  <div class="text-divider redactor" v-html="propsData.text"></div>
 </template>
 
 <script>

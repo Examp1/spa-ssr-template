@@ -12,7 +12,7 @@
           <p class="title">{{ accItem.title }}</p>
         </div>
         <p class="date">{{ accItem.date }}</p>
-        <p class="subTitle" v-html="accItem.subtitle"></p>
+        <div class="subTitle" v-html="accItem.subtitle"></div>
         <div
           v-if="accItem.text && accItem.text !== '<p><br></p>'"
           class="accordion-trigger"
@@ -20,7 +20,7 @@
           +
         </div>
       </div>
-      <div hidden class="accordion-content" v-html="accItem.text"></div>
+      <div hidden class="accordion-content redactor" v-html="accItem.text"></div>
     </div>
   </div>
 </template>
