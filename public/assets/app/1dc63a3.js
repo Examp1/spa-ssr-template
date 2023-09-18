@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[33],{520:function(n,t,c){"use strict";c.r(t);var e={},o=c(27),component=Object(o.a)(e,(function(){return(0,this._self._c)("div",[this._v("\n  app contact tans\n")])}),[],!1,null,"d7fcf5e6",null);t.default=component.exports}}]);

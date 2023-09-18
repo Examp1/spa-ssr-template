@@ -1,6 +1,6 @@
 <template>
   <div class="blocks-links">
-    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title" v-html="propsData.title"></h2>
     <div class="links" :class="`gtc${propsData.title_column_select}`">
       <div
         v-for="(link, idx) in propsData.list"

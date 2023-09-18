@@ -1,6 +1,6 @@
 <template>
   <div class="video-and-text">
-    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title" v-html="propsData.title"></h2>
     <div class="redactor" v-html="propsData.text"></div>
     <app-btns :props-data="propsData.btns"></app-btns>
     <div class="video-wrapper" @click="playVideo">

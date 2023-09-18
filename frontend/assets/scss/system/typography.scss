@@ -31,8 +31,15 @@ body {
   }
 }
 
+
+p,
+li,
+span {
+  @include text-large
+}
+
 // обычные стили для текста
-h1 {
+h1, h1>* {
   @include heading-styles($color: $text-primary, $font-size: 55px, $font-weight: 700, $line-height: 120%);
 }
 
@@ -54,12 +61,6 @@ h5 {
 
 h6 {
   @include heading-styles($color: $text-primary, $font-size: 22px, $font-weight: 600, $line-height: 120%);
-}
-
-p,
-li,
-span {
-  @include text-large
 }
 
 // стили текста который приходят с виз редактора
@@ -118,10 +119,13 @@ span {
       font-size: 14px;
     }
   }
+
   ol {
     counter-reset: olcounter;
+
     li {
       counter-increment: olcounter;
+
       &::before {
         content: counter(olcounter, decimal-leading-zero);
         position: absolute;

@@ -5,7 +5,7 @@
       <img v-if="propsData.sticker" class="sticker" :src="path(propsData.sticker)" alt="sticker" />
       <div class="inner-wrapper" :class="contentAlign">
         <div class="text-wrapper">
-          <h1>{{ propsData.title }}</h1>
+          <h1 v-if="propsData.title" v-html="propsData.title"></h1>
           <div class="redactor" v-html="propsData.text"></div>
           <app-btns :props-data="propsData.btns"></app-btns>
         </div>

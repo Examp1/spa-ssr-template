@@ -1,7 +1,7 @@
 <template>
   <div class="app-stages" :class="propsData.content_position">
     <div class="stage-wrp">
-      <h2 v-if="propsData.title">{{ propsData.title }}</h2>
+      <h2 v-if="propsData.title" v-html="propsData.title"></h2>
       <div class="stages-list">
         <div
           v-for="(li, idx) in propsData.list"

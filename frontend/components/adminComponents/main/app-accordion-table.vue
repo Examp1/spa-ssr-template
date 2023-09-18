@@ -1,6 +1,6 @@
 <template>
   <div class="accordion-table">
-    <h2 v-if="propsData.title">{{ propsData.title }}</h2>
+    <h2 v-if="propsData.title" v-html="propsData.title"></h2>
     <div
       v-for="(accItem, idx) in propsData.list"
       :key="'accItem' + idx"
