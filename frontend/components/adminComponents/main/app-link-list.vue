@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="linkList" v-if="propsData.type !== 'tags'">
+    <div v-if="propsData.type !== 'tags'" class="linkList">
       <h2 class="title" v-html="propsData.title"></h2>
       <ul class="links">
         <li
@@ -10,17 +10,17 @@
         >
           <a :href="link.link">{{ link.name }}</a>
           <div class="linkWrp">
-            <p class="date" v-if="link.date">{{ link.date }}</p>
-            <a :href="link.file" v-if="link.file" download target="_blank">
+            <p v-if="link.date" class="date">{{ link.date }}</p>
+            <a v-if="link.file" :href="link.file" download target="_blank">
               завантажити
             </a>
-            <a :href="link.link" v-if="link.link" target="_blank">перейти</a>
+            <a v-if="link.link" :href="link.link" target="_blank">перейти</a>
           </div>
         </li>
       </ul>
       <buttons-tray v-if="propsData.btns" :buttons="propsData.btns" />
     </div>
-    <div class="linkList" v-else>
+    <div v-else class="linkList">
       <ul class="tags">
         <li
           v-for="(tag, idx) in propsData.list"

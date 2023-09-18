@@ -1,13 +1,13 @@
 <template>
-  <div class="formField" ref="select">
+  <div ref="select" class="formField">
     <label v-if="propsData.title" class="label">{{ propsData.title }}</label>
     <ValidationProvider
+      v-slot="{ errors }"
       :name="propsData.name"
       :rules="validationRules"
-      v-slot="{ errors }"
     >
-    <input v-model="value" hidden type="text" >
-      <div class="selected"  @click="open = !open" :class="{ open: open }">
+      <input v-model="value" hidden type="text" />
+      <div class="selected" :class="{ open: open }" @click="open = !open">
         {{ value || '---' }}
       </div>
       <div class="options" :class="{ open: open }">

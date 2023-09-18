@@ -118,27 +118,27 @@ span {
       font-size: 14px;
     }
   }
-
   ol {
     counter-reset: olcounter;
-
-    li::before {
-      content: counter(olcounter, decimal-leading-zero);
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      left: 0;
-      top: 5px;
-      box-shadow: 0 0 0 1px $text-primary;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $text-primary;
-
-      font-style: normal;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 125%;
+    li {
+      counter-increment: olcounter;
+      &::before {
+        content: counter(olcounter, decimal-leading-zero);
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        left: 0;
+        top: 5px;
+        box-shadow: 0 0 0 1px $text-primary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-primary;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 125%;
+      }
     }
   }
 }

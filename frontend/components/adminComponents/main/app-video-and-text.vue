@@ -28,8 +28,8 @@
 <script>
 import appBtns from '../../ui/app-btns.vue'
 export default {
-  components: { appBtns },
   name: 'VideoAndText',
+  components: { appBtns },
   data() {
     return {
       isPlaying: false,

@@ -64,7 +64,7 @@
         </template>
       </div>
     </div>
-    <div class="list2" v-if="propsData['list-2']">
+    <div v-if="propsData['list-2']" class="list2">
       <div class="scroller">
         <template v-for="(item, index) in propsData['list-2']">
           <span
@@ -89,8 +89,8 @@
 
 <script>
 export default {
-  name: 'AppTicker'
-};
+  name: 'AppTicker',
+}
 </script>
 
 <style lang="scss" scoped>
@@ -123,7 +123,7 @@ export default {
         vertical-align: top;
         border-radius: 100px;
         pointer-events: none;
-        @include s-lg{
+        @include s-lg {
           height: 90px;
         }
         @include md {
@@ -141,7 +141,7 @@ export default {
         letter-spacing: -0.005em;
         text-transform: uppercase;
         color: #111325;
-        @include s-lg{
+        @include s-lg {
           font-size: 90px;
           line-height: 90px;
         }

@@ -61,7 +61,7 @@ export default {
     },
     reset() {
       this.$refs.formObserver.reset()
-      this.$refs.formObserver.$children.forEach(el => {
+      this.$refs.formObserver.$children.forEach((el) => {
         el.value = ''
       })
     },
@@ -86,8 +86,7 @@ export default {
           this.success = false
         }, 4000)
       } else {
-        // Обработка ошибки, если необходимо
-        console.error(response.error)
+        console.warn(response.error)
       }
     },
   },
