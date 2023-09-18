@@ -2,7 +2,6 @@
   <div class="app">
     <the-header></the-header>
     <nuxt />
-    <the-footer></the-footer>
     <background-layer></background-layer>
   </div>
 </template>
@@ -11,9 +10,8 @@
 import Lenis from '@studio-freight/lenis'
 import TheHeader from '../components/navigations/the-header.vue'
 import BackgroundLayer from '../components/ui/BackgroundLayer.vue'
-import TheFooter from '../components/navigations/the-footer.vue'
 export default {
-  components: { BackgroundLayer, TheHeader, TheFooter },
+  components: { BackgroundLayer, TheHeader },
   mounted() {
     const lenis = new Lenis({
       duration: 2,

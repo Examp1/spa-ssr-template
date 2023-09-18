@@ -1,5 +1,4 @@
 export const getPageBySlug = async ({ $axios, redirect, i18n }, slug) => {
-  console.log(slug);
   try {
     const { data } = await $axios.$post('/api/page/get-by-slug', {
       lang: i18n.locale,
