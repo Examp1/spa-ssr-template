@@ -35,11 +35,6 @@ export default {
     changeLanguage(lang) {
       this.$i18n.setLocale(lang)
     },
-    switchLocale(locale) {
-      if (this.currentLocale === locale) return
-      this.otherLocale = this.currentLocale
-      this.currentLocale = locale
-    },
   },
 }
 </script>
