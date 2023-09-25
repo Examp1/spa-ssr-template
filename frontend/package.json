@@ -8,6 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "test": "node updateNuxtBlade.js",
     "build+gen": "nuxt build && nuxt generate && node updateNuxtBlade.js"
   },
   "devDependencies": {
