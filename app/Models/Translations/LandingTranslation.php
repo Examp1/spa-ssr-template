@@ -87,7 +87,7 @@ class LandingTranslation extends Model implements HasConstructor
             'cta'                  => ComponentCollections::cta(),
             'link-list'            => ComponentCollections::linkList(),
             'text-divider'         => ComponentCollections::textDivider(),
-            'blocks-slider'        => ComponentCollections::blocksSlider(),
+//            'blocks-slider'        => ComponentCollections::blocksSlider(),
             'team'                 => ComponentCollections::team(),
             'theses'               => ComponentCollections::theses(),
             'partners'             => ComponentCollections::partners(),
