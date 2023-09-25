@@ -172,7 +172,7 @@ class BlogArticlesController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->route($this->routeName.'.edit', $model->id)->with('success', __('Created successfully!'));
+            return redirect()->route($this->routeName.'.edit',['page' =>  $model->id,'lang' => $request->get('tab_lang',config('translatable.locale'))])->with('success', __('Created successfully!'));
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Created successfully!'));
         }
@@ -314,7 +314,7 @@ class BlogArticlesController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->back()->with('success', __('Updated successfully!'));
+            return redirect()->back()->with('success', __('Updated successfully!'))->withInput(['lang' => $request->get('tab_lang',config('translatable.locale'))]);
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Updated successfully!'));
         }

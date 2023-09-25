@@ -179,41 +179,6 @@ class ComponentCollections
     /**
      * @return array
      */
-    public static function simpleTextBtnLeft()
-    {
-        return [
-            'label'  => 'Текст с кнопкой праворуч',
-            'params' => [
-                'labels'     => [
-                    'title'            => 'Заголовок',
-                    'anker_title'      => 'Anker title',
-                    'font_size'        => 'Розмір шрифту',
-                    'top_separator'    => 'Верхній роздільник',
-                    'bottom_separator' => 'Нижній роздільник',
-                    'title_font_size'  => 'Розмір шрифту заголовка',
-                ],
-                'btn_type'   => self::BTN_TYPE,
-                'btn_icon'   => self::BTN_ICON,
-                'separator'  => self::SEPARATOR,
-                'font_size'  => [
-                    'normal' => 'Звичайний',
-                    'small'  => 'Маленький',
-                ],
-                'shown_name' => 'title'
-            ],
-            'rules'  => [
-                'content.title'       => 'nullable|string|max:255',
-                'content.description' => 'nullable|string|max:65000',
-                'content.background'  => 'nullable|string|max:255',
-                'content.font_size'   => 'nullable|string|max:255',
-                'content.btns.*.item' => 'nullable|string|max:255',
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public static function simpleText()
     {
         return [
@@ -337,44 +302,6 @@ class ComponentCollections
                 'content.title.max' => 'Заголовок максимум 255 символів',
                 'content.text.max'  => 'Текст - максимум 65000 символів',
             ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function images3()
-    {
-        return [
-            'label'    => '3 картинки в ряд',
-            'params'   => [
-                'labels'     => [
-                    'title'            => 'Заголовок',
-                    'anker_title'      => 'Anker title',
-                    'image'            => 'Зображення',
-                    'font_size'        => 'Розмір шрифту',
-                    'top_separator'    => 'Верхній роздільник',
-                    'bottom_separator' => 'Нижній роздільник',
-                    'title_font_size'  => 'Розмір шрифту заголовка',
-                ],
-                'font_size'  => [
-                    'normal' => 'Звичайний',
-                    'small'  => 'Маленький',
-                ],
-                'btn_type'   => self::BTN_TYPE,
-                'btn_icon'   => self::BTN_ICON,
-                'separator'  => self::SEPARATOR,
-                'shown_name' => 'title'
-            ],
-            'rules'    => [
-                'content.title' => 'nullable|string|max:255',
-                'content.image' => 'nullable|string|max:255',
-                'content.list'  => 'required|array|min:3|max:3',
-            ],
-            'messages' => [
-                'content.list.min' => 'Мінімум 3 зображення',
-                'content.list.max' => 'Максимум 3 зображення',
-            ]
         ];
     }
 
