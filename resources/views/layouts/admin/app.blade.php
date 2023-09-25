@@ -16,7 +16,7 @@
     <link href="{{ asset('matrix/libs/flot/css/float-chart.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('matrix/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin/reStyle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/re-style.css') }}" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />

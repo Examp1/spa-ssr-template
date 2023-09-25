@@ -76,6 +76,14 @@ use Illuminate\Support\Facades\Request;
                     </li>
                 @endcan
 
+                <li class="sidebar-item @if(in_array(Request::segment(2),['landings'])) active @endif">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('landing.index')}}"
+                       aria-expanded="false">
+                        <i class="mdi mdi-book-open-page-variant"></i>
+                        <span class="hide-menu">Лендінги</span>
+                    </a>
+                </li>
+
                 @if(
                 auth()->user()->can('blog_articles_view')
                 || auth()->user()->can('blog_tags_view')
