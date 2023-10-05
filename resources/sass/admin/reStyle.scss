@@ -17,18 +17,24 @@
     }
 }
 
-select{
+select {
     width: 100%;
 }
 
-.attr-containerNew:last-of-type {
-    .input-group {
-        flex-direction: column;
+.attr-containerNew {
+    .input-group.image {
+        // flex-direction: column;
+        .input-group-text + .form-control{
+            width: 90%;
+        }
+        .media-wrapper{
+            width: 100% ! important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
     }
 
-    .media-wrapper,
-    .form-control {
-        width: 100% ! important;
-    }
 
 }

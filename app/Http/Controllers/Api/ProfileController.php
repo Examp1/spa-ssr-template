@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Core\Error\ErrorManager;
 use App\Core\Response\ResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Mail\Profile\RegConfirmEmail;
+use App\Mail\RegConfirmEmail;
 use App\Models\User;
 use App\Models\UserVerified;
-use App\Service\SendMailGunTemplate;
 use Carbon\Carbon;
 use Daaner\TurboSMS\Facades\TurboSMS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,13 +23,69 @@ class ProfileController extends Controller
     use ResponseTrait;
 
     /**
-     * @var SendMailGunTemplate
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
-    private $mailer;
-
-    public function __construct(SendMailGunTemplate $sendMailGunTemplate)
+    public function show(Request $request)
     {
-        $this->mailer = $sendMailGunTemplate;
+        $user = auth('api')->user();
+
+        if ($user) {
+
+            if (!$decodedJson = $request->json()->all()) {
+                return $this->errorResponse(
+                    ErrorManager::buildError(VALIDATION_REQUEST_JSON_EXPECTED),
+                    Response::HTTP_UNPROCESSABLE_ENTITY
+                );
+            }
+
+            if (isset($decodedJson['lang'])) {
+                $lang = $decodedJson['lang'];
+            } else {
+                $lang = config('translatable.locale');
+            }
+
+            app()->setLocale($lang);
+
+            $data['user'] = [
+                'name'  => $user->name,
+                'phone' => $user->phone,
+                'email' => $user->email
+            ];
+
+
+            $data['orders'] = [];
+
+            foreach ($user->orders as $order) {
+                $data['orders'][] = app(CartController::class)->formatOrder($order);
+            }
+
+            $data['wishlist'] = [
+                'share'    => $user->wishlist_share ?: '',
+                'products' => $user->wishlists()->with([
+                    'product' => function ($query) {
+                        $query->leftJoin('product_translations', 'product_translations.product_id', '=', 'products.id')
+                            ->where('product_translations.lang', app()->getLocale());
+                        $query->with([
+                            'prices' => function ($query) {
+                                $query->active();
+                            }
+                        ]);
+                        $query->select([
+                            'products.*',
+                            'product_translations.name',
+                        ]);
+                    },
+                ])->get()->toArray(),
+            ];
+            return $this->successResponse($data);
+        }
+
+        return $this->errorResponse(
+            ErrorManager::buildError(VALIDATION_UNAUTHORIZED, ['user']),
+            Response::HTTP_UNPROCESSABLE_ENTITY
+        );
     }
 
     /**
@@ -68,27 +124,70 @@ class ProfileController extends Controller
 
         app()->setLocale($lang);
 
-        if (isset($decodedJson['phone']) && $decodedJson['phone']) {
-            if (!config('api_account.registration.phone_confirm')) {
-                // если не нужно подтверждение по телефону
-                $user->phone = $decodedJson['phone'];
-            } else {
-                return $this->returnPhoneConfirm($user, $decodedJson['phone']);
+        $fields = [
+            'name'     => 'required|min:2',
+            'lastname' => 'required|min:2',
+            // 'surname' => 'required|min:2',
+            'email'    => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'phone'    => 'nullable|string|max:255',
+            'birthday' => 'nullable|date|before:today',
+        ];
+
+        $validateFields = [];
+
+
+
+        foreach ($fields as $field_name => $field_rule) {
+            if (isset($decodedJson[$field_name]) && !empty($decodedJson[$field_name])) {
+                $validateFields[$field_name] = $field_rule;
             }
         }
 
-        if (isset($decodedJson['email']) && $decodedJson['email']) {
+        $validator = Validator::make($decodedJson, $validateFields);
+
+        if ($validator->fails()) {
+            return $this->errorResponse(
+                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD, $validator->errors()->toArray()),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $validatedData = $validator->validated();
+
+        if (!empty($validatedData)) {
+            $user->update($validatedData);
+        }
+
+        if (isset($validatedData['phone']) && $validatedData['phone']) {
+            if (!config('api_account.registration.phone_confirm')) {
+                // если не нужно подтверждение по телефону
+                $user->phone = $validatedData['phone'];
+            } else {
+                return $this->returnPhoneConfirm($user, $validatedData['phone']);
+            }
+        }
+
+        if (isset($validatedData['email']) && $validatedData['email']) {
+            $user_exist = User::query()->where(function ($query) use ($validatedData, $user) {
+                $query->where('email', $validatedData['email']);
+                $query->where('id', '<>', $user->id);
+            })->exists();
+
+            if ($user_exist) {
+                return $this->errorResponse(
+                    ErrorManager::buildError(VALIDATION_EMAIL_ALREADY_EXISTS)
+                );
+            }
+
+            $user->email = $validatedData['email'];
+            $user->email_verified_at = null;
+            $user->save();
+
             if (!config('api_account.registration.email_confirm')) {
                 // если не нужно подтверждение по email
-                $user->email = $decodedJson['email'];
+                // $user->email = $decodedJson['email'];
             } else {
-                if(User::query()->where('email',$decodedJson['email'])->exists()){
-                    return $this->errorResponse(
-                        ErrorManager::buildError(VALIDATION_EMAIL_ALREADY_EXISTS)
-                    );
-                }
-
-                return $this->returnEmailConfirm($user, $decodedJson['email'], $lang);
+                return $this->returnEmailConfirm($user, $validatedData['email'], $lang);
             }
         }
 
@@ -96,6 +195,7 @@ class ProfileController extends Controller
             if (Hash::check($decodedJson['oldPassword'], $user->password)) {
                 // если не нужно подтверждение
                 $user->password = Hash::make($decodedJson['newPassword']);
+                $user->save();
             } else {
                 return $this->errorResponse(
                     ErrorManager::buildError(VALIDATION_UNAUTHORIZED),
@@ -103,8 +203,6 @@ class ProfileController extends Controller
                 );
             }
         }
-
-        $user->save();
 
         return $this->successResponse(['user' => $user]);
     }
@@ -191,12 +289,12 @@ class ProfileController extends Controller
             );
         }
 
-        if (!isset($decodedJson['new_email'])) {
-            return $this->errorResponse(
-                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD, ['new_email']),
-                Response::HTTP_UNPROCESSABLE_ENTITY
-            );
-        }
+        // if (!isset($decodedJson['new_email'])) {
+        //     return $this->errorResponse(
+        //         ErrorManager::buildError(VALIDATION_REQUIRED_FIELD, ['new_email']),
+        //         Response::HTTP_UNPROCESSABLE_ENTITY
+        //     );
+        // }
 
         /* @var $verified UserVerified */
         $verified = UserVerified::query()
@@ -211,7 +309,7 @@ class ProfileController extends Controller
             );
 
         $user->email_verified_at = Carbon::now();
-        $user->email = $decodedJson['new_email'];
+        // $user->email = $decodedJson['new_email'];
         $user->save();
         $verified->delete();
 
@@ -231,8 +329,8 @@ class ProfileController extends Controller
             'type'  => UserVerified::TYPE_PHONE
         ]);
 
-        if(config('api_account.debug')){
-            Log::info('api_debug',[
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
                 'method' => 'returnPhoneConfirm',
                 'data' => [
                     'field' => $user->phone,
@@ -263,14 +361,8 @@ class ProfileController extends Controller
 
         $link = url('/profile/user-email-confirm/token/' . $token);
 
-        $template = SendMailGunTemplate::TEMPLATE_REGISTRATION_CONFIRM_EMAIL;
-
-        if ($lang != config('translatable.locale')) {
-            $template .= '_' . $lang;
-        }
-
-        if(config('api_account.debug')){
-            Log::info('api_debug',[
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
                 'method' => 'returnEmailConfirm',
                 'data' => [
                     'link'  => $link,
@@ -278,16 +370,11 @@ class ProfileController extends Controller
                 ]
             ]);
         } else {
-            $this->mailer->sendMail(
-                config('mail.mailers.mailgun.from_address'),
-                $email,
-                __('Email confirmation'),
-                $template,
-                [
-                    'name' => $user->name,
-                    'link' => $link
-                ]
-            );
+            $objData       = new \stdClass();
+            $objData->name = $user->name;
+            $objData->link = $link;
+
+            Mail::to($email)->send(new RegConfirmEmail($objData));
         }
 
         return $this->successResponse([

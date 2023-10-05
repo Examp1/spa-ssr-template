@@ -15,8 +15,8 @@
     <title>{{ env('APP_NAME') }}</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
-{{--    <link rel="stylesheet" href="{{asset('/css/front/style.css')}}">--}}
-    <link rel="stylesheet" href="{{asset('/css/front/main.css')}}">
+{{--    <link rel="stylesheet" href="{{ asset('/css/front/style.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('/css/front/main.css') }}">
 
     @stack('styles')
 </head>

@@ -25,7 +25,22 @@ return [
             'model' => \App\Models\BlogCategories::class,
             'changefreq' => 'monthly',
             'priority'   => '0.8'
-        ]
+        ],
+        'Landing'        => [
+            'model' => \App\Models\Landing::class,
+            'changefreq' => 'weekly',
+            'priority'   => '0.7'
+        ],
+        'Categories'        => [
+            'model' => Owlwebdev\Ecom\Models\Category::class,
+            'changefreq' => 'weekly',
+            'priority'   => '0.7'
+        ],
+        'Products'        => [
+            'model' => Owlwebdev\Ecom\Models\Product::class,
+            'changefreq' => 'weekly',
+            'priority'   => '0.7'
+        ],
     ],
 
     /*

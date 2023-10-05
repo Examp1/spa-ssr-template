@@ -194,7 +194,7 @@
 }
 
 .section_item .inputWrapper input {
-  width: 46px;
+  width: 4em;
 }
 
 .section_item .wrp {
@@ -446,12 +446,14 @@ select {
   width: 100%;
 }
 
-.attr-containerNew:last-of-type .input-group {
-  flex-direction: column;
+.attr-containerNew .input-group.image .input-group-text + .form-control {
+  width: 90%;
 }
 
-.attr-containerNew:last-of-type .media-wrapper,
-.attr-containerNew:last-of-type .form-control {
+.attr-containerNew .input-group.image .media-wrapper {
   width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
 }
-

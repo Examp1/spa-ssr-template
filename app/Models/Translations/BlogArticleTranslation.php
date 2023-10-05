@@ -30,6 +30,8 @@ class BlogArticleTranslation extends Model implements HasConstructor
         'meta_auto_gen',
         'image',
         'alt',
+        'preview_image',
+        'preview_alt',
         'image_mob',
         'alt_mob',
         'constructor_html',

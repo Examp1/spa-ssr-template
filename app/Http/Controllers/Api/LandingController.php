@@ -50,20 +50,14 @@ class LandingController extends Controller
         $query = Landing::query()
             ->leftJoin('landing_translations', 'landing_translations.landing_id', '=', 'landings.id')
             ->where('landing_translations.lang', $lang)
-            ->where('landing_translations.status_lang', 1)
             ->select([
                 'landings.*',
                 'landing_translations.title AS pageName'
             ]);
 
-        if (isset($decodedJson['prevw'])) {
-            if ($decodedJson['prevw'] == crc32($decodedJson['slug'])) { // check
-                // good
-            } else {
-                $query->active()->where('landing_translations.status_lang', 1);
-            }
-        } else {
-            $query->active()->where('landing_translations.status_lang', 1);
+        //show without active status
+        if (!isset($decodedJson['prevw']) || $decodedJson['prevw'] != crc32($decodedJson['slug'])) {
+            $query->where('landing_translations.status_lang', 1)->active();
         }
 
         $model = $query

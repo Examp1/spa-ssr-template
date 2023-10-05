@@ -9,7 +9,7 @@
                 <b class="logo-icon ps-2">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
-                    <img src="{{asset('/images/logo-icon.png')}}" alt="homepage" class="light-logo" />
+                    <img src="{{ asset('/images/logo-icon.png') }}" alt="homepage" class="light-logo" />
 
                 </b>
                 <!--End Logo icon -->
@@ -160,12 +160,12 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item d-none d-lg-block" title="{{ __('Clear cache') }}">
-                    <a class="nav-link waves-effect waves-light" href="{{route('cache-clear')}}">
+                    <a class="nav-link waves-effect waves-light" title="Скинути кеш" href="{{route('cache-clear')}}">
                         <i class="mdi mdi-cached font-24"></i>
                     </a>
                 </li>
                 <li class="nav-item d-none d-lg-block">
-                    <a class="nav-link waves-effect waves-light" href="/" target="_blank">
+                    <a class="nav-link waves-effect waves-light" title="Перейти на сайт" href="/" target="_blank">
                         <i class="mdi mdi-eye font-24"></i>
                     </a>
                 </li>

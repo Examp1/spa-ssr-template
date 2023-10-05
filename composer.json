@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "aranyasen/laravel-adminer": "^2.0",
         "astrotomic/laravel-translatable": "^11.9",
         "barryvdh/laravel-dompdf": "^2.0",
         "butschster/meta-tags": "^2.2",
@@ -25,14 +26,26 @@
         "laravel/ui": "^3.2",
         "maatwebsite/excel": "^3.1",
         "mailgun/mailgun-php": "^3.5",
+        "maksa988/laravel-esputnik": "^1.0",
         "nyholm/psr7": "^1.5",
+        "owlwebdev/ecom": "dev-master",
         "spatie/laravel-permission": "^5.5",
         "tymon/jwt-auth": "^1.0",
         "unisharp/laravel-filemanager": "^2.2"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/owlwebdev/ecom",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.5",
         "laravel/sail": "^1.16",
         "laravel/telescope": "^4.14",
         "mockery/mockery": "^1.4.2",

@@ -144,7 +144,8 @@ if (!function_exists('get_interlink')) {
                 'link_type' => 'form',
                 'link'      => '',
                 'form_id'   => $formId,
-                'form_data' => $contentData
+                'form_data' => $contentData,
+                'btn_name' => $form->btn_name,
             ];
         } else {
             $model = config('menu.entities')[$type]::query()->where('id', $id)->active()->first();
@@ -289,5 +290,29 @@ if (!function_exists('printTruncated')) {
             $string .= sprintf('</%s>', array_pop($tags));
 
         return $string;
+    }
+}
+
+if (!function_exists('acronym')) {
+
+    function acronym($string, $delimiter = '')
+    {
+        if (empty($string)) {
+            return '';
+        }
+
+        $acronym = '';
+        foreach (preg_split('/[\s\W]+/siu', trim($string)) as $word) {
+            if (!empty($word)) {
+                if (is_numeric($word)) {
+                    $acronym .= $word . $delimiter;
+                } else {
+                    $first_letter = mb_substr($word, 0, 1);
+                    $acronym .= $first_letter . $delimiter;
+                }
+            }
+        }
+
+        return strtoupper($acronym);
     }
 }

@@ -81,8 +81,10 @@ class UserController extends Controller
 
         $user = User::create([
             'name'           => $request->get('name'),
+            'lastname'       => $request->get('lastname'),
             'email'          => $request->get('email'),
             'phone'          => $request->get('phone'),
+            'birthday'       => $request->get('birthday'),
             'discount_id'    => $request->get('discount_id'),
             'password'       => Hash::make($request->get('password')),
             'status'         => User::STATUS_REGISTER,
@@ -164,8 +166,17 @@ class UserController extends Controller
 
         $user = User::query()->where('id', $id)->first();
 
-        $user->syncRoles([]);
+        if ($user->carts->isNotEmpty()) {
 
+            $msg = ' ';
+            foreach ($user->carts as $order) {
+                $msg .= '#' . $order->id . ' ';
+            }
+            return redirect()->route('users.index')->with('error', __('Can`t delete, User has orders') . $msg);
+        }
+
+        $user->syncRoles([]);
+        $user->wishlists()->delete();
         $user->delete();
 
         return redirect()->route('users.index')->with('success', __('Deleted successfully!'));
@@ -185,8 +196,13 @@ class UserController extends Controller
                     continue;
                 }
 
-                $user->syncRoles([]);
+                if ($user->carts->isNotEmpty()) {
+                    $not_deleted[] = $id;
+                    continue;
+                }
 
+                $user->syncRoles([]);
+                $user->wishlists()->delete();
                 $user->delete();
             }
 

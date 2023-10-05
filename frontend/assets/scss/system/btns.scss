@@ -1,40 +1,60 @@
 .btn {
-  padding: 22px 30px;
-  text-decoration: none;
-  position: relative;
-  transition: .3s;
-  cursor: pointer;
-  border-radius: 50px;
-  &:has(i) {
-    padding-right: 64px;
+    padding: 15px 31px;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #000;
+    font-family: Calibri;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    &:has(i) {
+        padding-right: 64px;
+        i {
+            transition: inherit;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 32px;
+        }
+    }
 
-    i {
-      transition: inherit;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 32px;
+    &.fill {
+        background-color: $black;
+        color: #fff;
+        border: 2px solid black;
+        &:hover {
+            background-color: transparent;
+            color: $black;
+        }
     }
-  }
-
-  &.fill {
-    background-color: $black;
-    color: #fff;
-    border: 2px solid black;
-    &:hover{
-      background-color: transparent;
-      color: $black;
+    &.stroke {
+        border: 2px solid $black;
+        color: $black;
+        &:hover {
+            background-color: $black;
+            color: #fff;
+        }
     }
-  }
-  &.stroke {
-    border: 2px solid $black;
-    color: $black;
-    &:hover{
-      background-color: $black;
-      color: #fff
+    &.simple {
+        color: $black;
     }
-  }
-  &.simple{
-    color: $black
-  }
+}
+// custom
+.btn {
+    &-main {
+        background-color: $primary;
+        display: flex;
+        align-items: center;
+        svg{
+            margin-right: 10px;
+        }
+    }
+    &-small {
+        padding: 3px 10px;
+        font-weight: 400;
+    }
 }

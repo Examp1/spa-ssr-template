@@ -1,12 +1,48 @@
+body {
+    margin: 0;
+    color: #000;
+    font-family: 'Calibri';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
+    background: #fff;
+    min-width: 380px;
+    height: 100%;
+    position: relative;
+    -webkit-text-size-adjust: none;
+}
+
+#wrapper {
+    overflow: hidden;
+}
+
+html,
+body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+        background: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    &:focus {
+        background: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
 ins {
-  text-decoration: none !important;
-  font-weight: 800 !important;
+    text-decoration: none !important;
+    font-weight: 800 !important;
 }
 
 /* Для WebKit-браузеров */
 ::-webkit-scrollbar {
-  width: 2px;
-  /* Ширина скроллбара */
+    width: 2px;
+    /* Ширина скроллбара */
 }
 
 // ::-webkit-scrollbar-track {
@@ -15,14 +51,14 @@ ins {
 // }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
-  /* Цвет ползунка скроллбара */
+    background-color: #888;
+    /* Цвет ползунка скроллбара */
 }
 
 /* Для Firefox */
 scrollbar {
-  width: 10px;
-  /* Ширина скроллбара */
+    width: 10px;
+    /* Ширина скроллбара */
 }
 
 // scrollbar-track {
@@ -31,10 +67,62 @@ scrollbar {
 // }
 
 scrollbar-thumb {
-  background-color: #888;
-  /* Цвет ползунка скроллбара */
+    background-color: #888;
+    /* Цвет ползунка скроллбара */
 }
 
 img {
-  width: 100%;
+    width: 100%;
+}
+
+.dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    grid-gap: 5px;
+
+    li {
+        transition: 0.3s;
+        width: 10px;
+        height: 10px;
+        border-radius: 100px;
+        cursor: pointer;
+        background-color: #E1E1E1;
+
+        &.active {
+            background-color: #FECA0A;
+        }
+
+        &:hover {
+            background-color: #FECA0A;
+        }
+    }
+}
+
+.slick-dots {
+    bottom: 20px;
+
+    li {
+        width: 10px;
+        height: 10px;
+
+        &.slick-active button::before {
+            background-color: #FECA0A;
+        }
+
+        &:hover button::before {
+            background-color: #FECA0A;
+        }
+
+        button::before {
+            width: 10px;
+            height: 10px;
+            font-size: 0;
+            opacity: 1;
+            border-radius: 50%;
+            background-color: #E1E1E1;
+        }
+    }
 }

@@ -66,6 +66,8 @@
                         class="form-control{{ $errors->has('setting_data.' . $key . '.' . $tab . '_meta_description') ? ' is-invalid' : '' }}">
                 </div>
             </div>
+
+            <hr>
             @include('admin.settings.tabs._generate', ['generate_route' => route('landing.meta-generate')])
         </div>
     @endforeach

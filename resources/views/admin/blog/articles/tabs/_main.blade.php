@@ -55,11 +55,7 @@
             box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
         }
 
-        .select2-container--classic .select2-selection--single,
-        .select2-container--default .select2-selection--multiple,
-        .select2-container--default .select2-selection--single,
-        .select2-container--default .select2-selection--single .select2-selection__arrow,
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
+        .select2-container--default .select2-selection--multiple {
             height: inherit;
         }
     </style>

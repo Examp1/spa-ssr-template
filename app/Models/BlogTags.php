@@ -187,7 +187,7 @@ class BlogTags extends BaseModelSection implements ModelSection
     {
         return BlogTagTranslation::query()
             ->where('blog_tags_id', $this->id)
-            ->where('lang',$lang)
+            ->where('lang', $lang)
             ->where('name', '<>', '')
             ->exists();
     }

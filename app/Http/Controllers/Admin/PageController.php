@@ -151,7 +151,7 @@ class PageController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();
@@ -160,7 +160,7 @@ class PageController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->route($this->routeName.'.edit',['page' =>  $model->id,'lang' => $request->get('tab_lang',config('translatable.locale'))])->with('success', __('Created successfully!'));
+            return redirect()->route($this->routeName.'.edit', $model->id)->with('success', __('Created successfully!'));
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Created successfully!'));
         }
@@ -284,7 +284,7 @@ class PageController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();
@@ -293,7 +293,7 @@ class PageController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->back()->with('success', __('Updated successfully!'))->withInput(['lang' => $request->get('tab_lang',config('translatable.locale'))]);
+            return redirect()->back()->with('success', __('Updated successfully!'));
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Updated successfully!'));
         }

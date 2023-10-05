@@ -1,42 +1,93 @@
 <template>
-  <footer>
+  <footer class="footer">
     <div class="container">
-      <p class="copy">{{ getSettings.copyright }}</p>
-      <a href="https://owlweb.com.ua/" target="_blank" rel="nofollow">
-        Created by
-        <svg
-          width="30"
-          height="14"
-          version="1.0"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 226.000000 141.000000"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <g
-            transform="translate(0.000000,141.000000) scale(0.100000,-0.100000)"
-            fill="#DFE2F5"
-            stroke="none"
-          >
-            <path
-              d="M334 1218 l155 -163 -78 -20 c-100 -27 -178 -74 -250 -150 -94 -101
-                -130 -196 -131 -341 0 -193 101 -354 279 -444 78 -39 154 -53 253 -48 74 4 95
-                9 169 46 96 48 224 141 330 241 l74 68 74 -69 c108 -100 234 -192 330 -240 74
-                -37 95 -42 169 -46 99 -5 175 9 253 48 178 90 279 251 279 444 -1 153 -38 244
-                -145 352 -77 77 -157 123 -257 145 l-58 12 156 164 156 163 -136 0 -136 0
-                -342 -346 -343 -346 -342 346 -342 346 -136 0 -137 0 156 -162z m286 -383 c67
-                -24 201 -118 296 -208 l86 -81 -64 -58 c-98 -90 -217 -178 -283 -210 -139 -65
-                -302 -8 -380 133 -26 47 -30 64 -30 134 0 63 5 90 23 126 67 137 224 209 352
-                164z m1237 -19 c63 -32 115 -83 145 -145 18 -36 23 -63 23 -126 0 -70 -4 -87
-                -30 -134 -53 -96 -161 -161 -268 -161 -90 0 -223 79 -395 238 l-64 58 86 81
-                c91 86 227 183 292 208 57 22 148 14 211 -19z"
-            ></path>
-            <path
-              d="M1065 220 l-69 -70 64 -65 c35 -36 69 -65 75 -65 6 0 40 29 75 65
-                l65 65 -70 70 -70 70 -70 -70z"
-            ></path>
-          </g>
-        </svg>
-      </a>
+      <div class="footer_container">
+        <div class="footer_column">
+          <div class="footer_logo">
+            <component :is="$route.name.includes('index__') ? 'span' : 'nuxt-link'" to="/">
+                <img :src="path(getSettings.logofooter)" alt="">
+            </component>
+          </div>
+          <p class="cop">{{ getSettings.copyright }}</p>
+          <ul class="footer_column-nav">
+            <li><a href="">Умови використання сайту</a></li>
+            <li><a href="">Публічний договір</a></li>
+          </ul>
+          <ul class="footer_column-bank">
+            <li>
+              <img src="img/icon-bank3.svg" alt="img" />
+            </li>
+            <li>
+              <img src="img/icon-bank4.svg" alt="img" />
+            </li>
+          </ul>
+          <span class="createdBy">Created by <i></i></span>
+        </div>
+        <div class="footer_nav twoColumns">
+          <div class="footer_titleColumn">Категорії товарів</div>
+          <ul>
+            <li><a href="">Дивани</a></li>
+            <li><a href="">Комоди, тумби</a></li>
+            <li><a href="">Ліжка</a></li>
+            <li><a href="">Серванти, стелажі, пенали</a></li>
+            <li><a href="">Матраци</a></li>
+            <li><a href="">Модульні системи</a></li>
+            <li><a href="">Столи</a></li>
+            <li><a href="">Офісні</a></li>
+            <li><a href="">Стільці</a></li>
+            <li><a href="">Меблі для ванної</a></li>
+            <li><a href="">Крісла</a></li>
+            <li><a href="">Текстиль</a></li>
+            <li><a href="">Кухні</a></li>
+            <li><a href="">Меблі для саду, кемпінгу, літніх кафе</a></li>
+            <li><a href="">Шафи</a></li>
+          </ul>
+        </div>
+        <div class="footer_nav">
+          <div class="footer_titleColumn">Інформація</div>
+          <ul>
+            <li><a href="">Доставка та оплата</a></li>
+            <li><a href="">Оформити рекламацію</a></li>
+            <li><a href="">Поширені питання</a></li>
+            <li><a href="">Повернення та гарантія</a></li>
+            <li><a href="">Догляд за меблями</a></li>
+            <li><a href="">Дизайнерам</a></li>
+          </ul>
+        </div>
+        <div class="footer_nav">
+          <div class="footer_titleColumn">Про компанію</div>
+          <ul>
+            <li><a href="">Про нас</a></li>
+            <li><a href="">Вакансії</a></li>
+            <li><a href="">Контакти</a></li>
+            <li><a href="">Магазини</a></li>
+            <li><a href="">Проекти</a></li>
+          </ul>
+        </div>
+        <div class="footer_contacts">
+          <div class="footer_titleColumn">Контакти</div>
+          <strong>+38 (066) 662-90-91</strong>
+          <a href="" class="footer_site">zakaz@d2interier.com</a>
+          <div class="footer_times">
+            <div class="footer_time">
+              <b>Графік роботи магазину</b>
+              <span>10:00-19:00</span>
+            </div>
+            <div class="footer_time">
+              <b>Онлайн замовлення</b>
+              <span>09:00-21:00</span>
+            </div>
+          </div>
+          <div class="footer_soc">
+            <ul>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+              <li><a href=""></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -54,22 +105,510 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-footer {
-  background-color: $text-primary;
-  .container {
+.footer {
+  background-color: #f5f5f5;
+  padding: 70px 0;
+  @include _991 {
+    padding: 70px 0 30px;
+    .container {
+      padding: 0;
+    }
+  }
+  @include _480 {
+    padding: 50px 0 25px;
+  }
+  &_container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    color: $text-secondary;
-    a {
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 145%;
-      letter-spacing: -0.4px;
-      color: $text-secondary;
-      text-decoration: none;
+    @include _991 {
+      flex-wrap: wrap;
     }
+  }
+  &_logo {
+    margin-bottom: 10px;
+    a {
+      display: block;
+      @include size(208px, 69px);
+    //   background: url(../img/footer-logo.svg) no-repeat;
+    }
+    @include _991 {
+      margin: 0;
+      a {
+        @include size(159px, 52px);
+        background-size: 100% 100%;
+      }
+    }
+  }
+  &_column {
+    p.cop {
+      display: block;
+      margin-bottom: 20px;
+      font-family: Calibri;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 15px;
+      color: #959595;
+    }
+    &-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      li {
+        margin-bottom: 5px;
+        &:last-child {
+          margin: 0;
+        }
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        font-family: Calibri;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #696969;
+        @include transition;
+        position: relative;
+        &:after {
+          @include after;
+          position: absolute;
+          @include transition;
+          bottom: 1px;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          background-color: #696969;
+        }
+        &:hover:after {
+          width: 0;
+        }
+      }
+    }
+    &-bank {
+      margin-bottom: 50px;
+      display: flex;
+      li {
+        margin-right: 10px;
+        &:last-child {
+          margin: 0;
+        }
+      }
+      img {
+        display: block;
+      }
+    }
+    .createdBy {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: -0.02em;
+      color: #959595;
+      i {
+        display: block;
+        margin-left: 3px;
+        // background: url(../img/iconka2.svg) no-repeat;
+        @include size(18px, 11px);
+      }
+    }
+    @include _991 {
+      width: 100%;
+      order: 5;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 30px 20px 0;
+      border-top: 1px solid #d9d9d9;
+      p.cop {
+        width: 100%;
+        order: 5;
+        font-size: 12px;
+        line-height: 17px;
+        padding: 28px 0 0 0;
+        margin: 0;
+      }
+      &-nav {
+        margin: 0;
+        a {
+          font-size: 14px;
+          line-height: 17px;
+        }
+      }
+      &-bank {
+        margin: 0;
+      }
+    }
+    @include _640 {
+      &-bank {
+        order: 2;
+      }
+      &-nav {
+        order: 3;
+      }
+      p.cop {
+        order: 4;
+        width: 50%;
+        padding-top: 5px;
+      }
+      .createdBy {
+        order: 5;
+        line-height: 17px;
+      }
+    }
+    @include _480 {
+      .footer_logo {
+        margin-bottom: 10px;
+      }
+      p.cop {
+        order: 2;
+        width: 50%;
+        padding-top: 0;
+        margin-bottom: 10px;
+      }
+      &-nav {
+        order: 3;
+        width: 50%;
+        margin-bottom: 20px;
+      }
+      &-bank {
+        order: 4;
+        width: 50%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+  &_titleColumn {
+    display: block;
+    margin-bottom: 20px;
+    color: #000;
+    font-family: Calibri;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    @include _991 {
+      font-size: 18px;
+      line-height: 22px;
+      margin: 0;
+    }
+  }
+  &_nav {
+    ul {
+      li {
+        display: flex;
+        margin-bottom: 15px;
+        &:last-child {
+          margin: 0;
+        }
+      }
+      a {
+        display: block;
+        text-decoration: none;
+        font-family: Calibri;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #696969;
+        @include transition;
+        position: relative;
+        &:after {
+          @include after;
+          position: absolute;
+          @include transition;
+          bottom: 1px;
+          left: 0;
+          width: 0;
+          height: 1px;
+          background-color: #696969;
+        }
+        &:hover:after {
+          width: 100%;
+        }
+      }
+    }
+    &.twoColumns {
+      max-width: 305px;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      li {
+        &:nth-child(odd) {
+          width: 120px;
+        }
+        &:nth-child(even) {
+          width: 180px;
+        }
+      }
+    }
+    @include _991 {
+      width: 100%;
+      border-top: 1px solid #d9d9d9;
+      &.twoColumns {
+        max-width: 100%;
+        ul {
+          display: none;
+        }
+      }
+      ul {
+        display: none;
+      }
+      .footer_titleColumn {
+        padding: 30px 20px;
+        position: relative;
+        &:after {
+          @include after;
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          transform: translate(0, -50%);
+        //   background: url(../img/icon-arrow-bot-black.svg) no-repeat;
+          @include size(14px);
+        }
+      }
+    }
+    @include _640 {
+      .footer_titleColumn {
+        padding: 25px 15px;
+      }
+    }
+  }
+  &_contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #000;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 29px;
+    }
+    @include _991 {
+      width: 100%;
+      order: 4;
+      padding: 30px 20px 30px;
+      border-top: 1px solid #d9d9d9;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .footer_titleColumn {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      strong {
+        width: 50%;
+        margin: 0 0 20px 0;
+      }
+      a.footer_site {
+        font-size: 24px;
+        width: 50%;
+        line-height: 29px;
+        text-decoration: underline;
+        margin: 0 0 20px 0;
+        &:after {
+          display: none;
+        }
+        &:before {
+          display: none;
+        }
+      }
+      .footer_times {
+        width: 50%;
+        order: 5;
+        display: flex;
+        margin: 0;
+        b {
+          font-size: 12px;
+          line-height: 14px;
+        }
+        span {
+          font-size: 12px;
+          line-height: 14px;
+        }
+      }
+      .footer_time {
+        margin: 0 20px 0 0;
+        &:last-child {
+          margin: 0;
+        }
+      }
+      .footer_soc {
+        width: 50%;
+        a {
+          @include size(34px);
+          &:after {
+            background-size: 100% 100% !important;
+          }
+          &:before {
+            background-size: 100% 100% !important;
+          }
+        }
+      }
+    }
+    @include _640 {
+      padding: 25px 15px 30px;
+    }
+    @include _480 {
+      strong {
+        width: 100%;
+        margin: 0 0 15px 0;
+      }
+      a.footer_site {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      .footer_times {
+        order: 4;
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      .footer_time {
+        width: 50%;
+        margin: 0;
+      }
+      .footer_soc {
+        order: 5;
+        width: 100%;
+        margin: 0;
+      }
+    }
+  }
+  &_site {
+    display: block;
+    color: #000;
+    font-family: Calibri;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    @include transition;
+    text-decoration: none;
+    position: relative;
+    margin-bottom: 30px;
+    &:after {
+      @include after;
+      position: absolute;
+      @include transition;
+      bottom: 1px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #000;
+    }
+    &:hover:after {
+      width: 0;
+    }
+  }
+  &_time {
+    margin-bottom: 10px;
+    &:last-child {
+      margin: 0;
+    }
+    b {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 17px;
+      color: #000;
+    }
+    span {
+      display: block;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 17px;
+      color: #696969;
+    }
+  }
+  &_soc {
+    padding-top: 0px;
+    ul {
+      display: flex;
+    }
+    li {
+      margin-right: 10px;
+      &:nth-child(1) a {
+        &:after {
+          @include transition;
+          @include after;
+          @include size(100%);
+          position: absolute;
+          opacity: 1;
+        //   background: url(../img/soc.svg) no-repeat;
+        }
+        &:before {
+          @include transition;
+          @include after;
+          @include size(100%);
+          position: absolute;
+          opacity: 0;
+        }
+      }
+      &:nth-child(2) a {
+        &:after {
+          @include transition;
+          @include after;
+          @include size(100%);
+          opacity: 1;
+          position: absolute;
+        //   background: url(../img/soc2.svg) no-repeat;
+        }
+        &:before {
+          @include transition;
+          @include after;
+          @include size(100%);
+          position: absolute;
+          opacity: 0;
+        }
+      }
+      &:nth-child(3) a {
+        &:after {
+          @include transition;
+          @include after;
+          @include size(100%);
+          opacity: 1;
+          position: absolute;
+        //   background: url(../img/soc3.svg) no-repeat;
+        }
+        &:before {
+          @include transition;
+          @include after;
+          @include size(100%);
+          position: absolute;
+          opacity: 0;
+        }
+      }
+      &:nth-child(4) a {
+        &:after {
+          @include transition;
+          @include after;
+          @include size(100%);
+          opacity: 1;
+          position: absolute;
+        //   background: url(../img/soc4.svg) no-repeat;
+        }
+        &:before {
+          @include transition;
+          @include after;
+          @include size(100%);
+          position: absolute;
+          opacity: 0;
+        }
+      }
+    }
+    a {
+      display: block;
+      @include size(24px);
+      position: relative;
+    }
+  }
+  &_times {
+    margin-bottom: 30px;
   }
 }
 </style>

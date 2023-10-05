@@ -1,38 +1,130 @@
 .gtc4 {
-  grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
-  @include lg {
-    grid-template-columns: repeat(3, 1fr);
-  }
+    @include _1440 {
+        grid-template-columns: repeat(3, 1fr);
+    }
 
-  @include s-lg {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    @include _1024 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  @include sm {
-    grid-template-columns: 1fr;
-  }
+    @include _640 {
+        grid-template-columns: 1fr;
+    }
 }
 .gtc3 {
-  grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
-  @include s-lg {
-    grid-template-columns: repeat(2, 1fr);
-  }
+    @include _1024 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-  @include sm {
-    grid-template-columns: 1fr;
-  }
+    @include _640 {
+        grid-template-columns: 1fr;
+    }
 }
 
 .gtc2 {
-  grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
-  @include s-lg {
-    grid-template-columns: 1fr;
-  }
+    @include _1024 {
+        grid-template-columns: 1fr;
+    }
 }
 
 .gtc1 {
-  grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
+}
+
+//
+
+.title {
+    display: block;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 42px;
+    text-align: left;
+    color: #000;
+    @media (max-width: 960px) {
+        font-size: 30px;
+        line-height: 36px;
+    }
+}
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.view-all {
+    border-radius: 0;
+    text-align: left;
+    justify-content: left;
+    color: #f1c10f;
+    font-family: Calibri;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    @include transition;
+    i {
+        display: block;
+        margin-left: 10px;
+        @include size(22px, 16px);
+        @include transition;
+        position: relative;
+        &:after {
+            @include after;
+            @include transition;
+            // background: url(../img/arrow-right-yellow.svg) no-repeat 50% 50%;
+            @include size(100%);
+            opacity: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        &:before {
+            @include after;
+            @include transition;
+            // background: url(../img/arrow-right-black.svg) no-repeat 50% 50%;
+            @include size(100%);
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+    &:hover {
+        color: #000;
+        i {
+            &:after {
+                opacity: 0;
+            }
+            &:before {
+                opacity: 1;
+            }
+        }
+    }
+    @include _991 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+    @include _480 {
+        font-size: 16px;
+        line-height: 20px;
+        i {
+            @include size(20px, 14px);
+            &:after {
+                background-size: 100% 100%;
+            }
+            &:before {
+                background-size: 100% 100%;
+            }
+        }
+    }
+}
+
+.dots{
+
 }

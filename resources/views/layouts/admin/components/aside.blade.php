@@ -76,13 +76,17 @@ use Illuminate\Support\Facades\Request;
                     </li>
                 @endcan
 
-                <li class="sidebar-item @if(in_array(Request::segment(2),['landings'])) active @endif">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('landing.index')}}"
-                       aria-expanded="false">
-                        <i class="mdi mdi-book-open-page-variant"></i>
-                        <span class="hide-menu">Лендінги</span>
-                    </a>
-                </li>
+                @can('landing_view')
+                    <li class="sidebar-item @if(in_array(Request::segment(2),['landing'])) active @endif">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('landing.index')}}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-book-open"></i>
+                            <span class="hide-menu">{{ __('Landings') }}</span>
+                        </a>
+                    </li>
+                @endcan
+
+                @include('ecom::admin.pieces.aside')
 
                 @if(
                 auth()->user()->can('blog_articles_view')
@@ -106,7 +110,7 @@ use Illuminate\Support\Facades\Request;
                                     </a>
                                 </li>
                             @endcan
-                            @can('blog_category_view')
+                            {{-- @can('blog_category_view')
                                 <li class="sidebar-item @if(in_array(Request::segment(3),['categories'])) active @endif">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                        href="{{route('blog.categories.index')}}" aria-expanded="false">
@@ -114,7 +118,7 @@ use Illuminate\Support\Facades\Request;
                                         <span class="hide-menu">{{ __('Categories') }}</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
                             @can('blog_tags_view')
                                 <li class="sidebar-item @if(in_array(Request::segment(3),['tags'])) active @endif">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
@@ -277,6 +281,16 @@ use Illuminate\Support\Facades\Request;
                                     </a>
                                 </li>
                             @endcan
+                            @can('setting_landing_view')
+                                <li class="sidebar-item @if(in_array(Request::segment(4),['landing'])) active @endif">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                       href="/admin/settings/landing"
+                                       aria-expanded="false">
+                                        <i class="mdi mdi-checkbox-blank-circle-outline"></i>
+                                        <span class="hide-menu">{{ __('Landings') }}</span>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('setting_theme_view')
                                 <li class="sidebar-item @if(in_array(Request::segment(4),['theme'])) active @endif">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
@@ -287,15 +301,16 @@ use Illuminate\Support\Facades\Request;
                                     </a>
                                 </li>
                             @endcan
+                            @include('ecom::admin.pieces.aside_settings')
                         </ul>
                     </li>
                 @endif
 
-                <li class="sidebar-item @if(in_array(Request::segment(2),['mailgun-test'])) active @endif">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('mailgun-test.index')}}"
+                <li class="sidebar-item @if(in_array(Request::segment(2),['mail-test'])) active @endif">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('mail-test.index')}}"
                        aria-expanded="false">
                         <i class="mdi mdi-mailbox"></i>
-                        <span class="hide-menu">Mailgun test</span>
+                        <span class="hide-menu">Mail test</span>
                     </a>
                 </li>
             </ul>

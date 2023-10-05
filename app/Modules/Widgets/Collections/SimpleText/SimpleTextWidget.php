@@ -13,7 +13,7 @@ class SimpleTextWidget implements WidgetInterface
 
     public static string $preview = 'simple-text.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING];
 
     /**
      * @var array

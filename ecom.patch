@@ -1,0 +1,206 @@
+diff --git a/app/Http/Controllers/Admin/UserController.php b/app/Http/Controllers/Admin/UserController.php
+index 898f4a41..d9424ef1 100644
+--- a/app/Http/Controllers/Admin/UserController.php
++++ b/app/Http/Controllers/Admin/UserController.php
+@@ -164,8 +164,17 @@ class UserController extends Controller
+ 
+         $user = User::query()->where('id', $id)->first();
+ 
+-        $user->syncRoles([]);
++        if ($user->carts->isNotEmpty()) {
+ 
++            $msg = ' ';
++            foreach ($user->carts as $order) {
++                $msg .= '#' . $order->id . ' ';
++            }
++            return redirect()->route('users.index')->with('error', __('Can`t delete, User has orders') . $msg);
++        }
++
++        $user->syncRoles([]);
++        $user->wishlists()->delete();
+         $user->delete();
+ 
+         return redirect()->route('users.index')->with('success', __('Deleted successfully!'));
+@@ -185,8 +194,13 @@ class UserController extends Controller
+                     continue;
+                 }
+ 
+-                $user->syncRoles([]);
++                if ($user->carts->isNotEmpty()) {
++                    $not_deleted[] = $id;
++                    continue;
++                }
+ 
++                $user->syncRoles([]);
++                $user->wishlists()->delete();
+                 $user->delete();
+             }
+ 
+diff --git a/app/Models/Menu.php b/app/Models/Menu.php
+index 36c912c9..45ec2d20 100644
+--- a/app/Models/Menu.php
++++ b/app/Models/Menu.php
+@@ -5,6 +5,8 @@ namespace App\Models;
+ use Astrotomic\Translatable\Translatable;
+ use Illuminate\Database\Eloquent\Model;
+ use Kalnoy\Nestedset\NodeTrait;
++use Owlwebdev\Ecom\Models\Product;
++use Owlwebdev\Ecom\Models\Category;
+ 
+ class Menu extends Model
+ {
+@@ -40,6 +42,8 @@ class Menu extends Model
+     const TYPE_LANDING          = 3;
+     const TYPE_BLOG_CATEGORY    = 4;
+     const TYPE_BLOG_TAGS        = 5; //Тег блога
++    const TYPE_PRODUCT_CATEGORY = 11; //Категорії товарів
++    const TYPE_PRODUCT          = 12; //Товари
+ 
+     public static function getVisibility(): array
+     {
+@@ -80,6 +84,8 @@ class Menu extends Model
+             self::TYPE_BLOG_TAGS        => __('Blog Tags'),
+             self::TYPE_LANDING          => __('Landings'),
+             self::TYPE_ARBITRARY        => __('Arbitrary link'),
++            self::TYPE_PRODUCT_CATEGORY => 'Категорії товарів',
++            self::TYPE_PRODUCT          => 'Товари',
+         ];
+     }
+ 
+@@ -91,6 +97,8 @@ class Menu extends Model
+             self::TYPE_LANDING          => Landing::getMenuConfig(),
+             self::TYPE_BLOG_CATEGORY    => BlogCategories::getMenuConfig(),
+             self::TYPE_BLOG_TAGS        => BlogTags::getMenuConfig(),
++            self::TYPE_PRODUCT_CATEGORY => Category::getMenuConfig(),
++            self::TYPE_PRODUCT          => Product::getMenuConfig(),
+         ];
+     }
+ 
+@@ -274,4 +282,14 @@ class Menu extends Model
+     {
+         return $this->hasOne(BlogTags::class, 'id', 'model_id');
+     }
++    
++    public function product()
++    {
++        return $this->hasOne(Product::class, 'id', 'model_id');
++    }
++
++    public function product_category()
++    {
++        return $this->hasOne(Category::class, 'id', 'model_id');
++    }
+ }
+diff --git a/app/Models/Settings.php b/app/Models/Settings.php
+index e2f3df0c..64b72509 100644
+--- a/app/Models/Settings.php
++++ b/app/Models/Settings.php
+@@ -39,6 +39,9 @@ class Settings extends Model
+     const TAB_LANDING         = 'landing';
+     const TAB_BLOG_TAGS       = 'blogtags';
+     const TAB_THEME = 'theme';
++    const TAB_CATEGORIES         = 'categories';
++    const TAB_PRODUCTS           = 'products';
++    const TAB_CHECKOUT           = 'checkout';
+ 
+     public static function getTabNames(): array
+     {
+@@ -51,6 +54,9 @@ class Settings extends Model
+             self::TAB_BLOG_CATEGORIES => 'Categories',
+             self::TAB_BLOG_TAGS       => 'Tags',
+             self::TAB_THEME           => 'Тема',
++            self::TAB_CATEGORIES      => 'Catalog',
++            self::TAB_PRODUCTS        => 'Products',
++            self::TAB_CHECKOUT        => 'Checkout',
+         ];
+     }
+ }
+diff --git a/composer.json b/composer.json
+index c5a62fe8..1e4eaf88 100644
+--- a/composer.json
++++ b/composer.json
+@@ -28,8 +28,18 @@
+         "nyholm/psr7": "^1.5",
+         "spatie/laravel-permission": "^5.5",
+         "tymon/jwt-auth": "^1.0",
+-        "unisharp/laravel-filemanager": "^2.2"
++        "unisharp/laravel-filemanager": "^2.2",
++        "owlwebdev/ecom": "dev-master"
+     },
++    "repositories": [
++        {
++            "type": "path",
++            "url": "packages/owlwebdev/ecom",
++            "options": {
++                "symlink": true
++            }
++        }
++    ],
+     "require-dev": {
+         "facade/ignition": "^2.5",
+         "fakerphp/faker": "^1.9.1",
+diff --git a/resources/views/admin/users/_form.blade.php b/resources/views/admin/users/_form.blade.php
+index 7ab67896..52da6e65 100644
+--- a/resources/views/admin/users/_form.blade.php
++++ b/resources/views/admin/users/_form.blade.php
+@@ -64,6 +64,26 @@
+     </div>
+ </div>
+ 
++<div class="form-group row">
++    <label class="col-md-3 text-right" for="discount_id">{{ __('Discounts') }}</label>
++    <div class="col-md-9">
++        <select name="discount_id" id="discount_id"
++            class="select2-field {{ $errors->has('discount_id') ? ' is-invalid' : '' }}" style="width: 100%">
++            <option value="">-</option>
++            @foreach (\App\Models\Discount::query()->get() as $item)
++                <option value="{{ $item->id }}" @if ($model->discount_id == $item->id) selected @endif>
++                    {{ $item->name }}</option>
++            @endforeach
++        </select>
++
++        @if ($errors->has('discount_id'))
++            <span class="invalid-feedback" role="alert">
++                <strong>{{ $errors->first('discount_id') }}</strong>
++            </span>
++        @endif
++    </div>
++</div>
++
+ <div class="form-group row">
+     <label class="col-md-3 text-right" for="page_status">{{ __('Status') }}</label>
+     <div class="col-md-9">
+diff --git a/resources/views/layouts/admin/components/_asider.blade.php b/resources/views/layouts/admin/components/_asider.blade.php
+index 76ce6123..93a8985c 100644
+--- a/resources/views/layouts/admin/components/_asider.blade.php
++++ b/resources/views/layouts/admin/components/_asider.blade.php
+@@ -251,7 +251,7 @@
+                             </div>
+                         </div>
+                     @endif
+-
++                    @include('ecom::admin.pieces._asider')
+                     <div class="section_item">
+                         <div class="input-group">
+                             <label>Slug</label>
+diff --git a/resources/views/layouts/admin/components/aside.blade.php b/resources/views/layouts/admin/components/aside.blade.php
+index 064e0f0a..631fd383 100644
+--- a/resources/views/layouts/admin/components/aside.blade.php
++++ b/resources/views/layouts/admin/components/aside.blade.php
+@@ -86,6 +86,8 @@ use Illuminate\Support\Facades\Request;
+                     </li>
+                 @endcan
+ 
++                @include('ecom::admin.pieces.aside')
++
+                 @if(
+                 auth()->user()->can('blog_articles_view')
+                 || auth()->user()->can('blog_tags_view')
+@@ -299,6 +301,7 @@ use Illuminate\Support\Facades\Request;
+                                     </a>
+                                 </li>
+                             @endcan
++                            @include('ecom::admin.pieces.aside_settings')
+                         </ul>
+                     </li>
+                 @endif

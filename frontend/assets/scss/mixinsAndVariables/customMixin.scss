@@ -1,0 +1,16 @@
+@mixin after() {
+    content:'';
+    display:block;
+    clear:both;
+}
+@mixin transition() {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}

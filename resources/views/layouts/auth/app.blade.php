@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{asset('css/auth/cabinetStyle.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/auth/cabinetStyle.css') }}">
 
     <!-- Styles -->
     @stack('styles')

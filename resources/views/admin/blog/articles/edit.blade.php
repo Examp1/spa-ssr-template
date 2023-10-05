@@ -39,9 +39,9 @@
                             {{-- --------------------------- MAIN TAB --------------------------------------- --}}
                             <div class="tab-pane fade show active" id="main" role="tabpanel"
                                 aria-labelledby="main-tab">
-                                <ul class="nav nav-tabs nav-main-tab nav-lang-tab" role="tablist">
+                                <ul class="nav nav-tabs nav-main-tab" role="tablist">
                                     @foreach ($localizations as $key => $lang)
-                                        <li  data-lang="{{ $key }}" class="nav-item">
+                                        <li class="nav-item">
                                             <a data-lang="{{ $key }}"
                                                 class="nav-link @if (config('translatable.locale') == $key) active @endif"
                                                 data-toggle="tab" href="#main_lang_{{ $key }}" role="tab">
@@ -60,9 +60,9 @@
                                 </ul>
 
                                 <br>
-                                <div class="tab-content tab-content-lang">
+                                <div class="tab-content">
                                     @foreach ($localizations as $key => $catLang)
-                                        <div data-lang="{{ $key }}" class="tab-pane p-t-20 p-b-20  @if (config('translatable.locale') == $key) active @endif"
+                                        <div class="tab-pane p-t-20 p-b-20  @if (config('translatable.locale') == $key) active @endif"
                                             id="main_lang_{{ $key }}" role="tabpanel">
                                             @include('admin.blog.articles.tabs._main', [
                                                 'lang' => $key,
@@ -140,12 +140,12 @@
                         ],
                         'info' => [
                             'blocks' => [
-                                'main_category' => [
-                                    'show' => true,
-                                ],
-                                'categories' => [
-                                    'show' => true,
-                                ],
+                                // 'main_category' => [
+                                //     'show' => true,
+                                // ],
+                                // 'categories' => [
+                                //     'show' => true,
+                                // ],
                                 'tags' => [
                                     'show' => true,
                                 ],
@@ -167,36 +167,3 @@
         </form>
     @endcan
 @endsection
-
-@push('scripts')
-    <script>
-        $(document).ready(function(){
-            $(".nav-lang-tab .nav-item").on('click',function(){
-                let lang = $(this).data('lang');
-                var currentUrl = window.location.href;
-                var paramName = "lang";
-                var paramRegex = new RegExp('([?&])' + paramName + '=[^&]*');
-                if (paramRegex.test(currentUrl)) {
-                    var newUrl = currentUrl.replace(paramRegex, '$1' + paramName + '=' + lang);
-                } else {
-                    var separator = currentUrl.includes('?') ? '&' : '?';
-                    var newUrl = currentUrl + separator + paramName + '=' + lang;
-                }
-                window.history.pushState({}, "", newUrl);
-                $("#tab_lang").val(lang);
-            });
-
-            var queryString = window.location.search;
-            var urlParams = new URLSearchParams(queryString);
-            var langValue = urlParams.get('lang');
-
-            if(langValue){
-                $(".nav-lang-tab .nav-item a").removeClass('active');
-                $(".nav-lang-tab .nav-item a[data-lang='"+langValue+"']").addClass('active');
-
-                $(".tab-content-lang .tab-pane").removeClass('active');
-                $(".tab-content-lang .tab-pane[data-lang='"+langValue+"']").addClass('active');
-            }
-        });
-    </script>
-@endpush

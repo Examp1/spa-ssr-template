@@ -10,7 +10,6 @@ use App\Mail\ResetPasswordEmail;
 use App\Models\PasswordResets;
 use App\Models\User;
 use App\Models\UserVerified;
-use App\Service\SendMailGunTemplate;
 use Carbon\Carbon;
 use Daaner\TurboSMS\Facades\TurboSMS;
 use Illuminate\Http\Request;
@@ -28,19 +27,13 @@ class ResetController extends Controller
     use ResponseTrait;
 
     /**
-     * @var SendMailGunTemplate
-     */
-    private $mailer;
-
-    /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(SendMailGunTemplate $sendMailGunTemplate)
+    public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['reset', 'resetPostEmail', 'passwordChange']]);
-        $this->mailer = $sendMailGunTemplate;
     }
 
     /**
@@ -96,14 +89,9 @@ class ResetController extends Controller
         ]);
 
         $link = url('/password-reset/token/' . $token);
-        $template = SendMailGunTemplate::TEMPLATE_RESET_PASSWORD;
 
-        if ($lang != config('translatable.locale')) {
-            $template .= '_' . $lang;
-        }
-
-        if(config('api_account.debug')){
-            Log::info('api_debug',[
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
                 'method' => 'reset',
                 'data' => [
                     'link'  => $link,
@@ -111,16 +99,10 @@ class ResetController extends Controller
                 ]
             ]);
         } else {
-            $this->mailer->sendMail(
-                config('mail.mailers.mailgun.from_address'),
-                $user->email,
-                __('Reset password'),
-                $template,
-                [
-                    'name' => $user->name,
-                    'link' => $link
-                ]
-            );
+            $objData       = new \stdClass();
+            $objData->link = $link;
+
+            Mail::to($user->email)->send(new ResetPasswordEmail($objData));
         }
 
         return $this->successResponse([
@@ -189,7 +171,7 @@ class ResetController extends Controller
 
         $fields = explode('*code*', base64_decode($decodedJson['token']));
 
-        if(count($fields) < 3){
+        if (count($fields) < 3) {
             return $this->errorResponse(
                 ErrorManager::buildError(VALIDATION_TOKEN_NOT_VALID),
                 Response::HTTP_UNPROCESSABLE_ENTITY
@@ -250,7 +232,7 @@ class ResetController extends Controller
         /* Скинуть лимит попыток входа */
         $ip = $request->getClientIp();
         $key = 'max_login_attempts_' . $ip;
-        Cache::put($key,'0',config('api_account.login.lockout_time'));
+        Cache::put($key, '0', config('api_account.login.lockout_time'));
 
         return $this->successResponse([
             'message'      => 'Password successfully changed',

@@ -1,5 +1,5 @@
 <template>
-  <app-link
+    <!-- <app-link
     v-if="propsData.type_link === 'link'"
     class="btn"
     :class="propsData.type"
@@ -14,25 +14,25 @@
     @click="formOpen(propsData, 'modal')"
   >
     {{ propsData.text }}
-  </span>
+  </span> -->
+    <div>123</div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 export default {
-  name: 'AppBtn',
-  methods: {
-    ...mapActions({
-      setFormData: 'dinamic_form/setFormData',
-      openForm: 'modal/openForm',
-    }),
-    formOpen(form) {
-      this.setFormData(form)
-      this.openForm(true)
+    name: 'AppBtn',
+    methods: {
+        ...mapActions({
+            setFormData: 'dinamic_form/setFormData',
+            openForm: 'modal/openForm',
+        }),
+        formOpen(form) {
+            this.setFormData(form)
+            this.openForm(true)
+        },
     },
-  },
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -25,8 +25,10 @@ class UserCreateRequest extends FormRequest
     {
         return [
             'name'     => 'required|min:2',
+            'lastname' => 'required|min:2',
             'email'    => 'required|string|email|max:255|unique:users,email,' . $this->id, // id must be in POST
             'phone'    => 'nullable|string|max:255',
+            'birthday' => 'nullable|before:today',
             'password' => 'required|min:8',
             'status'   => 'required|bool',
         ];

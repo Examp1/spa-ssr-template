@@ -6,8 +6,9 @@ use Mailgun\Mailgun;
 
 class SendMailGunTemplate
 {
-    const TEMPLATE_REGISTRATION_CONFIRM_EMAIL = 'registration_confirm_email';
-    const TEMPLATE_RESET_PASSWORD = 'reset_password';
+    const TEMPLATE_REGISTRATION_CONFIRM_EMAIL = 'stage_registration_confirm_email';
+    const TEMPLATE_RESET_PASSWORD = 'stage_reset_password';
+    const TEMPLATE_THANKS_FOR_REGISTRATION = 'stage_thanks_for_registration';
 
     /**
      * @param $from

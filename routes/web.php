@@ -28,7 +28,7 @@ Route::get('/admin/cache-clear', function () {
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
     \Illuminate\Support\Facades\Artisan::call('view:clear');
 
-    return redirect()->back()->with('success', 'Кеш успешно очищено!');
+    return redirect()->back()->with('success', 'Кеш успішно очищено!');
 })->name('cache-clear');
 
 //lang. switcher
@@ -127,8 +127,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/multimedia/get-info', [\App\Http\Controllers\Admin\FileManagerController::class, 'getInfo'])->name('multimedia.get-info');
 
 
-    Route::post('/mailgun-test/send', [\App\Http\Controllers\Admin\MailgunTestController::class, 'send'])->name('mailgun-test.send');
-    Route::get('/mailgun-test', [\App\Http\Controllers\Admin\MailgunTestController::class, 'index'])->name('mailgun-test.index');
+    Route::post('/mail-test/send', [\App\Http\Controllers\Admin\MailTestController::class, 'send'])->name('mail-test.send');
+    Route::get('/mail-test', [\App\Http\Controllers\Admin\MailTestController::class, 'index'])->name('mail-test.index');
+
+    Route::any('/adminer', '\Aranyasen\LaravelAdminer\AdminerAutologinController@index');
+
 });
 /************************************ END ADMIN ***********************************************************************/
 

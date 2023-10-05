@@ -13,7 +13,7 @@ class NumbersWidget implements WidgetInterface
 
     public static string $preview = 'numbers.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING];
 
     /**
      * @var array

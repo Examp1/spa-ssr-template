@@ -13,7 +13,7 @@ class TextNColumnsWidget implements WidgetInterface
 
     public static string $preview = 'text-n-columns.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING];
 
     /**
      * @var array

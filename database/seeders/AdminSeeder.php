@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
 
         Admin::create([
             'name' => 'Admin',
-            'email' => 'admin@owlweb.com.ua',
+            'email' => config('app.name') . '@owlweb.com.ua',
             'email_verified_at' => now(),
             'phone' => '380000000000',
             'phone_verified_at' => now(),

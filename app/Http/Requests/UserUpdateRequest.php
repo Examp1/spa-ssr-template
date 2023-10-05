@@ -24,10 +24,12 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'required|min:2',
-            'email'  => 'required|string|email|max:255|unique:users,email,' . $this->id, // id must be in POST
-            'phone'  => 'nullable|string|max:255',
-            'status' => 'required|boolean',
+            'name'     => 'required|min:2',
+            'lastname' => 'required|min:2',
+            'email'    => 'required|string|email|max:255|unique:users,email,' . $this->id, // id must be in POST
+            'phone'    => 'nullable|string|max:255',
+            'birthday' => 'nullable|date|before:today',
+            'status'   => 'required|boolean',
         ];
     }
 }

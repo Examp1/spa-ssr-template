@@ -27,7 +27,7 @@ class BlogArticleRequest extends FormRequest
 
         return [
             'page_data.' . $defaultLang . '.name' => 'required|min:2',
-            'main_category_id'                    => 'required',
+            'main_category_id'                    => 'nullable',
             'order'                               => 'required|integer',
         ];
     }

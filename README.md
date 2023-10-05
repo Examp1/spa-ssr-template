@@ -92,6 +92,17 @@ In your project folder go to /vendor/laravel/sail/runtimes/8.0/Dockerfile. On li
 
 8. Run VSCode ```code .```
 
+## DB access
+~~~bash
+docker-compose exec mysql bash
+mysql -u root -p
+password: password
+GRANT ALL PRIVILEGES ON *.* TO 'sail'@'%';
+FLUSH PRIVILEGES;
+EXIT;
+exit
+~~~
+
 ## Files permissions
 assuming www-data is your web server user, you can run:
 ~~~bash
@@ -128,20 +139,23 @@ Your webserver will need to upload and store data as well so make sure you give 
 sudo chgrp -R www-data storage bootstrap/cache
 sudo chmod -R ug+rwx storage bootstrap/cache
 ~~~
+
 ## Git Patches
-~~~console
+~~~bash
 git format-patch <commit sha>^..<commit sha> --stdout > <patch-name>.patch
 git am --3way <patch-name>.patch   
 ~~~
 
 ## Telescope After Installation
 Copy telescope migration from vendor to database/migrations/telescope subfolder
+~~~bash
 php artisan migrate --path=database/migrations/telescope
+~~~
 
 Remove App\Providers\TelescopeServiceProvider::class from config/app.php because all providers inside config/app.php is automatically loaded. But in your production environment, laravel/telescope isn't installed that means Laravel\Telescope\TelescopeApplicationServiceProvider is undefined and App\Providers\TelescopeServiceProvider can not extend an undefined class.
 
 Register App\Providers\TelescopeServiceProvider::class manually inside app/Providers/AppServiceProviders.php
-~~~
+~~~bash
 <?php
 
 namespace App\Providers;

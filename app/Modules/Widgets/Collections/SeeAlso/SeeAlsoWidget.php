@@ -14,7 +14,7 @@ class SeeAlsoWidget implements WidgetInterface
 
     public static string $preview = 'see-also.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING,WIDGET_GROUP_PAGE];
 
     /**
      * @var array
@@ -140,7 +140,7 @@ class SeeAlsoWidget implements WidgetInterface
             $list[$key] = array_merge([
                 'title' => $item['title'],
                 'text'  => $item['text'],
-                'image' => $item['image']
+                'image' => get_image_uri($item['image'])
             ], $interlink);
 
             if(isset($interlink['public_date']) && $interlink['public_date']){

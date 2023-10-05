@@ -170,7 +170,7 @@ class CRUDController extends Controller
         if(!$newWidget->save()){
             return redirect()->back()->with('error','Виникла помилка копіювання!');
         } else {
-            return redirect('/admin/widgets?lang=' . $newWidget->lang)->with('success','Віджет успішно скопійовано!');
+            return redirect('/admin/widgets/'.$newWidget->id.'/edit?lang=' . $newWidget->lang)->with('success','Віджет успішно скопійовано!');
         }
     }
 

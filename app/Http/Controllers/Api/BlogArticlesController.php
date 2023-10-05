@@ -16,6 +16,7 @@ use App\Modules\Setting\Setting;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\Adapter;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
 class BlogArticlesController extends Controller
@@ -69,24 +70,20 @@ class BlogArticlesController extends Controller
             $m->save();
         }
 
-        $model = cache()->remember('blog_articles_getBySlug_' . $decodedJson['slug'] . '_' . $lang, (60 * 5), function () use ($decodedJson, $lang) {
+        $model = cache()->remember('get_blog_articles_all_' . '_' . implode('_', $decodedJson), (60 * 5), function () use ($decodedJson, $lang) {
             $m_query = BlogArticles::query()
                 ->leftJoin('blog_article_translations', 'blog_article_translations.blog_articles_id', '=', 'blog_articles.id')
                 ->where('blog_article_translations.lang', $lang)
-                ->where('blog_article_translations.status_lang', 1)
                 ->select([
                     'blog_articles.*',
-                    'blog_article_translations.name AS articleName'
+                    'blog_article_translations.name AS articleName',
+                    'blog_article_translations.image',
+                    'blog_article_translations.preview_image',
                 ]);
 
-            if (isset($decodedJson['prevw'])) {
-                if ($decodedJson['prevw'] == crc32($decodedJson['slug'])) { // check
-                    // good
-                } else {
-                    $m_query->active();
-                }
-            } else {
-                $m_query->active();
+            //show without active status
+            if (!isset($decodedJson['prevw']) || $decodedJson['prevw'] != crc32($decodedJson['slug'] . config('app.name'))) {
+                $m_query->where('blog_article_translations.status_lang', 1)->active();
             }
 
             return $m_query
@@ -116,7 +113,7 @@ class BlogArticlesController extends Controller
                 ->whereIn('blog_tags.id', $tagsIds)
                 ->select([
                     'blog_tags.*',
-                    'blog_tag_translations.name AS transName'
+                    'blog_tag_translations.name AS transName',
                 ])
                 ->get();
 
@@ -235,7 +232,7 @@ class BlogArticlesController extends Controller
 
         app()->setLocale($lang);
 
-        $data = cache()->remember('get_blog_articles_all_' . $take . implode('_', $decodedJson), (60 * 5), function () use ($decodedJson, $lang, $take) {
+        $data = cache()->remember('get_blog_articles_all_' . $take . '_' . implode('_', $decodedJson), (60 * 5), function () use ($decodedJson, $lang, $take) {
             $data        = [];
             $currentPage = $decodedJson['page'] ?? 1;
 
@@ -245,86 +242,64 @@ class BlogArticlesController extends Controller
 
             $articlesQuery = BlogArticles::query()
                 ->leftJoin('blog_article_translations', 'blog_article_translations.blog_articles_id', '=', 'blog_articles.id')
-                ->leftJoin('blog_categories', 'blog_categories.id', '=', 'blog_articles.main_category_id')
-                ->leftJoin('blog_category_translations', 'blog_category_translations.blog_categories_id', '=', 'blog_articles.main_category_id')
-                ->where('blog_article_translations.lang', $lang)
-                ->where('blog_article_translations.status_lang',1)
-                ->where('blog_category_translations.lang', $lang)
+                ->where('blog_article_translations.lang', app()->getLocale())
+                ->where('blog_article_translations.status_lang', 1)
                 ->select([
-                    'blog_articles.*',
-                    'blog_categories.path',
-                    'blog_category_translations.name as category_title',
+                    'blog_articles.public_date',
+                    'blog_articles.slug',
+                    'blog_article_translations.name',
+                    'blog_article_translations.image',
+                    'blog_article_translations.alt',
+                    'blog_article_translations.text',
+                    'blog_article_translations.excerpt',
+                    'blog_article_translations.preview_image',
+                    'blog_article_translations.preview_alt',
                 ])
                 ->orderBy('blog_articles.public_date', 'desc')
                 ->active();
 
-            $total = $articlesQuery->count();
-
-            $articlesQuery
-                ->take($take)
-                ->skip($currentPage == 1 ? 0 : (($take * $currentPage) - $take));
-
-            $articles = $articlesQuery->get();
-
-            $items = $this->adapter->prepareModelsResults($articles, $lang, Menu::TYPE_BLOG_CATEGORY);
-
-            $paginate = [
-                'total'        => $total,
-                'per_page'     => $take,
-                'current_page' => $currentPage,
-            ];
-
-            $items['paginate'] = $paginate;
-
-            $data = [
-                'items' => $items
-            ];
-
-            //TODO: fix, and make it work with and without categories
-            /*************************************** Default pagination without categories *******************/
             // $articlesQuery = BlogArticles::query()
             //     ->leftJoin('blog_article_translations', 'blog_article_translations.blog_articles_id', '=', 'blog_articles.id')
-            //     ->where('blog_article_translations.lang', app()->getLocale())
+            //     // ->leftJoin('blog_categories', 'blog_categories.id', '=', 'blog_articles.main_category_id')
+            //     // ->leftJoin('blog_category_translations', 'blog_category_translations.blog_categories_id', '=', 'blog_articles.main_category_id')
+            //     ->where('blog_article_translations.lang', $lang)
             //     ->where('blog_article_translations.status_lang', 1)
+            //     // ->where('blog_category_translations.lang', $lang)
             //     ->select([
-            //         'blog_articles.public_date',
-            //         'blog_articles.slug',
-            //         'blog_article_translations.name',
-            //         'blog_article_translations.image',
-            //         'blog_article_translations.alt',
-            //         'blog_article_translations.text',
-            //         'blog_article_translations.excerpt',
+            //         'blog_articles.*',
+            //         // 'blog_categories.path',
+            //         // 'blog_category_translations.name as category_title',
             //     ])
             //     ->orderBy('blog_articles.public_date', 'desc')
             //     ->active();
-            // $data['articles'] = $articlesQuery->paginate($take, ['*'], 'page', $currentPage);
 
-            // // format public date in paginator
-            // $data['articles']->setCollection(
-            //     $data['articles']->getCollection()->transform(function ($item) use ($lang) {
-            //         if (isset($item->public_date)) {
-            //             $pd = Carbon::parse($item->public_date);
-            //             if ($lang == 'uk') {
-            //                 $pd->setLocale('uk_UA');
-            //             } elseif ($lang == 'ru') {
-            //                 $pd->setLocale('ru_RU');
-            //             }
-            //             $item->public_date = $pd->translatedFormat('d F Y');
-            //         }
+            // Custom pagination
+            // $total = $articlesQuery->count();
 
-            //         return $item;
-            //     })
-            // );
+            // $articlesQuery
+            //     ->take($take)
+            //     ->skip($currentPage == 1 ? 0 : (($take * $currentPage) - $take));
 
-            // $data['articles'] = $data['articles']->toArray();
+            // $articles = $articlesQuery->get();
 
-            /*************************************** END Default pagination without categories ***************/
+            // $items = $this->adapter->prepareModelsResults($articles, $lang);
 
-            //TODO: seo from settings
+            // $paginate = [
+            //     'total'        => $total,
+            //     'per_page'     => $take,
+            //     'current_page' => $currentPage,
+            // ];
+
+            // $items['paginate'] = $paginate;
+
+            // $data = [
+            //     'items' => $items
+            // ];
+
             // $page = Pages::query()
             //     ->leftJoin('page_translations', 'page_translations.pages_id', '=', 'pages.id')
             //     ->where('page_translations.lang', config('translatable.locale'))
-            //     ->where('pages.id',13)
+            //     ->where('pages.id', 13)
             //     ->select([
             //         'pages.*',
             //         'page_translations.title AS transTitle',
@@ -337,18 +312,40 @@ class BlogArticlesController extends Controller
             //     'description' => $page->transDescription,
             // ];
 
-            /*************************************** Breadcrumbs *********************************************/
-            $breadcrumbs = [
-                [
-                    'name' => __('News', [], $lang),
-                    'url'  => ($lang !== config('translatable.locale') ? ('/' . $lang) : '') . '/news'
-                ]
-            ];
+            $paginated = $articlesQuery->paginate($take, ['*'], 'page', $currentPage);
 
-            $data['breadcrumbs'] = $breadcrumbs;
+            // format public date in paginator
+            $paginated->setCollection(
+                $paginated->getCollection()->transform(function ($item) use ($lang) {
+                    if (isset($item->public_date)) {
+                        $pd = Carbon::parse($item->public_date);
+                        if ($lang == 'uk') {
+                            $pd->setLocale('uk_UA');
+                        } elseif ($lang == 'ru') {
+                            $pd->setLocale('ru_RU');
+                        }
+                        $item->public_date = $pd->translatedFormat('d F Y');
+                    }
 
-            return $data;
+                    return $item;
+                })
+            );
+            $paginated = $paginated->toArray();
+            $data['articles']['data'] = $paginated['data'];
+            $data['articles']['paginate'] = Arr::except($paginated, 'data');
+
+            return $data['articles'];
         });
+
+        /*************************************** Breadcrumbs *********************************************/
+        $breadcrumbs = [
+            [
+                'name' => __('News', [], $lang),
+                'url'  => ($lang !== config('translatable.locale') ? ('/' . $lang) : '') . '/news'
+            ]
+        ];
+
+        $data['breadcrumbs'] = $breadcrumbs;
 
         return $this->successResponse($data);
     }
@@ -431,6 +428,8 @@ class BlogArticlesController extends Controller
                     'blog_article_translations.name as transName',
                     'blog_article_translations.image AS transImage',
                     'blog_article_translations.alt AS transImageAlt',
+                    'blog_article_translations.preview_image AS transPreviewImage',
+                    'blog_article_translations.preview_alt AS transPreviewImageAlt',
                     'blog_article_translations.meta_title AS transMetaTitle',
                     'blog_article_translations.meta_description AS transMetaDescription',
                     'blog_categories.path',
@@ -482,7 +481,7 @@ class BlogArticlesController extends Controller
             // $page = Pages::query()
             //     ->leftJoin('page_translations', 'page_translations.pages_id', '=', 'pages.id')
             //     ->where('page_translations.lang', config('translatable.locale'))
-            //     ->where('pages.id',13)
+            //     ->where('pages.id', 13)
             //     ->select([
             //         'pages.*',
             //         'page_translations.title AS transTitle',

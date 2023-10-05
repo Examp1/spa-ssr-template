@@ -153,7 +153,7 @@ class LandingController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();
@@ -248,7 +248,7 @@ class LandingController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();

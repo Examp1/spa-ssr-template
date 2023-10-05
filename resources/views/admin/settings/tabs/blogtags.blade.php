@@ -67,6 +67,7 @@
                 </div>
             </div>
 
+            <hr>
             @include('admin.settings.tabs._generate', [
                 'generate_route' => route('blog.tags.meta-generate'),
             ])

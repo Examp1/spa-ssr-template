@@ -7,8 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Owlwebdev\Ecom\Models\Order;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Owlwebdev\Ecom\Models\Wishlist;
+use Owlwebdev\Ecom\Models\Discount;
 
 /**
  * Class User
@@ -22,6 +25,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $password
  * @property string $remember_token
  * @property string $phone
+ * @property string $provider_id
+ * @property string $provider_name
  * @property integer $status
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -48,9 +53,9 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'lastname', 'email', 'password', 'role',
-        'phone', 'country', 'city', 'address', 'apartment', 'postcode',
-        'status', 'email_verified_at', 'phone_verified_at', 'wishlist_share', 'discount_id'
+        'name', 'lastname', 'surname', 'email', 'password', 'role',
+        'phone', 'country', 'city', 'address', 'apartment', 'postcode', 'birthday',
+        'status', 'email_verified_at', 'phone_verified_at', 'wishlist_share', 'discount_id', 'provider_id', 'provider_name'
     ];
 
     /**
@@ -129,5 +134,37 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function mainAddress()
+    {
+        return $this->addresses()->where('main', true)->first();
+    }
+
+    //all
+    public function carts()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    //public orders
+    public function orders()
+    {
+        return $this->carts()->whereIn('order_status_id', Order::PUBLIC_STATUSES);
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function discount()
+    {
+        return $this->hasOne(Discount::class, 'id', 'discount_id')->active()->withDefault(null);
     }
 }

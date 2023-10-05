@@ -13,7 +13,7 @@ class TickerWidget implements WidgetInterface
 
     public static string $preview = 'ticker.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_PAGE,WIDGET_GROUP_LANDING];
 
     /**
      * @var array

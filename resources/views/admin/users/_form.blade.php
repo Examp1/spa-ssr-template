@@ -19,6 +19,19 @@
         @endif
     </div>
 </div>
+<div class="form-group row">
+    <label class="col-md-3 text-right required" for="lastname">{{ __('Lastname') }}</label>
+    <div class="col-md-9">
+        <input type="text" name="lastname" id="lastname"
+            class="form-control {{ $errors->has('lastname') ? ' is-invalid' : '' }}" value="{{ old('lastname', $model->lastname) }}">
+
+        @if ($errors->has('lastname'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('lastname') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
 
 <div class="form-group row">
     <label class="col-md-3 text-right required" for="email">E-mail</label>
@@ -39,12 +52,27 @@
     <label class="col-md-3 text-right" for="phone">{{ __('Phone') }}</label>
     <div class="col-md-9">
         <input type="text" name="phone" id="phone"
-            class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }}"
+            class="form-control {{ $errors->has('phone') ? ' is-invalid' : '' }} phone-mask"
             value="{{ old('phone', $model->phone) }}">
 
         @if ($errors->has('phone'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('phone') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-3 text-right" for="birthday">{{ __('Birthday') }}</label>
+    <div class="col-md-9">
+        <input type="date" name="birthday" id="birthday"
+            class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+            value="{{ old('birthday', $model->birthday) }}">
+
+        @if ($errors->has('birthday'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('birthday') }}</strong>
             </span>
         @endif
     </div>
@@ -59,6 +87,26 @@
         @if ($errors->has('password'))
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('password') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-3 text-right" for="discount_id">{{ __('Discounts') }}</label>
+    <div class="col-md-9">
+        <select name="discount_id" id="discount_id"
+            class="select2-field {{ $errors->has('discount_id') ? ' is-invalid' : '' }}" style="width: 100%">
+            <option value="">-</option>
+            @foreach ( \Owlwebdev\Ecom\Models\Discount::query()->get() as $item)
+                <option value="{{ $item->id }}" @if ($model->discount_id == $item->id) selected @endif>
+                    {{ $item->name }}</option>
+            @endforeach
+        </select>
+
+        @if ($errors->has('discount_id'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('discount_id') }}</strong>
             </span>
         @endif
     </div>
@@ -120,9 +168,11 @@
 
 @push('scripts')
     <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/inputmask/min/jquery.inputmask.bundle.min.js') }}"></script>
     <script>
         $(document).ready(() => {
             $('.select2-field').select2();
+            $(".phone-mask").inputmask("+3809999999999", {"placeholder": ""});
         });
     </script>
 @endpush

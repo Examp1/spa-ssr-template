@@ -13,6 +13,8 @@ use App\Modules\Setting\Setting;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\Adapter;
+use Owlwebdev\Ecom\Models\Category;
+use Owlwebdev\Ecom\Http\Controllers\Api\CategoryController;
 
 class PagesController extends Controller
 {
@@ -52,20 +54,14 @@ class PagesController extends Controller
         $query = Pages::query()
             ->leftJoin('page_translations', 'page_translations.pages_id', '=', 'pages.id')
             ->where('page_translations.lang', $lang)
-            ->where('page_translations.status_lang', 1)
             ->select([
                 'pages.*',
                 'page_translations.title AS pageName'
             ]);
 
-        if (isset($decodedJson['prevw'])) {
-            if ($decodedJson['prevw'] == crc32($decodedJson['slug'])) { // check
-                // good
-            } else {
-                $query->active();
-            }
-        } else {
-            $query->active();
+        //show without active status
+        if (!isset($decodedJson['prevw']) || $decodedJson['prevw'] != crc32($decodedJson['slug'])) {
+            $query->where('page_translations.status_lang', 1)->active();
         }
 
         $model = $query
@@ -73,10 +69,13 @@ class PagesController extends Controller
             ->first();
 
         if (!$model)
-            return $this->errorResponse(
-                ErrorManager::buildError(VALIDATION_MODEL_NOT_FOUND),
-                Response::HTTP_NOT_FOUND
-            );
+            //to categories
+            return app(CategoryController::class)->getBySlug($request);
+
+            // return $this->errorResponse(
+            //     ErrorManager::buildError(VALIDATION_MODEL_NOT_FOUND),
+            //     Response::HTTP_NOT_FOUND
+            // );
 
         $data = $this->adapter->prepareModelResults($model, $lang);
 
@@ -86,7 +85,10 @@ class PagesController extends Controller
         /* Custom pages */
         $settings_fields = [
             'contact_page' => 'Сторінка контактів',
+            'catalog_page' => 'Сторінка каталогу',
+            'about_page'   => 'Сторінка Про нас',
         ];
+
         $pages_settings = cache()->remember(
             'pages_settings_' . $lang,
             (60 * 5),
@@ -103,8 +105,24 @@ class PagesController extends Controller
 
         switch ($model->id) {
             case $pages_settings['contact_page']:
+                $data['type'] = 'contact_page';
                 $data['contacts'] = json_decode(app(Setting::class)->get('contacts', $lang), true);
                 $data['maps_api_key'] = app(Setting::class)->get('maps_api_key', config('translatable.locale'));
+                break;
+
+            case $pages_settings['catalog_page']:
+                $data['type'] = 'catalog_page';
+                $data['catalog'] = cache()->remember(
+                    'catalog_categories' . $lang,
+                    (60 * 5),
+                    function () {
+                        $categories = new Category();
+                        return $categories->treeStructure();
+                    }
+                );
+                break;
+            case $pages_settings['about_page']:
+                $data['type'] = 'about_page';
                 break;
 
             default:

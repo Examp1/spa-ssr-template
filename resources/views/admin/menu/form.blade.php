@@ -124,6 +124,18 @@ use App\Models\Menu;
                                         ->first();
                                     $url = \App\Models\Landing::backLink($entity->id);
                                     break;
+                                case Menu::TYPE_PRODUCT:
+                                    $entity = \Owlwebdev\Ecom\Models\Product::query()
+                                        ->where('id', $model->model_id)
+                                        ->first();
+                                    $url = \Owlwebdev\Ecom\Models\Product::backLink($entity->id);
+                                    break;
+                                case Menu::TYPE_PRODUCT_CATEGORY:
+                                    $entity = \Owlwebdev\Ecom\Models\Category::query()
+                                        ->where('id', $model->model_id)
+                                        ->first();
+                                    $url = \Owlwebdev\Ecom\Models\Category::backLink($entity->id);
+                                    break;
                             }
                             ?>
 

@@ -211,6 +211,7 @@
                             </div>
                         </div>
                     @endif
+                    @include('ecom::admin.pieces._asider')
 
                     {{-- TODO: make project specific fields better --}}
                     {{-- Project fields --}}
@@ -243,20 +244,55 @@
                 <div class="collapse @if (!$asiderSections['image']['collapse_hide']) show @endif" id="collapseExample5">
                     <hr>
                     <div class="accordion-content">
-                        <div class="section_item justify-content-start">
-                            <img src="#" alt="">
-                            <label>{{ __('Recommended size') }} {{ \App\Models\Landing::IMAGE_RECOMMENDED_SIZE }}, {{ __('proportions') }}
-                                {{ \App\Models\Landing::IMAGE_PROPORTION }}</label>
-                        </div>
-                        <div class="section_item justify-content-center">
-                            {{ media_preview_box(
-                                'page_data[' . $key . '][image]',
-                                old('page_data.' . $key . '.image', $data[$key]['image'] ?? ''),
-                                null,
-                                'page_data[' . $key . '][alt]',
-                                old('page_data.' . $key . '.alt', $data[$key]['alt'] ?? ''),
-                            ) }}
-                        </div>
+                        @if(get_class($model) == "App\Models\BlogArticles")
+                            <div style="display: flex;justify-content: center; gap: 30px">
+                                <div>
+                                    <div class="section_item justify-content-start">
+                                        <img src="#" alt="">
+                                        <label>Прев'ю</label>
+                                    </div>
+                                    <div class="section_item justify-content-center">
+                                        {{ media_preview_box(
+                                            'page_data[' . $key . '][preview_image]',
+                                            old('page_data.' . $key . '.preview_image', $data[$key]['preview_image'] ?? ''),
+                                            null,
+                                            'page_data[' . $key . '][preview_alt]',
+                                            old('page_data.' . $key . '.preview_alt', $data[$key]['preview_alt'] ?? ''),
+                                        ) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="section_item justify-content-start">
+                                        <img src="#" alt="">
+                                        <label>Для банера</label>
+                                    </div>
+                                    <div class="section_item justify-content-center">
+                                        {{ media_preview_box(
+                                            'page_data[' . $key . '][image]',
+                                            old('page_data.' . $key . '.image', $data[$key]['image'] ?? ''),
+                                            null,
+                                            'page_data[' . $key . '][alt]',
+                                            old('page_data.' . $key . '.alt', $data[$key]['alt'] ?? ''),
+                                        ) }}
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="section_item justify-content-start">
+                                <img src="#" alt="">
+                                <label>{{ __('Recommended size') }} {{ \App\Models\Landing::IMAGE_RECOMMENDED_SIZE }}, {{ __('proportions') }}
+                                    {{ \App\Models\Landing::IMAGE_PROPORTION }}</label>
+                            </div>
+                            <div class="section_item justify-content-center">
+                                {{ media_preview_box(
+                                    'page_data[' . $key . '][image]',
+                                    old('page_data.' . $key . '.image', $data[$key]['image'] ?? ''),
+                                    null,
+                                    'page_data[' . $key . '][alt]',
+                                    old('page_data.' . $key . '.alt', $data[$key]['alt'] ?? ''),
+                                ) }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </section>

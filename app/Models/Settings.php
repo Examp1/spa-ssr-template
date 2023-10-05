@@ -39,6 +39,9 @@ class Settings extends Model
     const TAB_LANDING         = 'landing';
     const TAB_BLOG_TAGS       = 'blogtags';
     const TAB_THEME = 'theme';
+    const TAB_CATEGORIES         = 'categories';
+    const TAB_PRODUCTS           = 'products';
+    const TAB_CHECKOUT           = 'checkout';
 
     public static function getTabNames(): array
     {
@@ -51,6 +54,9 @@ class Settings extends Model
             self::TAB_BLOG_CATEGORIES => 'Categories',
             self::TAB_BLOG_TAGS       => 'Tags',
             self::TAB_THEME           => 'Тема',
+            self::TAB_CATEGORIES      => 'Catalog',
+            self::TAB_PRODUCTS        => 'Products',
+            self::TAB_CHECKOUT        => 'Checkout',
         ];
     }
 }

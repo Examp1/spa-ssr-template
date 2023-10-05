@@ -58,11 +58,11 @@ $articles = \App\Models\BlogArticles::query()->active()->get();
 </div>
 
 @push('styles')
-    <link rel="stylesheet" href="{{asset('assets/plugins/select2/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}">
 @endpush
 
 @push('scripts')
-    <script src="{{asset('assets/plugins/select2/dist/js/select2.min.js')}}"></script>
+    <script src="{{ asset('assets/plugins/select2/dist/js/select2.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
            $('.select2-field-shown').each(function () {

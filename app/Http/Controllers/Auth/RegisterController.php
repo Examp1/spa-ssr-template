@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Mail\RegConfirmEmail;
+use App\Mail\Profile\RegConfirmEmail;
 use App\Models\Admin;
 use App\Providers\RouteServiceProvider;
 use App\Service\TelegramBot;

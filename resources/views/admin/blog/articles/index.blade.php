@@ -75,7 +75,7 @@
                                     data-field="id">{{ __('ID') }}</th>
                                 <th class="sorting @if (request()->input('sort') == 'name' && request()->input('order') == 'asc') sorting_asc @elseif(request()->input('sort') == 'name' && request()->input('order') == 'desc') sorting_desc @endif"
                                     data-field="name">{{ __('Title') }}</th>
-                                <th>{{ __('Category') }}</th>
+                                {{-- <th>{{ __('Category') }}</th> --}}
                                 <th class="sorting @if (request()->input('sort') == 'views' && request()->input('order') == 'asc') sorting_asc @elseif(request()->input('sort') == 'views' && request()->input('order') == 'desc') sorting_desc @endif"
                                     data-field="views">{{ __('Views') }}</th>
                                 <th class="sorting @if (request()->input('sort') == 'status' && request()->input('order') == 'asc') sorting_asc @elseif(request()->input('sort') == 'status' && request()->input('order') == 'desc') sorting_desc @endif"
@@ -104,7 +104,7 @@
                                             {{ $item->name }}
                                         @endcan
                                     </td>
-                                    <td>{{ $item->mainCategory->name ?? '-' }}</td>
+                                    {{-- <td>{{ $item->mainCategory->name ?? '-' }}</td> --}}
                                     <td>{{ $item->views }}</td>
                                     <td>{!! $item->showStatus() !!}</td>
                                     <td>{!! $item->showAllLanguagesNotEmpty() !!}</td>
@@ -120,7 +120,7 @@
                                             @can('blog_articles_edit')
                                                 <a href="{{ route('articles.edit', $item->id) }}"
                                                     class="btn btn-md btn-primary">
-                                                    <i class="fas fa-edit"></i>
+                                                    <i class="fas fa-edit fa-lg"></i>
                                                 </a>
                                             @endcan
 

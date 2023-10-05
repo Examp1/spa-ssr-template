@@ -1,14 +1,14 @@
 export const state = () => ({
-  mode: ''
+    mode: '',
 })
 export const getters = {
-  getMode(state){
-    return state.mode
-  }
+    getMode(state) {
+        return state.mode
+    },
 }
 
 export const mutations = {
-  setMode(state, mode) {
-    state.mode = mode
-  }
+    setMode(state, mode) {
+        state.mode = mode
+    },
 }

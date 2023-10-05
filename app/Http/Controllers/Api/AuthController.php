@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Core\Error\ErrorManager;
 use App\Core\Response\ResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Mail\RegConfirmEmail;
 use App\Models\Pages;
+use App\Models\Subscribes;
 use App\Models\User;
 use App\Models\UserVerified;
-use App\Service\SendMailGunTemplate;
 use Carbon\Carbon;
 use Daaner\TurboSMS\Facades\TurboSMS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,20 +26,15 @@ class AuthController extends Controller
 {
     use ResponseTrait;
 
-    /**
-     * @var SendMailGunTemplate
-     */
-    private $mailer;
 
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(SendMailGunTemplate $sendMailGunTemplate)
+    public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register', 'emailConfirm', 'phoneConfirm','redirectToProvider','handleProviderCallback']]);
-        $this->mailer = $sendMailGunTemplate;
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'emailConfirm','phoneConfirm', 'redirectToProvider', 'handleProviderCallback']]);
     }
 
     /**
@@ -61,7 +59,7 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return $this->errorResponse(
-                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD,$validator->errors()->toArray()),
+                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD, $validator->errors()->toArray()),
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
@@ -70,9 +68,10 @@ class AuthController extends Controller
         $ip = $request->getClientIp();
         $key = 'max_login_attempts_' . $ip;
 
-        if(Cache::get($key,0) > config('api_account.login.max_login_attempts')){
+        if (Cache::get($key, 0) > config('api_account.login.max_login_attempts')) {
             return $this->errorResponse(
-                ErrorManager::buildError(VALIDATION_EXCEEDED_LIMIT_OF_LOGIN_ATTEMPTS,
+                ErrorManager::buildError(
+                    VALIDATION_EXCEEDED_LIMIT_OF_LOGIN_ATTEMPTS,
                     ['lockout_time' => config('api_account.login.lockout_time')]
                 ),
                 Response::HTTP_UNAUTHORIZED
@@ -81,9 +80,9 @@ class AuthController extends Controller
         /*********************************************************/
 
         // Проверить подтверджена ли почта, если нужно
-        if(config('api_account.registration.email_confirm')){
-            $user = User::query()->where('email',$request->get('email'))->first();
-            if($user && is_null($user->email_verified_at)){
+        if (config('api_account.registration.email_confirm')) {
+            $user = User::query()->where('email', $request->get('email'))->first();
+            if ($user && is_null($user->email_verified_at)) {
                 return $this->errorResponse(
                     ErrorManager::buildError(VALIDATION_ACCOUNT_NOT_VERIFIED_BY_EMAIL),
                     Response::HTTP_UNAUTHORIZED
@@ -91,12 +90,19 @@ class AuthController extends Controller
             }
         }
 
-        if (!$token = auth('api')->attempt(array_merge($validator->validated(),['status' => User::STATUS_REGISTER]))) {
-            if(!Cache::has($key)){
+        if (!$token = auth('api')->attempt(array_merge($validator->validated(), ['status' => User::STATUS_REGISTER]))) {
+            if (!Cache::has($key)) {
                 Cache::put($key, '1', config('api_account.login.lockout_time'));
             }
 
             Cache::increment('max_login_attempts_' . $ip);
+
+            if(User::query()->where('email',$validator->validated()['email'])->whereNotNull('provider_id')->whereNotNull('provider_name')->exists()){
+                return $this->errorResponse(
+                    ErrorManager::buildError(VALIDATION_USER_ONLY_SOCIALITE),
+                    Response::HTTP_UNAUTHORIZED
+                );
+            }
 
             return $this->errorResponse(
                 ErrorManager::buildError(VALIDATION_INVALID_LOGIN_PASSWORD_PAIR),
@@ -104,14 +110,13 @@ class AuthController extends Controller
             );
         }
 
-        Cache::put($key,'0',config('api_account.login.lockout_time'));
+        Cache::put($key, '0', config('api_account.login.lockout_time'));
 
         /* Если нужно подтверждение регистрации по e-mail */
-        if(config('api_account.registration.email_confirm')){
+        if (config('api_account.registration.email_confirm')) {
             $email_verified_at = auth('api')->user()->email_verified_at;
 
-            if(empty($email_verified_at))
-            {
+            if (empty($email_verified_at)) {
                 auth('api')->logout();
                 return $this->errorResponse(
                     ErrorManager::buildError(VALIDATION_ACCOUNT_NOT_VERIFIED_BY_EMAIL),
@@ -121,11 +126,10 @@ class AuthController extends Controller
         }
 
         /* Если нужно подтверждение регистрации по телефону */
-        if(config('api_account.registration.phone_confirm')){
+        if (config('api_account.registration.phone_confirm')) {
             $phone_verified_at = auth('api')->user()->phone_verified_at;
 
-            if(empty($phone_verified_at))
-            {
+            if (empty($phone_verified_at)) {
                 auth('api')->logout();
                 return $this->errorResponse(
                     ErrorManager::buildError(VALIDATION_ACCOUNT_NOT_VERIFIED_BY_PHONE),
@@ -147,6 +151,9 @@ class AuthController extends Controller
         $user_main_filed = 'email';
         $validateFields = [
             'name'     => 'required|string|between:2,100',
+            'lastname' => 'required|string|between:2,100',
+            'birthday' => 'nullable|before:today',
+            'subscribe' => 'nullable|bool',
             'phone'    => 'string|between:2,100',
             'email'    => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:8',
@@ -167,8 +174,8 @@ class AuthController extends Controller
         }
 
         /* Если нужно подтверждение по телефону ****************************/
-        if(config('api_account.registration.phone_confirm')){
-            $validateFields = array_merge($validateFields,['phone' => 'required|string|unique:users']);
+        if (config('api_account.registration.phone_confirm')) {
+            $validateFields = array_merge($validateFields, ['phone' => 'required|string|unique:users']);
 
             $shadow = User::where('status', User::STATUS_NOT_ACTIVE)->where('phone', $request->input('phone'))->first();
 
@@ -183,7 +190,7 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return $this->errorResponse(
-                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD,$validator->errors()->toArray()),
+                ErrorManager::buildError(VALIDATION_REQUIRED_FIELD, $validator->errors()->toArray()),
                 Response::HTTP_BAD_REQUEST
             );
         }
@@ -203,22 +210,37 @@ class AuthController extends Controller
             )
         );
 
+        if ($request->has('subscribe') && $request->input('subscribe')) {
+            Subscribes::updateOrCreate(['email' => $validator->validated()['email']]);
+        }
+
         /* Если нужно подтверждение по e-mail ****************************/
-        if(config('api_account.registration.email_confirm')){
+        if (config('api_account.registration.email_confirm')) {
             return $this->returnEmailConfirm($user, $lang);
         }
         /****************************************************************/
 
         /* Если нужно подтверждение по телефону ****************************/
-        if(config('api_account.registration.phone_confirm')){
+        if (config('api_account.registration.phone_confirm')) {
             return $this->returnPhoneConfirm($user, $lang);
         }
         /****************************************************************/
 
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
+                'method' => 'register',
+                'data' => [
+                    'email' => $user->email,
+                ]
+            ]);
+        } else {
+            // Mail::to($user->email)->send(new ResetPasswordEmail($objData));
+        }
+
         return $this->successResponse([
             'message' => 'User successfully registered',
             'user'    => $user
-        ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -231,7 +253,7 @@ class AuthController extends Controller
         auth('api')->logout();
 
         return $this->successResponse(['message' => 'User successfully signed out']);
-}
+    }
 
     /**
      * Refresh a token.
@@ -254,6 +276,7 @@ class AuthController extends Controller
 
         $data = [
             'name'  => $user->name,
+            'lastname' => $user->lastname,
             'phone' => $user->phone,
             'email' => $user->email
         ];
@@ -323,7 +346,7 @@ class AuthController extends Controller
         $verified->delete();
 
         /* Если нужно подтверждение по телефону ****************************/
-        if(config('api_account.registration.phone_confirm') && is_null($user->phone_verified_at)){
+        if (config('api_account.registration.phone_confirm') && is_null($user->phone_verified_at)) {
             $user->status = User::STATUS_NOT_ACTIVE;
             $user->save();
             return $this->returnPhoneConfirm($user);
@@ -333,7 +356,7 @@ class AuthController extends Controller
         return $this->successResponse([
             'message' => 'User successfully registered',
             'user'    => $user
-        ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
     public function phoneConfirm(Request $request)
@@ -389,7 +412,7 @@ class AuthController extends Controller
         $verified->delete();
 
         /* Якщо потрібно підтвердження по e-mail ****************************/
-        if(config('api_account.registration.email_confirm') && is_null($user->email_verified_at)){
+        if (config('api_account.registration.email_confirm') && is_null($user->email_verified_at)) {
             $user->status = User::STATUS_NOT_ACTIVE;
             $user->save();
             return $this->returnEmailConfirm($user);
@@ -399,7 +422,7 @@ class AuthController extends Controller
         return $this->successResponse([
             'message' => 'User successfully registered',
             'user'    => $user
-        ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
     private function returnEmailConfirm(User $user, $lang = 'uk')
@@ -414,16 +437,10 @@ class AuthController extends Controller
 
 
         $link = url('/user-email-confirm/token/' . $token);
-        $template = SendMailGunTemplate::TEMPLATE_REGISTRATION_CONFIRM_EMAIL;
-
-        // templates for localization with _{locale} in the end
-        if ($lang != config('translatable.locale')) {
-            $template .= '_' . $lang;
-        }
 
         // todo send mail
-        if(config('api_account.debug')){
-            Log::info('api_debug',[
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
                 'method' => 'returnEmailConfirm',
                 'data' => [
                     'email' => $user->email,
@@ -431,21 +448,16 @@ class AuthController extends Controller
                 ]
             ]);
         } else {
-            $this->mailer->sendMail(
-                config('mail.mailers.mailgun.from_address'),
-                $user->email,
-                __('Email confirmation'),
-                $template,
-                [
-                    'name' => $user->name,
-                    'link' => $link
-                ]
-            );
+            $objData       = new \stdClass();
+            $objData->email = $user->email;
+            $objData->link = $link;
+
+            Mail::to($user->email)->send(new RegConfirmEmail($objData));
         }
 
         return $this->successResponse([
             'message' => 'Email sent for confirmation',
-        ],Response::HTTP_CREATED);
+        ], Response::HTTP_CREATED);
     }
 
     private function returnPhoneConfirm(User $user)
@@ -458,8 +470,8 @@ class AuthController extends Controller
             'type'  => UserVerified::TYPE_PHONE
         ]);
 
-        if(config('api_account.debug')){
-            Log::info('api_debug',[
+        if (config('api_account.debug')) {
+            Log::info('api_debug', [
                 'method' => 'returnPhoneConfirm',
                 'data' => [
                     'field' => $user->phone,
@@ -469,7 +481,7 @@ class AuthController extends Controller
             ]);
         } else {
             /* Send sms */
-            $sended = TurboSMS::sendMessages($user->phone, 'Код подтверждения: ' . $code, 'sms');
+            $sended = TurboSMS::sendMessages($user->phone, 'Код підтвердження: ' . $code, 'sms');
         }
 
         return $this->successResponse([
@@ -485,24 +497,57 @@ class AuthController extends Controller
     public function handleProviderCallback($driver)
     {
         Log::info('handleProviderCallback',[$driver]);
+
         try {
             $user = Socialite::driver($driver)->user();
             Log::info('handleProviderCallbackUser',[$user]);
         } catch (\Exception $e) {
-
+            Log::info('handleProviderCallbackUser User not found', [$driver]);
+            abort(404,'User not found');
         }
 
-        $existingUser = User::query()->where('email', $user->getEmail())->first();
+        /* @var User $existingUser */
+        $existingUser = User::query()
+            ->where('email', $user->getEmail())
+            ->first();
 
         if ($existingUser) {
+            $existingUser->status = User::STATUS_REGISTER;
+            $existingUser->provider_id = $user->getId();
+            $existingUser->provider_name = $driver;
+            $existingUser->save();
+
             $token = auth('api')->login($existingUser, true);
         } else {
+            $first_name = '';
+            $last_name = '';
+
+            switch ($driver) {
+                case 'facebook':
+                    $first_name = $user->offsetExists('first_name') ? $user->offsetGet('first_name') : $user->getName();
+                    $last_name = $user->offsetExists('last_name') ? $user->offsetGet('last_name') : $user->getName();
+                    break;
+
+                case 'google':
+                    $first_name = $user->offsetExists('given_name') ? $user->offsetGet('given_name') : $user->getName();
+                    $last_name = $user->offsetExists('family_name') ? $user->offsetGet('family_name') : $user->getName();
+                    break;
+
+                    // You can also add more provider option e.g. linkedin, twitter etc.
+
+                default:
+                    $first_name = $user->getName();
+                    $last_name = $user->getName();
+            }
+
             $newUser = new User;
             $newUser->provider_name = $driver;
             $newUser->provider_id = $user->getId();
-            $newUser->name = $user->getName();
+            $newUser->name = $first_name;
+            $newUser->lastname = $last_name;
             $newUser->email = $user->getEmail();
             $newUser->email_verified_at = now();
+            $newUser->password = Hash::make(Str::random(8));
             $newUser->status = User::STATUS_REGISTER;
             $newUser->save();
 

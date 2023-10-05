@@ -7,6 +7,9 @@ use App\Modules\Setting\Setting;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use App\Mail\Transport\EsputnikTransport;
+use ESputnik\ESputnik;
+use Illuminate\Support\Facades\Mail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,6 +44,10 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::if('user', function () {
             return auth()->check() && auth()->user()->isUser();
+        });
+
+        Mail::extend('esputnik', function (array $config = []) {
+            return new EsputnikTransport();
         });
 
         $this->includeHelpers();

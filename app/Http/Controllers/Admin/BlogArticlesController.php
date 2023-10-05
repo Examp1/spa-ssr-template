@@ -136,6 +136,7 @@ class BlogArticlesController extends Controller
             $model->fill($request->all());
 
             $model->status = $request->get('status') ?? false;
+            $model->main_category_id = 1;
 
             if (!$model->save()) {
                 DB::rollBack();
@@ -147,9 +148,21 @@ class BlogArticlesController extends Controller
 
             $model->categories()->sync($request->get('categories'));
 
+            $image = '';
+
             foreach (config('translatable.locales') as $lang => $item) {
                 $constructorData = $request->get('constructorData');
                 $data = $request->input('page_data.' . $lang, []);
+
+                // image copy
+                if (empty($image) && !empty($data['image'])) {
+                    $image = $data['image'];
+                }
+
+                if (empty($data['image']) && !empty($image)) {
+                    $data['image'] = $image;
+                }
+
                 $data['meta_auto_gen'] = $data['meta_auto_gen'] ?? false;
                 $data['status_lang'] = $data['status_lang'] ?? false;
                 $model->translateOrNew($lang)->fill(array_merge($data, $constructorData[$lang] ?? []));
@@ -163,7 +176,7 @@ class BlogArticlesController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();
@@ -172,7 +185,7 @@ class BlogArticlesController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->route($this->routeName.'.edit',['page' =>  $model->id,'lang' => $request->get('tab_lang',config('translatable.locale'))])->with('success', __('Created successfully!'));
+            return redirect()->route($this->routeName.'.edit', $model->id)->with('success', __('Created successfully!'));
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Created successfully!'));
         }
@@ -240,7 +253,7 @@ class BlogArticlesController extends Controller
 
                 if (!$trans->save()) {
                     DB::rollBack();
-                };
+                }
 
                 $item->load('constructor');
 
@@ -279,6 +292,7 @@ class BlogArticlesController extends Controller
             $model->fill($request->all());
 
             $model->status = $request->get('status') ?? false;
+            $model->main_category_id = 1;
 
             if (!$model->save()) {
                 DB::rollBack();
@@ -289,9 +303,21 @@ class BlogArticlesController extends Controller
 
             $model->deleteTranslations();
 
+            $image = '';
+
             foreach (config('translatable.locales') as $lang => $item) {
                 $constructorData = $request->get('constructorData');
                 $data = $request->input('page_data.' . $lang, []);
+
+                // image copy
+                if (empty($image) && !empty($data['image'])) {
+                    $image = $data['image'];
+                }
+
+                if (empty($data['image']) && !empty($image)) {
+                    $data['image'] = $image;
+                }
+
                 $data['meta_auto_gen'] = $data['meta_auto_gen'] ?? false;
                 $data['status_lang'] = $data['status_lang'] ?? false;
                 $model->translateOrNew($lang)->fill(array_merge($data, $constructorData[$lang] ?? []));
@@ -305,7 +331,7 @@ class BlogArticlesController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
 
-            return redirect()->back()->with('error', __('Error!') . $e->getMessage())->withInput();
+            return redirect()->route($this->routeName.'.index')->with('error', __('Error!') . $e->getMessage());
         }
 
         DB::commit();
@@ -314,7 +340,7 @@ class BlogArticlesController extends Controller
         \Illuminate\Support\Facades\Artisan::call('view:clear');
 
         if ($request->get('save_method') === 'save_and_back') {
-            return redirect()->back()->with('success', __('Updated successfully!'))->withInput(['lang' => $request->get('tab_lang',config('translatable.locale'))]);
+            return redirect()->back()->with('success', __('Updated successfully!'));
         } else {
             return redirect()->route($this->routeName.'.index')->with('success', __('Updated successfully!'));
         }

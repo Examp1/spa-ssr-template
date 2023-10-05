@@ -271,6 +271,43 @@ $(document).ready(function () {
         }
     });
 
+    $(".btn-update-checked").on('click', function () {
+        let checked = [];
+
+        $('.checkbox-item').each(function () {
+            if ($(this).prop('checked')) {
+                checked.push($(this).val());
+            }
+        });
+
+        if (checked.length == 0) {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Немає вибраних записів',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        } else {
+            Swal.fire({
+                title: 'Ви впевнені?',
+                text: "Ви намагаєтеся оновити записи!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Так, зробити це!',
+                cancelButtonText: 'Ні'
+            }).then((result) => {
+                if (result.value) {
+                    $('#update_sel_form').find('input[name="ids"]').val(JSON.stringify(checked));
+                    $('#update_sel_form').find('input[name="status_id"]').val($('#status_change').find(':selected').val());
+                    $('#update_sel_form').submit();
+                }
+            });
+        }
+    });
+
     $('.delete-model-btn').on('click', function () {
         Swal.fire({
             title: 'Ви впевнені?',

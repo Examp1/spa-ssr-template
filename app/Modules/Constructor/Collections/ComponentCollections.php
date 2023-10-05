@@ -13,37 +13,23 @@ class ComponentCollections
         'text'           => 'Текст',
     ];
     const BTN_ICON = [
-        'non'                => 'Без іконки',
-        'icon-02'            => 'icon-02',
-        'icon-03'            => 'icon-03',
-        'icon-04'            => 'icon-04',
-        'icon-05'            => 'icon-05',
-        'icon-06'            => 'icon-06',
-        'icon-07'            => 'icon-07',
-        'icon-08'            => 'icon-08',
-        'icon-09'            => 'icon-09',
-        'icon-10'            => 'icon-10',
-        'icon-11'            => 'icon-11',
-        'icon-12'            => 'icon-12',
-        'icon-13'            => 'icon-13',
-        'icon-emoji-01'      => 'icon-emoji-01',
-        'icon-emoji-02'      => 'icon-emoji-02',
-        'icon-emoji-03'      => 'icon-emoji-03',
-        'icon-emoji-04'      => 'icon-emoji-04',
-        'icon-emoji-05'      => 'icon-emoji-05',
-        'icon-arrow-left'    => 'icon-arrow-left',
-        'icon-arrow-right'   => 'icon-arrow-right',
-        'icon-check'         => 'icon-check',
-        'icon-close'         => 'icon-close',
-        'icon-plus'          => 'icon-plus',
-        'icon-play'          => 'icon-play',
-        'icon-send'          => 'icon-send',
-        'icon-facebook'      => 'icon-facebook',
-        'icon-telegram'      => 'icon-telegram',
-        'icon-twitter'       => 'icon-twitter',
-        'icon-link'          => 'icon-link',
-        'icon-arrow-left-2'  => 'icon-arrow-left-2',
-        'icon-arrow-right-2' => 'icon-arrow-right-2'
+        'non'            => 'Без іконки',
+        'icon-owl'       => 'icon-owl',
+        'icon-cart'      => 'icon-cart',
+        'icon-search'    => 'icon-search',
+        'icon-delete'    => 'icon-delete',
+        'icon-check'     => 'icon-check',
+        'icon-close'     => 'icon-close',
+        'icon-loader'    => 'icon-loader',
+        'icon-star-b'    => 'icon-star-b',
+        'icon-star-o'    => 'icon-star-o',
+        'icon-arrow'     => 'icon-arrow',
+        'icon-plus'      => 'icon-plus',
+        'icon-facebook'  => 'icon-facebook',
+        'icon-favorit'   => 'icon-favorit',
+        'icon-instagram' => 'icon-instagram',
+        'icon-tiktok'    => 'icon-tiktok',
+        'icon-youtube'   => 'icon-youtube',
     ];
 
     const SEPARATOR = [
@@ -179,6 +165,41 @@ class ComponentCollections
     /**
      * @return array
      */
+    public static function simpleTextBtnLeft()
+    {
+        return [
+            'label'  => 'Текст с кнопкой праворуч',
+            'params' => [
+                'labels'     => [
+                    'title'            => 'Заголовок',
+                    'anker_title'      => 'Anker title',
+                    'font_size'        => 'Розмір шрифту',
+                    'top_separator'    => 'Верхній роздільник',
+                    'bottom_separator' => 'Нижній роздільник',
+                    'title_font_size'  => 'Розмір шрифту заголовка',
+                ],
+                'btn_type'   => self::BTN_TYPE,
+                'btn_icon'   => self::BTN_ICON,
+                'separator'  => self::SEPARATOR,
+                'font_size'  => [
+                    'normal' => 'Звичайний',
+                    'small'  => 'Маленький',
+                ],
+                'shown_name' => 'title'
+            ],
+            'rules'  => [
+                'content.title'       => 'nullable|string|max:255',
+                'content.description' => 'nullable|string|max:65000',
+                'content.background'  => 'nullable|string|max:255',
+                'content.font_size'   => 'nullable|string|max:255',
+                'content.btns.*.item' => 'nullable|string|max:255',
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public static function simpleText()
     {
         return [
@@ -302,6 +323,44 @@ class ComponentCollections
                 'content.title.max' => 'Заголовок максимум 255 символів',
                 'content.text.max'  => 'Текст - максимум 65000 символів',
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function images3()
+    {
+        return [
+            'label'    => '3 картинки в ряд',
+            'params'   => [
+                'labels'     => [
+                    'title'            => 'Заголовок',
+                    'anker_title'      => 'Anker title',
+                    'image'            => 'Зображення',
+                    'font_size'        => 'Розмір шрифту',
+                    'top_separator'    => 'Верхній роздільник',
+                    'bottom_separator' => 'Нижній роздільник',
+                    'title_font_size'  => 'Розмір шрифту заголовка',
+                ],
+                'font_size'  => [
+                    'normal' => 'Звичайний',
+                    'small'  => 'Маленький',
+                ],
+                'btn_type'   => self::BTN_TYPE,
+                'btn_icon'   => self::BTN_ICON,
+                'separator'  => self::SEPARATOR,
+                'shown_name' => 'title'
+            ],
+            'rules'    => [
+                'content.title' => 'nullable|string|max:255',
+                'content.image' => 'nullable|string|max:255',
+                'content.list'  => 'required|array|min:3|max:3',
+            ],
+            'messages' => [
+                'content.list.min' => 'Мінімум 3 зображення',
+                'content.list.max' => 'Максимум 3 зображення',
+            ]
         ];
     }
 

@@ -20,6 +20,7 @@
         <div class="tab-pane p-t-20 p-b-20  @if (config('translatable.locale') == $key) active @endif"
             id="main_lang_{{ $key }}" role="tabpanel">
 
+            <h4>Вкладка: Доставка та оплата</h4>
             <div class="form-group row">
                 <label class="col-md-3 text-right"
                     for="setting_{{ $tab }}_title_{{ $key }}">Заголовок</label>
@@ -33,11 +34,35 @@
 
             <div class="form-group row">
                 <label class="col-md-3 text-right"
-                    for="setting_{{ $tab }}_description_{{ $key }}">Описание</label>
+                    for="setting_{{ $tab }}_description_{{ $key }}">Опис</label>
                 <div class="col-md-9">
                     <textarea class="form-control summernote editor"
                         name="setting_data[{{ $key }}][{{ $tab }}_description]"
                         id="setting_{{ $tab }}_description_{{ $key }}" cols="30" rows="10">{{ old('setting_data.' . $key . '.' . $tab . '_description', $data[$key][$tab . '_description'][0]['value'] ?? '') }}</textarea>
+                </div>
+            </div>
+
+            <hr>
+            <h4>Вкладка: Обмін та повернення</h4>
+
+            <div class="form-group row">
+                <label class="col-md-3 text-right"
+                       for="setting_{{ $tab }}_refund_title_{{ $key }}">Заголовок</label>
+                <div class="col-md-9">
+                    <input type="text" name="setting_data[{{ $key }}][{{ $tab }}_refund_title]"
+                           value="{{ old('setting_data.' . $key . '.' . $tab . '_refund_title', $data[$key][$tab . '_refund_title'][0]['value'] ?? '') }}"
+                           id="setting_{{ $tab }}_refund_title_{{ $key }}"
+                           class="form-control{{ $errors->has('setting_data.' . $key . '.' . $tab . '_refund_title') ? ' is-invalid' : '' }}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-3 text-right"
+                       for="setting_{{ $tab }}_refund_text_{{ $key }}">Опис</label>
+                <div class="col-md-9">
+                    <textarea class="form-control summernote editor"
+                              name="setting_data[{{ $key }}][{{ $tab }}_refund_text]"
+                              id="setting_{{ $tab }}_refund_text_{{ $key }}" cols="30" rows="10">{{ old('setting_data.' . $key . '.' . $tab . '_refund_text', $data[$key][$tab . '_refund_text'][0]['value'] ?? '') }}</textarea>
                 </div>
             </div>
 
@@ -66,7 +91,8 @@
                         class="form-control{{ $errors->has('setting_data.' . $key . '.' . $tab . '_meta_description') ? ' is-invalid' : '' }}">
                 </div>
             </div>
-
+            
+            <hr>
             @include('admin.settings.tabs._generate', ['generate_route' => route('products.meta-generate')])
         </div>
     @endforeach

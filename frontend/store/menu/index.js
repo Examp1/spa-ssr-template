@@ -2,7 +2,7 @@ export const state = () => ({
     headerMenu: null,
     footerMenu: null,
     sideBarMenu: null,
-    textPageMenu: null
+    textPageMenu: null,
 })
 
 export const getters = {

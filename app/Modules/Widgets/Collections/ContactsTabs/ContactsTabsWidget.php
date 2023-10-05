@@ -14,7 +14,7 @@ class ContactsTabsWidget implements WidgetInterface
 
     public static string $preview = 'contacts-tabs.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING,WIDGET_GROUP_PAGE];
 
     /**
      * @var array
@@ -71,19 +71,6 @@ class ContactsTabsWidget implements WidgetInterface
                 ],
                 'value'   => '',
             ],
-            [
-                'type'  => 'select2',
-                'name'  => 'tabs',
-                'label' => 'Виберіть таби з налаштувань контактів',
-                'class' => '',
-                'rules' => 'nullable|array',
-                'value' => [],
-                'multiple' => true,
-                'width' => '400px',
-                'list'  => function () {
-                    return $this->tabs;
-                }
-            ],
         ];
     }
 
@@ -91,15 +78,12 @@ class ContactsTabsWidget implements WidgetInterface
     {
         $contacts = [];
 
-        if(isset($data['tabs']) && is_array($data['tabs']) && count($data['tabs']) && count($this->contacts)){
-            foreach ($this->contacts as $contact){
-                if(in_array($contact['slug'],$data['tabs'])){
-                    $contacts[] = $contact;
-                }
-            }
+        foreach ($this->contacts as $contact){
+            $contacts[] = $contact;
         }
 
         $data['contacts'] = $contacts;
+
 
         return $data;
     }

@@ -16,19 +16,19 @@
     <link href="{{ asset('matrix/libs/flot/css/float-chart.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('matrix/css/style.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin/re-style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/reStyle.css') }}" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
 
     <link href="{{ asset('css/admin/inter-link.css') }}" rel="stylesheet">
     <!-- summernote -->
-    {{-- <link rel="stylesheet" href="{{asset("assets/plugins/summernote/summernote-bs4.css")}}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset("assets/plugins/summernote/summernote-bs4.css") }}"> --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <!-- Code Mirror Styles -->
     {{-- <link rel="stylesheet" href="{{ asset('vendor/admin/codemirror/lib/codemirror.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('myLib/media-owl-modal/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/icomoon.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/icomoon2.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/new-icons.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
     <style>
@@ -128,7 +128,7 @@
     {{-- <script src="{{ asset('vendor/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
-    {{-- <script src="{{asset('matrix/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js')}}"></script> --}}
+    {{-- <script src="{{ asset('matrix/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script> --}}
     <script src="{{ asset('matrix/extra-libs/sparkline/sparkline.js') }}"></script>
     <!--Wave Effects -->
     <script src="{{ asset('matrix/js/waves.js') }}"></script>
@@ -147,11 +147,11 @@
     <script src="{{ asset('matrix/libs/flot/jquery.flot.time.js') }}"></script>
     <script src="{{ asset('matrix/libs/flot/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset('matrix/libs/flot/jquery.flot.crosshair.js') }}"></script>
-    {{-- <script src="{{asset('matrix/libs/flot.tooltip/js/jquery.flot.tooltip.min.js')}}"></script> --}}
+    {{-- <script src="{{ asset('matrix/libs/flot.tooltip/js/jquery.flot.tooltip.min.js') }}"></script> --}}
 
-    {{-- <script src="{{asset('matrix/js/pages/chart/chart-page-init.js')}}"></script> --}}
+    {{-- <script src="{{ asset('matrix/js/pages/chart/chart-page-init.js') }}"></script> --}}
     <!-- Summernote -->
-    {{-- <script src="{{asset("assets/plugins/summernote/summernote-bs4.js")}}"></script> --}}
+    {{-- <script src="{{ asset("assets/plugins/summernote/summernote-bs4.js") }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
     <script src="{{ asset('js/summernote_plugins/summernote-uk-UA.js') }}"></script>
@@ -161,6 +161,7 @@
     <script src="{{ asset('js/summernote_plugins/btn_replace.js') }}"></script>
     <script src="{{ asset('js/summernote_plugins/btn_replace_tags.js') }}"></script>
     <script src="{{ asset('js/summernote_plugins/btn_replace_tags_all.js') }}"></script>
+    <script src="{{ asset('js/summernote_plugins/btn_more.js') }}"></script>
 
     <script>
         const summernote_options = {
@@ -183,14 +184,15 @@
                 ['insert', ['link', 'hr']],
                 ['view', ['fullscreen', 'codeview']],
                 ['popovers', ['img', 'myVideo']],
-                ['typography', ['typography']]
+                ['typography', ['typography','rdm']]
             ],
             buttons: {
                 img: LFMButton,
                 myVideo: VideoButton,
                 typography: ReplaceButton,
                 tags_replace: ReplaceButtonTags,
-                tags_replace_all: ReplaceButtonTagsAll
+                tags_replace_all: ReplaceButtonTagsAll,
+                rdm: MoreButton
             },
             icons: {
                 clear: '<i class="fa fa-video-camera"></i>',

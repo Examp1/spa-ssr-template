@@ -46,6 +46,8 @@ class BlogArticles extends BaseModelSection implements ModelSection
         'meta_created_as',
         'image',
         'alt',
+        'preview_image',
+        'preview_alt',
         'image_mob',
         'alt_mob',
         'constructor_html',
@@ -89,7 +91,7 @@ class BlogArticles extends BaseModelSection implements ModelSection
      */
     public function categories()
     {
-        return $this->belongsToMany(BlogCategories::class,'blog_article_category','blog_article_id','blog_category_id');
+        return $this->belongsToMany(BlogCategories::class, 'blog_article_category', 'blog_article_id', 'blog_category_id');
     }
 
     /**
@@ -99,7 +101,7 @@ class BlogArticles extends BaseModelSection implements ModelSection
      */
     public function mainCategory()
     {
-        return $this->hasOne(BlogCategories::class,'id','main_category_id');
+        return $this->hasOne(BlogCategories::class, 'id', 'main_category_id');
     }
 
     /**
@@ -135,7 +137,7 @@ class BlogArticles extends BaseModelSection implements ModelSection
      */
     public function showStatus(): string
     {
-        if($this->public_date > Carbon::now()){
+        if ($this->public_date > Carbon::now()) {
             return view('admin.pieces.status', self::getStatuses()[0]);
         }
 
@@ -185,7 +187,7 @@ class BlogArticles extends BaseModelSection implements ModelSection
      */
     public static function backLink($id): string
     {
-        return '/admin/blog/articles/'.$id.'/edit';
+        return '/admin/blog/articles/' . $id . '/edit';
     }
 
     public static function getOptionsHTML($selected = null): string
@@ -243,9 +245,9 @@ class BlogArticles extends BaseModelSection implements ModelSection
     public function hasLang($lang): bool
     {
         return BlogArticleTranslation::query()
-            ->where('blog_articles_id',$this->id)
-            ->where('lang',$lang)
-            ->where('status_lang',1)
+            ->where('blog_articles_id', $this->id)
+            ->where('lang', $lang)
+            ->where('status_lang', 1)
             ->exists();
     }
 }

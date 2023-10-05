@@ -39,6 +39,11 @@ Route::group([
     Route::post('/edit', [\App\Http\Controllers\Api\ProfileController::class, 'edit']);
     Route::post('/user-phone-confirm', [\App\Http\Controllers\Api\ProfileController::class, 'phoneConfirm']);
     Route::post('/user-email-confirm/token', [\App\Http\Controllers\Api\ProfileController::class, 'emailConfirm']);
+    Route::post('/address/update', [\App\Http\Controllers\Api\AddressController::class, 'update']);
+    Route::post('/address/store', [\App\Http\Controllers\Api\AddressController::class, 'store']);
+    Route::post('/address/destroy', [\App\Http\Controllers\Api\AddressController::class, 'destroy']);
+    Route::post('/address/setmain', [\App\Http\Controllers\Api\AddressController::class, 'setMain']);
+    Route::post('/address', [\App\Http\Controllers\Api\AddressController::class, 'show']);
 });
 
 Route::POST('menu/get-by-ids', [\App\Http\Controllers\Api\MenuController::class,'getByIds']);

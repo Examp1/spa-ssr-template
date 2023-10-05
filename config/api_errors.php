@@ -19,6 +19,7 @@ defined('VALIDATION_ACCOUNT_NOT_VERIFIED_BY_EMAIL') or define('VALIDATION_ACCOUN
 defined('VALIDATION_ACCOUNT_NOT_VERIFIED_BY_PHONE') or define('VALIDATION_ACCOUNT_NOT_VERIFIED_BY_PHONE', 115);
 defined('VALIDATION_TOKEN_NOT_VALID') or define('VALIDATION_TOKEN_NOT_VALID', 116);
 defined('VALIDATION_FORM_GROUP_NOT_FOUND') or define('VALIDATION_FORM_GROUP_NOT_FOUND', 117);
+defined('VALIDATION_USER_ONLY_SOCIALITE') or define('VALIDATION_USER_ONLY_SOCIALITE', 118);
 
 return [
     VALIDATION_REQUEST_JSON_EXPECTED  => [
@@ -71,5 +72,8 @@ return [
     ],
     VALIDATION_TOKEN_NOT_VALID        => [
         'message' => 'Token not valid',
-    ]
+    ],
+    VALIDATION_USER_ONLY_SOCIALITE        => [
+        'message' => 'User only socialite',
+    ],
 ];

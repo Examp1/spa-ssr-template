@@ -21,6 +21,11 @@ class Adapter
         return $a['order'] - $b['order'];
     }
 
+    public static function sort($a, $b)
+    {
+        return $a['sort'] - $b['sort'];
+    }
+
     private function isJSON($string)
     {
         return is_string($string) && is_array(json_decode($string, true)) ? true : false;
@@ -43,6 +48,14 @@ class Adapter
             $originalModel = app(get_class($model));
             $modelAttrTitle = $originalModel::getMenuConfig()['name'];
             $ogImage = app(Setting::class)->get('default_og_image');
+
+            /*************************************** Breadcrumbs *********************************************/
+            $breadcrumbs = [
+                [
+                    'name' => $translate[$modelAttrTitle],
+                    'link'  => $frontLink,
+                ],
+            ];
 
             if(isset($translate['image']) && $translate['image'] != ''){
                 $ogImage = $translate['image'];
@@ -67,7 +80,7 @@ class Adapter
                     'url'         => env('APP_URL') . $ogUrl,
                     'type'        => 'website',
                     'locale'      => $lang,
-                    'site_name'   => env('APP_NAME'),
+                    'site_name'   => app(Setting::class)->get('app_name',$lang),
                 ],
                 'head_code' => app(Setting::class)->get('head_code',config('translatable.locale')),
             ];
@@ -141,6 +154,7 @@ class Adapter
             'translate'   => $translate,
             'constructor' => $constructor,
             'meta'        => $meta,
+            'breadcrumbs'  => $breadcrumbs,
         ];
     }
 

@@ -5,6 +5,9 @@ namespace App\Models;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
+use Owlwebdev\Ecom\Models\Product;
+use Owlwebdev\Ecom\Models\Category;
+use Owlwebdev\Ecom\Models\SizeGrid;
 
 class Menu extends Model
 {
@@ -40,6 +43,9 @@ class Menu extends Model
     const TYPE_LANDING          = 3;
     const TYPE_BLOG_CATEGORY    = 4;
     const TYPE_BLOG_TAGS        = 5; //Тег блога
+    const TYPE_PRODUCT_CATEGORY = 11; //Категорії товарів
+    const TYPE_PRODUCT          = 12; //Товари
+    const TYPE_SIZE_GRID        = 13; //Розмірні сітки
 
     public static function getVisibility(): array
     {
@@ -80,6 +86,9 @@ class Menu extends Model
             self::TYPE_BLOG_TAGS        => __('Blog Tags'),
             self::TYPE_LANDING          => __('Landings'),
             self::TYPE_ARBITRARY        => __('Arbitrary link'),
+            self::TYPE_PRODUCT_CATEGORY => 'Категорії товарів',
+            self::TYPE_PRODUCT          => 'Товари',
+            self::TYPE_SIZE_GRID        => 'Розмірні сітки',
         ];
     }
 
@@ -91,6 +100,9 @@ class Menu extends Model
             self::TYPE_LANDING          => Landing::getMenuConfig(),
             self::TYPE_BLOG_CATEGORY    => BlogCategories::getMenuConfig(),
             self::TYPE_BLOG_TAGS        => BlogTags::getMenuConfig(),
+            self::TYPE_PRODUCT_CATEGORY => Category::getMenuConfig(),
+            self::TYPE_PRODUCT          => Product::getMenuConfig(),
+            self::TYPE_SIZE_GRID        => SizeGrid::getMenuConfig(),
         ];
     }
 
@@ -273,5 +285,20 @@ class Menu extends Model
     public function blog_tag()
     {
         return $this->hasOne(BlogTags::class, 'id', 'model_id');
+    }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'model_id');
+    }
+
+    public function product_category()
+    {
+        return $this->hasOne(Category::class, 'id', 'model_id');
+    }
+
+    public function size_grid()
+    {
+        return $this->hasOne(SizeGrid::class, 'id', 'model_id');
     }
 }

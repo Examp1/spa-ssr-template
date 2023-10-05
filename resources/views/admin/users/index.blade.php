@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card card-exportable">
                 <div class="card-body">
                     <form action="" method="get">
                         <div class="filter-container">
@@ -47,11 +47,14 @@
                                 <th style="width: 50px">
                                     <input type="checkbox" class="check-all">
                                 </th>
+                                <th>
+                                    {{ __('ID') }}
+                                </th>
                                 <th class="sorting @if (request()->input('sort') == 'name' && request()->input('order') == 'asc') sorting_asc @elseif(request()->input('sort') == 'name' && request()->input('order') == 'desc') sorting_desc @endif"
                                     data-field="name">{{ __('Name') }}</th>
                                 <th class="sorting @if (request()->input('sort') == 'email' && request()->input('order') == 'asc') sorting_asc @elseif(request()->input('sort') == 'email' && request()->input('order') == 'desc') sorting_desc @endif"
                                     data-field="email">Email</th>
-                                <th>{{ __('Phone') }}</th>
+                                <th data-field="phone">{{ __('Phone') }}</th>
                                 <th>{{ __('Actions') }}</th>
                             </tr>
                         </thead>
@@ -62,6 +65,7 @@
                                         <input type="checkbox" class="checkbox-item" data-check="{{ $user->id }}"
                                             name="check[]" value="{{ $user->id }}">
                                     </td>
+                                    <td>{{ $user->id }}</td>
                                     <td>
                                         @can('users_edit')
                                             <a href="{{ route('users.edit', $user->id) }}" title="Редагувати">
@@ -146,8 +150,16 @@
 @endpush
 
 @push('scripts')
+    <script src="{{ asset('/myLib/im-export-table-lib.js') }}"></script>
     <script>
         $(document).ready(() => {
+            var isMakeExport = true;
+            if (isMakeExport) {
+                let exportLib = new imExportTableLib({
+                    cardQuerySelector: ".card-exportable",
+                    dbTable: "users"
+                });
+            }
             $('.delete-item-btn').on('click', function() {
                 let _this = $(this);
                 Swal.fire({

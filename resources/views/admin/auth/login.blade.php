@@ -9,11 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/backend_images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/backend_images/favicon.png') }}">
     <title>Matrix</title>
     <!-- Custom CSS -->
-    <link href="{{asset("assets/dist/css/adminlte.min.css")}}" rel="stylesheet">
-    <link href="{{asset("assets/dist/css/login.css")}}" rel="stylesheet">
+    <link href="{{ asset("assets/dist/css/adminlte.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("assets/dist/css/login.css") }}" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -128,10 +128,10 @@
 <!-- ============================================================== -->
 <!-- All Required js -->
 <!-- ============================================================== -->
-<script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap tether Core JavaScript -->
-<script src="{{asset('assets/plugins/popper/popper.min.js')}}"></script>
-<script src="{{asset('assets/plugins/bootstrap/js/bootstrap.js')}}"></script>
+<script src="{{ asset('assets/plugins/popper/popper.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.js') }}"></script>
 <!-- ============================================================== -->
 <!-- This page plugin js -->
 <!-- ============================================================== -->

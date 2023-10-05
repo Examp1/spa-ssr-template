@@ -69,6 +69,10 @@ class TelegramNoticeController extends Controller
         $formData = $form->getData();
         $nameItem = [];
 
+        if (isset($fields['type'])) {
+            $message = "<b>" . __($fields['type']) . "</b>" . PHP_EOL;
+        }
+
         foreach ($formData as $item) {
             if (isset($item['name'])) {
                 $nameItem[$item['name']] = $item;
@@ -96,6 +100,8 @@ class TelegramNoticeController extends Controller
             $message .= $fields['product_text'];
         }
 
+
+
         $flag = $this->bot->sendMessage($message, $group['id']);
 
         if (!isset($flag['ok']) || !$flag['ok']) {
@@ -112,7 +118,7 @@ class TelegramNoticeController extends Controller
 
         return $this->successResponse($res);
     }
-    
+
     //TODO: check for vulnerabilities
     public function fileUpload(Request $request)
     {

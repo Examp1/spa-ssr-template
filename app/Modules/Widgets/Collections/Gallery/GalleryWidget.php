@@ -13,7 +13,7 @@ class GalleryWidget implements WidgetInterface
 
     public static string $preview = 'gallery.jpg';
 
-    public static array $groups = [WIDGET_GROUP_PAGE];
+    public static array $groups = [WIDGET_GROUP_LANDING];
 
     /**
      * @var array

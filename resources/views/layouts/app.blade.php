@@ -15,8 +15,8 @@
     @yield('meta')
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
-    <link rel="stylesheet" href="{{asset('/css/front/bootstrap-grid.css')}}">
-    <link rel="stylesheet" href="{{asset('/css/front/main.css')}}">
+    <link rel="stylesheet" href="{{ asset('/css/front/bootstrap-grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/front/main.css') }}">
 
     <!-- Styles -->
     <style>
@@ -76,8 +76,8 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
-<script src="{{asset('js/imask.min.js')}}"></script>
-<script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="{{ asset('js/imask.min.js') }}"></script>
+<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     var element = $('input[name="phone"]')[0];

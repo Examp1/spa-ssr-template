@@ -1,5 +1,3 @@
-Hello,
+{{ __('To restore your profile login password follow') }}
 
 {{$data->link}}
-
-Thank You

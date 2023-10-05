@@ -10,9 +10,18 @@
         @endif
     </div>
 </div>
+@php
+    $is_setting = app(Setting::class)->get('about_page_page_id', config('translatable.locale')) == $model->id;
+@endphp
 
 <div class="form-group row">
-    <label class="col-md-3 text-right" for="page_description_{{ $lang }}">Контент</label>
+    <label class="col-md-3 text-right" for="page_description_{{ $lang }}">
+        @if ($is_setting)
+            {{ __('Sidebar') }}
+        @else
+            {{ __('SEO Text') }}
+        @endif
+    </label>
     <div class="col-md-9">
         <textarea
             name="page_data[{{ $lang }}][description]"

@@ -54,7 +54,7 @@ class SettingsController extends Controller
                             foreach ($value as $valueKey => &$valueItem) {
 
                                 if (!$valueItem['name']) {
-                                    return redirect()->back()->with('error', "Назва - обов'язкове поле!");
+                                    $valueItem['slug'] = Str::slug(Str::random());
                                 } else {
                                     $valueItem['slug'] = Str::slug($valueItem['name']);
                                 }
@@ -68,7 +68,7 @@ class SettingsController extends Controller
                         }
                     }
 
-                    $item = Settings::firstOrNew([
+                    $item = Settings::query()->firstOrNew([
                         'code' => $code,
                         'lang' => $lang
                     ]);
