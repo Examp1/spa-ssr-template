@@ -49,7 +49,7 @@
   <div class="product container">
     <div class="section-header">
       <div class="title">Акції</div>
-      <a href="" class="view-all">Всі акції <i></i></a>
+      <a href="" class="view-all">Всі акції</a>
     </div>
     <div class="product_tabs">
       <ul>

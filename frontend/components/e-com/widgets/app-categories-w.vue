@@ -2,7 +2,7 @@
   <section class="category-w">
     <div class="section-header">
       <div class="title">Популярні категорії</div>
-      <a href="" class="view-all">Всі категорії <i></i></a>
+      <a href="" class="view-all">Всі категорії </a>
     </div>
     <div class="category_items">
       <app-category-item
