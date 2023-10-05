@@ -36,7 +36,7 @@ export default {
 
     &_content {
         position: relative;
-        &::before{
+        &::before {
             content: '';
             position: absolute;
             height: 94px;
@@ -44,6 +44,7 @@ export default {
             bottom: 0;
             background: linear-gradient(180deg, rgba(252, 252, 252, 0.60) 0%, #FFF 100%);
         }
+
         p {
             display: block;
             font-size: 16px;
@@ -65,38 +66,12 @@ export default {
         }
 
         .btn-more {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translate(-50%, 0);
             z-index: 2;
             font-size: 16px;
-            border-radius: 3px;
-            background-color: #FECA0A;
-            font-size: 14px;
-            color: #000;
-            padding: 0 10px;
-            height: 23px;
-
-            &:hover {
-                background-color: #FFF101;
-            }
-
-            &_black {
-                border-radius: 5px;
-                height: 38px;
-                padding: 0 24px;
-                background-color: #000;
-                color: #fff;
-
-                &:hover {
-                    background-color: #FECA0A;
-                    color: #000;
-                }
-            }
         }
 
         @include _991 {

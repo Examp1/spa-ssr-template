@@ -1,7 +1,7 @@
 <template>
     <div class="furnitureByRoom">
         <h2 v-if="propsData.title" class="title" v-html="propsData.title"></h2>
-        <div class="furnitureByRoom_items" :style="cssVariables" :class="`gtc${propsData.title_column_select}`">
+        <div class="furnitureByRoom_items" :class="`gtc${propsData.title_column_select}`">
             <div v-for="(block, idx) in propsData.list" :key="'block' + idx" class="furnitureByRoom_item">
                 <nuxt-link :to="block.link">
                     <!-- <h3 class="block-title">{{ block.title }}</h3> -->
