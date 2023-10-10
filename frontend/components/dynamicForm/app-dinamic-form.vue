@@ -14,7 +14,9 @@
                 :validation-rules="generateValidationRules(field)"
                 @input="handleInput"
             ></component>
-            <button class="submitBtn">Отправить</button>
+            <div class="center">
+                <button class="submitBtn">Отправить</button>
+            </div>
         </form>
     </ValidationObserver>
 </template>

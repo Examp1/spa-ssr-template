@@ -1,8 +1,18 @@
 .form::v-deep {
-    max-width: 600px;
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    form {
+        max-width: 630px;
+        width: 100%;
+        background-color: #272727;
+        border-radius: 25px;
+        padding: 40px;
+        color: $white;
+    }
+
     .formField {
         margin-bottom: 15px;
+
         input,
         textarea {
             padding: 15px 13px;
@@ -35,6 +45,7 @@
         position: absolute;
         display: none;
     }
+
     .checkbox {
         cursor: pointer;
         color: var(--1-gray-3, #838387);
@@ -44,6 +55,7 @@
         line-height: 130%;
         position: relative;
         padding-left: 30px;
+
         &::before {
             content: '';
             position: absolute;
@@ -73,8 +85,52 @@
             cursor: pointer;
         }
     }
+
     // error
     .error {
         color: red;
+    }
+
+    // new
+    h2 {
+        color: var(--White, #FFF);
+        text-align: center;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%;
+        margin-bottom: 25px;
+    }
+
+    p,
+    a {
+        color: var(--White, #FFF);
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%;
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    input,
+    textarea {
+        border-radius: 10px;
+    }
+
+    .submitBtn {
+        padding: 15px 30px;
+        background-color: $text-blue;
+        border: none;
+        color: var(--White, #FFF);
+        text-align: center;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%;
+        border-radius: 50px;
+        min-width: 230px;
+        cursor: pointer;
     }
 }
