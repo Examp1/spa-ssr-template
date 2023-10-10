@@ -8,7 +8,7 @@ export const getPageBySlug = async ({
     try {
         const options = {
             lang: i18n.locale,
-            slug: params.page ? params.page : 'golovna',
+            slug: params.page ? params.page : '/',
             prevw: query.prevw,
             page: query.page,
         }

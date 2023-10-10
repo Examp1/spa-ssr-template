@@ -58,7 +58,10 @@ export default {
         font-style: normal;
         font-weight: 600;
         line-height: 120%;
-        padding: 40px;
+        padding: 40px 10px;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
         @include _768{
             padding: 30px;
             font-size: 26px;
