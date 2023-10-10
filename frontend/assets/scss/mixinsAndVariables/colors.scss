@@ -6,12 +6,16 @@ $white: #F6F6F6;
 $gray-light: #959595;
 $gray: #696969;
 $black: #000;
-
+$footer: #272727;
 // Цвета текста;
-$text-primary: #353535;
-$text-secondary: #dfe2f5;
+$text-primary: #000;
+$text-secondary: #656565;
 $text-light: #aaa;
-
+$black-gray: #2C2827;
+$text-blue: #569CFF;
 // Цвета фона
 $bg-primary: #f5f5f5;
 $bg-secondary: #eee;
+
+//grad
+$bg-gradient-primary: linear-gradient(90deg, #559CFF 0%, #8CB7FA 100%);

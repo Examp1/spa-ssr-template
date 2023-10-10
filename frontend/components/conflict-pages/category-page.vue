@@ -1,6 +1,5 @@
 <template>
   <div class="category container">
-    <aside ref="aside" class="filter"></aside>
     <div ref="catalog" class="products-zone">
       <app-product-card
         v-for="(product, idx) in products"

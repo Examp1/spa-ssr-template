@@ -27,6 +27,9 @@ $container-width: 1440px;
     @include _380 {
         padding: $gap-mobile-s;
     }
+    &-1200{
+        max-width: 1200px;
+    }
 }
 
 .container-fluid {

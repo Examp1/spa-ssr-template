@@ -53,7 +53,7 @@ h1 > * {
 }
 
 h2 {
-    @include heading-styles($text-primary, 40px, 600, 120%, 35px);
+    @include heading-styles($text-primary, 40px, 400, 120%, 35px);
 }
 
 h3 {
