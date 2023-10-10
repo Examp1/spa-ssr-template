@@ -1,5 +1,5 @@
 <template>
-    <!-- <app-link
+    <app-link
     v-if="propsData.type_link === 'link'"
     class="btn"
     :class="propsData.type"
@@ -14,8 +14,8 @@
     @click="formOpen(propsData, 'modal')"
   >
     {{ propsData.text }}
-  </span> -->
-    <div>123</div>
+  </span>
+    <!-- <div>123</div> -->
 </template>
 
 <script>

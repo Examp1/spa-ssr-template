@@ -1,7 +1,7 @@
 <template>
   <div class="sections">
     <first-screen
-      v-if="!hasFirstScreen && !homePage"
+      v-if="!hasFirstScreen"
       :props-data="simpleFisrtScreen"
     ></first-screen>
     <section
@@ -115,8 +115,8 @@ export default {
     simpleFisrtScreen() {
       return {
         title: this.propsData.translate.title,
-        description: this.propsData.translate.description,
-        btns: this.propsData.translate.main_screen,
+        text: this.propsData.translate.description,
+        ...this.propsData.translate.main_screen,
         image: this.propsData.translate.image,
         image_mob: this.propsData.translate.image_mob,
       }

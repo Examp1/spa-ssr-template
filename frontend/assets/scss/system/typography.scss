@@ -49,7 +49,7 @@ span {
 // обычные стили для текста
 h1,
 h1 > * {
-    @include heading-styles($text-primary, 55px, 700, 120%, 45px);
+    @include heading-styles($text-primary, 55px, 500, 120%, 45px);
 }
 
 h2 {

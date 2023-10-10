@@ -18,8 +18,9 @@
                     <h1 v-if="propsData.title" v-html="propsData.title"></h1>
                     <div class="redactor" v-html="propsData.text"></div>
                     <app-btns
-                        v-if="propsData.btns"
-                        :props-data="propsData.btns"
+                        v-if="propsData.buttons || propsData.btns"
+                        class="btns"
+                        :props-data="propsData.btns || propsData.buttons"
                     ></app-btns>
                 </div>
                 <!-- <img v-if="!hasBg" :src="path(propsData.image)" alt="img" /> -->
@@ -35,7 +36,7 @@ export default {
     components: { AppBtns },
     computed: {
         hasBg() {
-            return this.propsData.with_fon === '0'
+            return this.propsData.with_image === '1' || this.propsData.with_fon === '0'
         },
         contentAlign() {
             switch (this.propsData.widget_type) {
@@ -58,6 +59,9 @@ export default {
     position: relative;
     z-index: 1;
 }
+.btns{
+    margin-top: 20px;
+}
 .bgImage {
     top: 0;
     left: 0;
@@ -74,6 +78,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     .inner-wrapper {
+        max-width: 830px;
         display: flex;
         grid-gap: 20px;
         &.left {
@@ -87,6 +92,9 @@ export default {
         }
     }
     // flex-direction: ;
+}
+.redactor{
+    margin-top: 50px;
 }
 .sticker {
     position: absolute;

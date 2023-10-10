@@ -11,6 +11,7 @@
 <script>
 import appBtn from './app-btn.vue'
 export default {
+    name: 'ButtonWrapper',
     components: { appBtn },
 }
 </script>
