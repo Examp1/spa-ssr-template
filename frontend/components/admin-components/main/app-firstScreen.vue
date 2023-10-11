@@ -1,7 +1,7 @@
 <template>
     <div class="firstScreen">
         <img
-            v-if="hasBg"
+
             class="bgImage"
             :src="path(propsData.image)"
             alt="bg"

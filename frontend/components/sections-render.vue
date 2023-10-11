@@ -1,11 +1,9 @@
 <template>
     <div class="sections">
-        <first-screen
-            v-if="!hasFirstScreen"
-            :props-data="simpleFisrtScreen"
-        ></first-screen>
+        <slot name="simpleFirstScreen"></slot>
+        <slot name="categoryItems"></slot>
         <section
-            v-for="(item, idx) in propsData.constructor"
+            v-for="(item, idx) in propsData"
             :key="item.content + idx"
             :style="{ ...backgroundStyle(item.content), order: item.position }"
             class="component"
@@ -111,21 +109,6 @@ export default {
             getFormData: 'dinamic_form/getFormData',
             isFormOpen: 'modal/isFormOpen',
         }),
-        hasFirstScreen() {
-            return this.propsData.constructor.some(
-                (item) => item.component === 'first-screen' && +item.visibility
-            )
-            // return temp
-        },
-        simpleFisrtScreen() {
-            return {
-                title: this.propsData.translate.title,
-                text: this.propsData.translate.description,
-                ...this.propsData.translate.main_screen,
-                image: this.propsData.translate.image,
-                image_mob: this.propsData.translate.image_mob,
-            }
-        },
     },
     methods: {
         containerClass(component) {
@@ -153,6 +136,7 @@ export default {
 
 <style lang="scss" scoped>
 .sections {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
