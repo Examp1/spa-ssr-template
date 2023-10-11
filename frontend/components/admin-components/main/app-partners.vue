@@ -58,20 +58,36 @@ export default {
 
 .wrp {
     margin-top: 30px;
-    display: grid;
+    display: flex;
     grid-gap: 20px;
-    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    flex-wrap: wrap;
+    // grid-template-columns: repeat(4, 1fr);
+    a {
+        width: calc(100% / 4 - 20px);
+    }
 
     @include _1440 {
-        grid-template-columns: repeat(3, 1fr);
+
+        // grid-template-columns: repeat(3, 1fr);
+        a {
+            width: calc(100% / 3 - 20px);
+        }
     }
 
     @include _820 {
-        grid-template-columns: repeat(2, 1fr);
+
+        // grid-template-columns: repeat(2, 1fr);
+        a {
+            width: calc(100% / 2 - 20px);
+        }
     }
 
     @include _640 {
-        grid-template-columns: repeat(1, 1fr);
+
+        // grid-template-columns: repeat(1, 1fr);
+        a {
+            width: 100%;
+        }
     }
-}
-</style>
+}</style>
