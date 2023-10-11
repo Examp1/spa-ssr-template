@@ -1,6 +1,7 @@
 <template>
     <div class="sections">
         <slot name="simpleFirstScreen"></slot>
+        <slot name="breadcrumbs"></slot>
         <slot name="categoryItems"></slot>
         <section
             v-for="(item, idx) in propsData"

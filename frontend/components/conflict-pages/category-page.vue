@@ -10,28 +10,32 @@
                     :props-data="simpleFirstScreen"
                 ></first-screen>
             </template>
+            <template #breadcrumbs>
+                <app-breadcrumbs :props-data="breadcrumbs" class="container"></app-breadcrumbs>
+            </template>
             <template #categoryItems>
-                <div
-                    class="products-zone container"
-                >
+                <div class="products-zone container">
                     <app-product-card
                         v-for="(product, idx) in products"
                         :key="'product' + idx"
                         :props-data="product"
                     ></app-product-card>
                 </div>
+                <app-pagination :props-data="paginateData"></app-pagination>
             </template>
         </sections-render>
     </div>
 </template>
 
 <script>
+import appBreadcrumbs from '../common/app-breadcrumbs.vue';
 import appProductCard from '../e-com/main/app-product-card.vue'
 import sectionsRender from '../sections-render.vue';
 import appFirstScreen from '~/components/admin-components/main/app-firstScreen.vue'
+import appPagination from '~/components/navigations/app-pagination.vue'
 export default {
     name: 'CategoryPage',
-    components: { appProductCard, sectionsRender, 'first-screen': appFirstScreen },
+    components: { appProductCard, sectionsRender, 'first-screen': appFirstScreen, appBreadcrumbs, appPagination },
     data() {
         return {
             meta: this.propsData.meta,
@@ -83,10 +87,13 @@ export default {
 
 .products-zone {
     //   width: calc(100% - 345px);
-    margin-top: 80px;
+    padding-bottom: 60px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    @include _768 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .filter {

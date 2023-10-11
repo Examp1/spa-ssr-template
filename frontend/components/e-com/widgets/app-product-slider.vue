@@ -9,7 +9,7 @@
                 :props-data="product"></app-product-card>
         </VueSlickCarousel>
         <center>
-            <app-link :to="catalog" class="btn stroke">Переглянути всі камери <i class="icon icon-big-arrow"></i></app-link>
+            <app-link to="catalog" class="btn stroke">Переглянути всі камери <i class="icon icon-big-arrow"></i></app-link>
         </center>
         <!-- </div> -->
     </div>
