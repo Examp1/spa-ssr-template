@@ -1,8 +1,14 @@
 <template>
     <div class="product_item">
-        <div class="product_img">
-            <img :src="previewPhoto" :alt="propsData.alt" />
-        </div>
+        <nuxt-link
+            :to="propsData.path"
+            class="product_img"
+        >
+            <img
+                :src="previewPhoto"
+                :alt="propsData.alt"
+            />
+        </nuxt-link>
         <div class="product_content">
             <div class="product_content-block">
                 <!-- <div class="product_item-inStock"><i></i> В наявності</div> -->
@@ -11,10 +17,30 @@
                 <div class="desc">Вулична Wi-Fi камера з мікрофоном</div>
             </div>
             <div class="product_prices">
-                <p v-if="propsData.old_price" class="old">{{ propsData.old_price }}₴</p>
+                <p
+                    v-if="+propsData.old_price"
+                    class="old"
+                >{{ propsData.old_price }}₴</p>
                 <p class="new">{{ propsData.price }}₴</p>
-                <nuxt-link :to="propsData.path" class="btn fill">Купити <i class="icon icon-big-arrow"></i></nuxt-link>
             </div>
+            <div
+                v-if="propsData.prices.length"
+                class="options"
+            >
+                <p>Комплектація</p>
+                <details>
+                    <p
+                        v-for="(opt, idx) in propsData.prices"
+                        :key="'opt' + idx"
+                        :value="opt.id"
+                        @click="goToProduct(propsData?.prices?.length, opt.id)"
+                    >{{ opt.name }}</p>
+                </details>
+            </div>
+            <nuxt-link
+                :to="propsData.path"
+                class="btn fill"
+            >Купити <i class="icon icon-big-arrow"></i></nuxt-link>
         </div>
     </div>
 </template>
@@ -26,6 +52,18 @@ export default {
         return {
             previewPhoto: this.path(this.propsData.image),
         }
+    },
+    methods: {
+        goToProduct(lng, id) {
+            console.log(123);
+            const routeObj = {
+                path: `/${this.propsData?.path}`,
+            }
+            if (lng > 1) {
+                routeObj.query = { optionId: id }
+            }
+            this.$router.push(routeObj)
+        },
     },
 }
 </script>
@@ -99,5 +137,6 @@ h3 {
     margin-top: 20px;
 }
 
-// }
-</style>
+.options {
+    margin-top: 20px;
+}</style>

@@ -1,28 +1,41 @@
 <template>
     <div class="seoText container">
         <div class="title">Інтернет-магазин меблів D2 Інтер'єр - купити меблі в Києві з доставкою по Україні</div>
-        <div class="seoText_content">
-            <p>Щиро вітаємо Вас в інтернет магазині меблів D2 Інтер'єр! Серед різних галузей діяльності ми обрали саме
-                меблі. Чому? Тому що меблі для нас – це не просто предмети, якими можна обставити квартиру, офіс чи
-                кав’ярню. Кожен стіл, стілець або крісло в нашому розумінні – це об'єкт щирого захоплення і нескінченного
-                інтересу. Пориньте в різноманітний і захопливий світ меблів разом з нами!
-                Сучасна мода на стилі інтер'єру – явище мінливе й непостійне. Ми уважно стежимо за трендами меблевої моди,
-                тому клієнту, який Престижні меблі для керівника
-                Коли мова заходить про престиж, ціна не має значення. Крісло і стіл для керівника компанії – це речі
-                засадничі. У нас знайдуться як розкішні класичні моделі, так і лаконічний
-            </p>
-            <a href="" class="btn btn-more btn-more_black">Детальніше</a>
+        <div
+            class="seoText_content"
+            :class="{ 'open': isOpen }"
+        >
+            <div
+                class="redactor"
+                v-html="propsData"
+            >
+            </div>
+            <span
+                class="btn fill btn-more"
+                @click="isOpen = true"
+            >Детальніше</span>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-
+    name: 'SeoText',
+    data() {
+        return {
+            isOpen: false
+        }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
+.redactor {
+    max-height: 120px;
+    overflow: hidden;
+    @include transition;
+}
+
 .seoText {
     margin-bottom: 105px;
 
@@ -36,15 +49,28 @@ export default {
 
     &_content {
         position: relative;
+
         &::before {
             content: '';
             position: absolute;
             height: 94px;
             width: 100%;
             bottom: 0;
+            @include transition;
             background: linear-gradient(180deg, rgba(252, 252, 252, 0.60) 0%, #FFF 100%);
         }
 
+        &.open {
+            &::before{
+                opacity: 0;
+            }
+            .redactor{
+                max-height: 10000px;
+            }
+            .btn{
+                opacity: 0;
+            }
+        }
         p {
             display: block;
             font-size: 16px;
@@ -67,6 +93,7 @@ export default {
 
         .btn-more {
             position: absolute;
+            @include transition;
             bottom: 0;
             left: 50%;
             transform: translate(-50%, 0);
@@ -89,5 +116,4 @@ export default {
     @include _480 {
         margin-bottom: 50px;
     }
-}
-</style>
+}</style>

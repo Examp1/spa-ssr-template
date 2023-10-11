@@ -60,6 +60,7 @@ import AppVideoAndText from './admin-components/main/app-video-and-text.vue'
 import AppTicker from './admin-components/widgets/app-ticker.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
 import AppCategoriesW from './e-com/widgets/app-categories-w.vue'
+import AppProductsW from './e-com/widgets/app-products-w.vue'
 import AppSeeAlso from './admin-components/widgets/app-see-also.vue'
 import AppProductSlider from './e-com/widgets/app-product-slider.vue'
 import AppOverlay from './ui/app-overlay.vue'
@@ -93,6 +94,7 @@ export default {
         'link-list': AppLinkList,
         ticker: AppTicker,
         'categories-w': AppCategoriesW,
+        'products-w': AppProductsW,
         'product-slider': AppProductSlider,
         'see-also': AppSeeAlso
     },
