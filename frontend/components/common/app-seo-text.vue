@@ -1,6 +1,6 @@
 <template>
     <div class="seoText container">
-        <div class="title">Інтернет-магазин меблів D2 Інтер'єр - купити меблі в Києві з доставкою по Україні</div>
+        <!-- <div class="title">Інтернет-магазин меблів D2 Інтер'єр - купити меблі в Києві з доставкою по Україні</div> -->
         <div
             class="seoText_content"
             :class="{ 'open': isOpen }"

@@ -55,6 +55,7 @@ import AppTeam from './admin-components/main/app-team.vue'
 import AppTextDivider from './admin-components/main/app-text-divider.vue'
 import AppTextNColumns from './admin-components/main/app-text-n-columns.vue'
 import AppTheses from './admin-components/main/app-theses.vue'
+import AppTabs from './admin-components/main/app-tabs.vue'
 import AppVideoAndText from './admin-components/main/app-video-and-text.vue'
 import AppTicker from './admin-components/widgets/app-ticker.vue'
 import AppDinamicForm from './dynamicForm/app-dinamic-form.vue'
@@ -95,7 +96,8 @@ export default {
         'categories-w': AppCategoriesW,
         'products-w': AppProductsW,
         'product-slider': AppProductSlider,
-        'see-also': AppSeeAlso
+        'see-also': AppSeeAlso,
+        'tabs': AppTabs
     },
 
     props: {
