@@ -81,7 +81,8 @@ h2 {
     .anker {
         border-radius: unset;
         padding: 20px 60px 20px 30px;
-        &:hover{
+
+        &:hover {
             color: inherit !important;
             background-color: inherit !important;
         }
@@ -95,4 +96,5 @@ h2 {
         }
 
     }
-}</style>
+}
+</style>
